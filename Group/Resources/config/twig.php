@@ -8,7 +8,3 @@ return static function (TwigConfig $config)
 {
 	$config->path(__DIR__.'/../view', 'UserGroup');
 };
-
-
-
-
