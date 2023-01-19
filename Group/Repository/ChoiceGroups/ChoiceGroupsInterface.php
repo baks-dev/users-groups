@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Repository\ChoiceGroups;
+namespace BaksDev\Users\Groups\Group\Repository\ChoiceGroups;
 
 interface ChoiceGroupsInterface
 {

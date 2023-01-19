@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\Quota;
+namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Quota;
 
-use App\Module\Users\Groups\Group\Entity\Quota\GroupQuota;
-use App\Module\Users\Groups\Group\Entity\Quota\GroupQuotaInterface;
+use BaksDev\Users\Groups\Group\Entity\Quota\GroupQuota;
+use BaksDev\Users\Groups\Group\Entity\Quota\GroupQuotaInterface;
 
 /**
  * Builder instance for {@see GroupQuota}.

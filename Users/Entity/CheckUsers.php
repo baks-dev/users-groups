@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Entity;
+namespace BaksDev\Users\Groups\Users\Entity;
 
-use App\Module\Users\Groups\Users\Type\Event\CheckUsersEventUid;
-use App\Module\Users\User\Entity\User;
-use App\Module\Users\User\Type\Id\UserUid;
+use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
+use BaksDev\Users\User\Entity\User;
+use BaksDev\Users\User\Type\Id\UserUid;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
-use App\System\Entity\EntityEvent;
+use BaksDev\Core\Entity\EntityEvent;
 use Exception;
 use InvalidArgumentException;
 
@@ -66,9 +66,9 @@ class CheckUsers
     }
     
 
-    public function setEvent(CheckUsersEventUid|\App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent $event) : void
+    public function setEvent(CheckUsersEventUid|\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent $event) : void
     {
-        $this->event = $event instanceof \App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent ? $event->getId() : $event;
+        $this->event = $event instanceof \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent ? $event->getId() : $event;
     }
     
 

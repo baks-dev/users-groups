@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Type\Check;
+namespace BaksDev\Users\Groups\Group\Type\Check;
 
-use App\Module\Users\Groups\Group\Type\Check\GroupCheckUid;
-use App\System\Type\UidType\UidType;
+use BaksDev\Users\Groups\Group\Type\Check\GroupCheckUid;
+use BaksDev\Core\Type\UidType\UidType;
 
 final class GroupCheckType extends UidType
 {

@@ -16,12 +16,12 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\Controller\Admin;
+namespace BaksDev\Users\Groups\Users\Controller\Admin;
 
-use App\Module\Users\Groups\Users\UseCase\Admin\Add\CheckUsersDTO;
-use App\Module\Users\Groups\Users\UseCase\Admin\Add\CheckUsersForm;
-use App\Module\Users\Groups\Users\UseCase\CheckUserAggregate;
-use App\System\Controller\AbstractController;
+use BaksDev\Users\Groups\Users\UseCase\Admin\Add\CheckUsersDTO;
+use BaksDev\Users\Groups\Users\UseCase\Admin\Add\CheckUsersForm;
+use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;
+use BaksDev\Core\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;

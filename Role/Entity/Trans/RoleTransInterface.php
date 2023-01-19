@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Trans;
+namespace BaksDev\Users\Groups\Role\Entity\Trans;
 
 interface RoleTransInterface
 {

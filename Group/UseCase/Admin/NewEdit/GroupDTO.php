@@ -16,14 +16,14 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit;
 
-use App\Module\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use App\Module\Users\Groups\Group\Entity\Trans\GroupTransInterface;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaDTO;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
+use BaksDev\Users\Groups\Group\Entity\Trans\GroupTransInterface;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaDTO;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -109,7 +109,7 @@ class GroupDTO implements GroupEventInterface
         /* Вычисляем расхождение и добавляем неопределенные локали */
         foreach(Locale::diffLocale($this->translate) as $locale)
         {
-            $GroupTransDTO = new \App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO();
+            $GroupTransDTO = new \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO();
             $GroupTransDTO->setLocal($locale);
             $this->addTranslate($GroupTransDTO);
         }
@@ -119,11 +119,11 @@ class GroupDTO implements GroupEventInterface
     
     /** Добавляем перевод категории
      *
-     * @param \App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO $trans
+     * @param \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO $trans
      *
      * @return void
      */
-    public function addTranslate(\App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO $trans) : void
+    public function addTranslate(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO $trans) : void
     {
         if(!$this->translate->contains($trans))
         {
@@ -187,12 +187,12 @@ class GroupDTO implements GroupEventInterface
         return $this->role;
     }
 
-    public function addRole(\App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO $role) : void
+    public function addRole(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO $role) : void
     {
         $this->role->add($role);
     }
     
-    public function removeRole(\App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO $role) : void
+    public function removeRole(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO $role) : void
     {
         $this->role->removeElement($role);
     }

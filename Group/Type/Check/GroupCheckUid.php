@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Type\Check;
+namespace BaksDev\Users\Groups\Group\Type\Check;
 
 use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Uuid;

@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\Entity\Quota;
+namespace BaksDev\Users\Groups\Group\Entity\Quota;
 
 use App\Module\Users\Entity\User;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Group\Entity\Quota\GroupQuotaInterface;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
-use App\Module\Users\Groups\Repository\Group\Modify\GroupModifyRepository;
-use App\System\Entity\EntityEvent;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\Entity\Quota\GroupQuotaInterface;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Repository\Group\Modify\GroupModifyRepository;
+use BaksDev\Core\Entity\EntityEvent;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;

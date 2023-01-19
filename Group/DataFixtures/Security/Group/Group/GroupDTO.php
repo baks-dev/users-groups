@@ -16,14 +16,14 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group;
+namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group;
 
-use App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\Quota\GroupQuotaDTO;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use App\Module\Users\Groups\Group\Entity\Trans\GroupTransInterface;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Quota\GroupQuotaDTO;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
+use BaksDev\Users\Groups\Group\Entity\Trans\GroupTransInterface;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -105,7 +105,7 @@ class GroupDTO implements GroupEventInterface
         /* Вычисляем расхождение и добавляем неопределенные локали */
         foreach(Locale::diffLocale($this->translate) as $locale)
         {
-            $GroupTransDTO = new \App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans\GroupTransDTO();
+            $GroupTransDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans\GroupTransDTO();
             $GroupTransDTO->setLocal($locale);
             $this->addTranslate($GroupTransDTO);
         }
@@ -115,11 +115,11 @@ class GroupDTO implements GroupEventInterface
     
     /** Добавляем перевод категории
      *
-     * @param \App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans\GroupTransDTO $trans
+     * @param \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans\GroupTransDTO $trans
      *
      * @return void
      */
-    public function addTranslate(\App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans\GroupTransDTO $trans) : void
+    public function addTranslate(\BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans\GroupTransDTO $trans) : void
     {
         if(!$this->translate->contains($trans))
         {
@@ -130,11 +130,11 @@ class GroupDTO implements GroupEventInterface
     /** Метод для инициализации и маппинга сущности на DTO в коллекции  */
     public function getTranslateClass() : GroupTransInterface
     {
-		return new \App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans\GroupTransDTO();
+		return new \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans\GroupTransDTO();
     }
     
     /**
-	 * @return \App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\Quota\GroupQuotaDTO
+	 * @return \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Quota\GroupQuotaDTO
      */
     public function getQuota() : GroupQuotaDTO
     {
@@ -142,7 +142,7 @@ class GroupDTO implements GroupEventInterface
     }
     
     /**
-	 * @param \App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\Quota\GroupQuotaDTO $quota
+	 * @param \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Quota\GroupQuotaDTO $quota
      */
     public function setQuota(GroupQuotaDTO $quota) : void
     {

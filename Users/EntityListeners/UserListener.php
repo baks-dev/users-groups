@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\EntityListeners;
+namespace BaksDev\Users\Groups\Users\EntityListeners;
 
 
 
-use App\Module\Users\Groups\Users\Repository\RoleByUser\RoleByUserInterface;
+use BaksDev\Users\Groups\Users\Repository\RoleByUser\RoleByUserInterface;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpKernel\KernelInterface;

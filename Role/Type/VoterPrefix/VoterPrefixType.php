@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Type\VoterPrefix;
+namespace BaksDev\Users\Groups\Role\Type\VoterPrefix;
 
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

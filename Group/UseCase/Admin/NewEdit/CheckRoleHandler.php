@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit;
 
-use App\Module\Users\Groups\Group\Entity;
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
+use BaksDev\Users\Groups\Group\Entity;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -44,7 +44,7 @@ final class CheckRoleHandler
 	
 	public function handle(
 		CheckRoleInterface $command
-	) : string|\App\Module\Users\Groups\Group\Entity\CheckRole\CheckRole
+	) : string|\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole
 	{
 		/* Валидация */
 		$errors = $this->validator->validate($command);
@@ -61,7 +61,7 @@ final class CheckRoleHandler
 		if(empty($command->getEvent()) || empty($command->getRole()))
 		{
 			$uniqid = uniqid('', false);
-			$errorsString = sprintf('Не указана роль или событие %s', \App\Module\Users\Groups\Group\Entity\CheckRole\CheckRole::class);
+			$errorsString = sprintf('Не указана роль или событие %s', \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class);
 			$this->logger->error($uniqid.': '.$errorsString);
 			return $uniqid;
 		}
@@ -69,13 +69,13 @@ final class CheckRoleHandler
 		
 		if($command->getEvent())
 		{
-			$Event = $this->entityManager->getRepository(\App\Module\Users\Groups\Group\Entity\CheckRole\CheckRole::class)->findOneBy(
+			$Event = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class)->findOneBy(
 				['event' => $command->getEvent(), 'role' => $command->getRole()]
 			);
 			
 			if(empty($Event))
 			{
-				$Event = new \App\Module\Users\Groups\Group\Entity\CheckRole\CheckRole($command->getEvent());
+				$Event = new \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole($command->getEvent());
 				$this->entityManager->persist($Event);
 				$Event->setEntity($command);
 				$this->entityManager->flush();

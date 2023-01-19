@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Repository\AllGroups;
+namespace BaksDev\Users\Groups\Group\Repository\AllGroups;
 
 interface AllGroupsInterface
 {

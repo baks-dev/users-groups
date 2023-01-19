@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\Entity\Modify;
+namespace BaksDev\Users\Groups\Group\Entity\Modify;
 
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Group\Entity\Modify\GroupModifyInterface;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
-use App\Module\Users\Groups\Repository\Group\Modify\GroupModifyRepository;
-use App\Module\Users\User\Entity\User;
-use App\Module\Users\User\Type\Id\UserUid;
-use App\System\Entity\EntityEvent;
-use App\System\Type\Ip\IpAddress;
-use App\System\Type\Modify\ModifyAction;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\Entity\Modify\GroupModifyInterface;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Repository\Group\Modify\GroupModifyRepository;
+use BaksDev\Users\User\Entity\User;
+use BaksDev\Users\User\Type\Id\UserUid;
+use BaksDev\Core\Entity\EntityEvent;
+use BaksDev\Core\Type\Ip\IpAddress;
+use BaksDev\Core\Type\Modify\ModifyAction;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

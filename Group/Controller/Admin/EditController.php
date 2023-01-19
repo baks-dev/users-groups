@@ -16,15 +16,15 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Controller\Admin;
+namespace BaksDev\Users\Groups\Group\Controller\Admin;
 
 
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Group\Entity\Group;
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\GroupDTO;
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\GroupForm;
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\GroupHandler;
-use App\System\Controller\AbstractController;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\Entity\Group;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupDTO;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupForm;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupHandler;
+use BaksDev\Core\Controller\AbstractController;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;

@@ -16,11 +16,11 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\EntityListeners;
+namespace BaksDev\Users\Groups\Users\EntityListeners;
 
 
-use App\Module\Users\Groups\Users\Entity\Modify\CheckUserModify;
-use App\System\Type\Ip\IpAddress;
+use BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModify;
+use BaksDev\Core\Type\Ip\IpAddress;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

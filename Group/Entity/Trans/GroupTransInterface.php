@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity\Trans;
+namespace BaksDev\Users\Groups\Group\Entity\Trans;
 
 interface GroupTransInterface
 {

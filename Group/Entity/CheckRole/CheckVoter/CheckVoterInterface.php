@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity\CheckRole\CheckVoter;
+namespace BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter;
 
 interface CheckVoterInterface
 {

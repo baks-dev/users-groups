@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\Delete;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\Delete;
 
-use App\Module\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use App\Module\Users\Groups\Group\Entity\Trans\GroupTransInterface;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaDTO;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
+use BaksDev\Users\Groups\Group\Entity\Trans\GroupTransInterface;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaDTO;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 

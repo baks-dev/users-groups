@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Repository\VoterChoice;
+namespace BaksDev\Users\Groups\Role\Repository\VoterChoice;
 
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 
 interface VoterChoiceInterface
 {

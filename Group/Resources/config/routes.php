@@ -7,7 +7,7 @@ return function (RoutingConfigurator $routes)
 {
     
     $routes->import('../../Controller', 'annotation')
-      ->prefix(\App\System\Type\Locale\Locale::routes())
+      ->prefix(\BaksDev\Core\Type\Locale\Locale::routes())
       ->namePrefix('UserGroup:');
     
 };

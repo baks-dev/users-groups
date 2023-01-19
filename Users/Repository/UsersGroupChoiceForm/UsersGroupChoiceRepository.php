@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Repository\UsersGroupChoiceForm;
+namespace BaksDev\Users\Groups\Users\Repository\UsersGroupChoiceForm;
 
-use App\Module\Users\AuthEmail\Account\Type\Status\AccountStatus;
-use App\Module\Users\AuthEmail\Account\Type\Status\AccountStatusEnum;
-use App\Module\Users\Groups\Users\Entity\CheckUsers;
-use App\Module\Users\User\Entity\User;
-use App\Module\Users\User\Type\Id\UserUid;
-use App\Module\Users\Groups\Users\Repository\UsersGroupChoiceForm\UsersGroupChoiceInterface;
+use BaksDev\Auth\EmailAccount\Type\Status\AccountStatus;
+use BaksDev\Auth\EmailAccount\Type\Status\AccountStatusEnum;
+use BaksDev\Users\Groups\Users\Entity\CheckUsers;
+use BaksDev\Users\User\Entity\User;
+use BaksDev\Users\User\Type\Id\UserUid;
+use BaksDev\Users\Groups\Users\Repository\UsersGroupChoiceForm\UsersGroupChoiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Module\Users\AuthEmail\Account\Entity;
+use BaksDev\Auth\EmailAccount\Entity;
 
 final class UsersGroupChoiceRepository implements UsersGroupChoiceInterface
 {

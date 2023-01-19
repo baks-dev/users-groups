@@ -16,13 +16,13 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole;
 
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO;
-use App\Module\Users\Groups\Role\Repository\RoleChoice\RoleChoiceInterface;
-use App\Module\Users\Groups\Role\Repository\VoterChoice\VoterChoiceInterface;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO;
+use BaksDev\Users\Groups\Role\Repository\RoleChoice\RoleChoiceInterface;
+use BaksDev\Users\Groups\Role\Repository\VoterChoice\VoterChoiceInterface;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -125,7 +125,7 @@ final class CheckRoleForm extends AbstractType
                   $votersChoice = [];
                   foreach($this->voterChoice->get($data->getRole()) as $item)
                   {
-                      $CheckVoterDTO = new \App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO();
+                      $CheckVoterDTO = new \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO();
                       $CheckVoterDTO->setVoter($item);
                       $votersChoice[$item->getValue()] = $CheckVoterDTO;
                   }

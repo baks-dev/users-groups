@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Trans;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans;
 
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

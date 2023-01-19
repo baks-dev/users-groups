@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Controller\Admin;
+namespace BaksDev\Users\Groups\Users\Controller\Admin;
 
-use App\Module\Users\AuthEmail\Account\Repository\UserAccountById\UserAccountByIdInterface;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupForm;
-use App\Module\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupDTO;
-use App\Module\Users\Groups\Group\UseCase\GroupAggregate;
-use App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent;
-use App\Module\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserDTO;
-use App\Module\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserForm;
-use App\Module\Users\Groups\Users\UseCase\CheckUserAggregate;
-use App\System\Controller\AbstractController;
+use BaksDev\Auth\EmailAccount\Repository\UserAccountById\UserAccountByIdInterface;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupForm;
+use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupDTO;
+use BaksDev\Users\Groups\Group\UseCase\GroupAggregate;
+use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
+use BaksDev\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserDTO;
+use BaksDev\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserForm;
+use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;
+use BaksDev\Core\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\ExpressionLanguage\Expression;

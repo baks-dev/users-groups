@@ -12,7 +12,7 @@ return static function (ContainerConfigurator $configurator)
     ;
     
 
-//    $services->load('App\Module\Users\Groups\Users\DataFixtures\\', '../../DataFixtures')
+//    $services->load('BaksDev\Users\Groups\Users\DataFixtures\\', '../../DataFixtures')
 //      ->exclude('../../DataFixtures/**/*DTO.php');
 
 

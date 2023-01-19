@@ -16,13 +16,13 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Voters\Trans;
+namespace BaksDev\Users\Groups\Role\Entity\Voters\Trans;
 
-use App\Module\Users\Groups\Role\Entity\Voters\RoleVoter;
-use App\Module\Users\Groups\Role\Entity\Voters\Trans\VoterTransInterface;
-use App\Module\Users\Groups\Role\Type\Voter\RoleVoterUid;
-use App\System\Entity\EntityEvent;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Role\Entity\Voters\RoleVoter;
+use BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTransInterface;
+use BaksDev\Users\Groups\Role\Type\Voter\RoleVoterUid;
+use BaksDev\Core\Entity\EntityEvent;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;

@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Repository\AllUsers;
+namespace BaksDev\Users\Groups\Users\Repository\AllUsers;
 
-use App\Module\Users\Groups\Group\Entity as EntityGroup;
-use App\Module\Users\Groups\Users\Entity;
-use App\Module\Users\Groups\Users\Repository\AllUsers\EntityAccount;
-use App\Module\Users\Groups\Users\Repository\AllUsers\AllCheckUsersInterface;
-use App\System\Form\Search\SearchDTO;
-use App\System\Services\Paginator\PaginatorInterface;
-use App\System\Services\Switcher\Switcher;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\Entity as EntityGroup;
+use BaksDev\Users\Groups\Users\Entity;
+use BaksDev\Users\Groups\Users\Repository\AllUsers\EntityAccount;
+use BaksDev\Users\Groups\Users\Repository\AllUsers\AllCheckUsersInterface;
+use BaksDev\Core\Form\Search\SearchDTO;
+use BaksDev\Core\Services\Paginator\PaginatorInterface;
+use BaksDev\Core\Services\Switcher\Switcher;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use function App\Module\Users\Groups\Users\Repository\AllUsers\mb_strtolower;
+use function BaksDev\Users\Groups\Users\Repository\AllUsers\mb_strtolower;
 
 
 final class AllCheckUsersQuery implements AllCheckUsersInterface
@@ -54,16 +54,16 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 		
 		//$qb->select('checker.user_id as id');
 		$qb->addSelect('checker.event');
-		$qb->from(\App\Module\Users\Groups\Users\Entity\CheckUsers::TABLE, 'checker');
+		$qb->from(\BaksDev\Users\Groups\Users\Entity\CheckUsers::TABLE, 'checker');
 		
 		
-		$qb->join('checker', \App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent::TABLE, 'event', 'event.id = checker.event');
+		$qb->join('checker', \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::TABLE, 'event', 'event.id = checker.event');
 		
 		/* Модификатор */
 		$qb->addSelect('checker_modify.mod_date as update');
 		$qb->join(
 			'checker',
-			\App\Module\Users\Groups\Users\Entity\Modify\CheckUserModify::TABLE,
+			\BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModify::TABLE,
 			'checker_modify',
 			'checker_modify.event = checker.event'
 		);
@@ -92,17 +92,17 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 		/* ГРУППА */
 		
 		
-		$qb->join('event', \App\Module\Users\Groups\Group\Entity\Group::TABLE, 'groups', 'groups.id = event.group_id');
+		$qb->join('event', \BaksDev\Users\Groups\Group\Entity\Group::TABLE, 'groups', 'groups.id = event.group_id');
 		
 		
 		$qb->addSelect('group_event.sort');
-		$qb->join('groups', \App\Module\Users\Groups\Group\Entity\Event\GroupEvent::TABLE, 'group_event', 'group_event.id = groups.event');
+		$qb->join('groups', \BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::TABLE, 'group_event', 'group_event.id = groups.event');
 		
 		$qb->addSelect('trans.name');
 		$qb->addSelect('trans.description');
 		$qb->join(
 			'group_event',
-			\App\Module\Users\Groups\Group\Entity\Trans\GroupTrans::TABLE,
+			\BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::TABLE,
 			'trans',
 			'trans.event = group_event.id AND trans.local = :local'
 		);

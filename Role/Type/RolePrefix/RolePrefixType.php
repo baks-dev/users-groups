@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Type\RolePrefix;
+namespace BaksDev\Users\Groups\Role\Type\RolePrefix;
 
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

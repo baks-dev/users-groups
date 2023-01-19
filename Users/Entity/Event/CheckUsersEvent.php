@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Entity\Event;
+namespace BaksDev\Users\Groups\Users\Entity\Event;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Users\Entity\CheckUsers;
-use App\Module\Users\Groups\Users\Entity\Event\CheckUsersEventInterface;
-use App\Module\Users\Groups\Users\Entity\Modify\CheckUserModify;
-use App\Module\Users\Groups\Users\Type\Event\CheckUsersEventUid;
-use App\Module\Users\User\Type\Id\UserUid;
-use App\System\Type\Modify\ModifyAction;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Users\Entity\CheckUsers;
+use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEventInterface;
+use BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModify;
+use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
+use BaksDev\Users\User\Type\Id\UserUid;
+use BaksDev\Core\Type\Modify\ModifyAction;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
-use App\System\Entity\EntityEvent;
+use BaksDev\Core\Entity\EntityEvent;
 use Exception;
 use InvalidArgumentException;
 

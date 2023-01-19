@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit;
 
-use App\Module\Users\Groups\Group\Entity;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use App\Module\Users\Groups\Users\Entity\CheckUsers;
-use App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Group\Entity;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
+use BaksDev\Users\Groups\Users\Entity\CheckUsers;
+use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -54,7 +54,7 @@ final class GroupHandler
 	
 	public function handle(
 		GroupEventInterface $command
-	) : string|\App\Module\Users\Groups\Group\Entity\Event\GroupEvent
+	) : string|\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent
 	{
 		
 		/* Валидация */
@@ -70,7 +70,7 @@ final class GroupHandler
 		
 		if($command->getEvent())
 		{
-			$EventRepo = $this->entityManager->getRepository(\App\Module\Users\Groups\Group\Entity\Event\GroupEvent::class)
+			$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class)
 				->find($command->getEvent()
 			);
 			
@@ -79,7 +79,7 @@ final class GroupHandler
 				$uniqid = uniqid('', false);
 				$errorsString = sprintf(
 					'Ошибка при получении сущности %s с id: %s',
-					\App\Module\Users\Groups\Group\Entity\Event\GroupEvent::class,
+					\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class,
 					$command->getEvent()
 				);
 				$this->logger->error($uniqid.': '.$errorsString);
@@ -89,7 +89,7 @@ final class GroupHandler
 			$Event = $EventRepo->cloneEntity();
 		} else
 		{
-			$Event = new \App\Module\Users\Groups\Group\Entity\Event\GroupEvent();
+			$Event = new \BaksDev\Users\Groups\Group\Entity\Event\GroupEvent();
 		}
 		
 		
@@ -115,7 +115,7 @@ final class GroupHandler
 		/* Делаем проверку, что префикс свободен */
 		if($command->getEvent() === null)
 		{
-			$GroupExist = $this->entityManager->getRepository(\App\Module\Users\Groups\Group\Entity\Group::class)->find($Event->getGroup());
+			$GroupExist = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Group::class)->find($Event->getGroup());
 			
 			if(!empty($GroupExist))
 			{
@@ -137,13 +137,13 @@ final class GroupHandler
 			}
 		}
 		
-		$Group = $this->entityManager->getRepository(\App\Module\Users\Groups\Group\Entity\Group::class)->findOneBy(
+		$Group = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Group::class)->findOneBy(
 			['event' => $command->getEvent()]
 		);
 		
 		if(empty($Group))
 		{
-			$Group = new \App\Module\Users\Groups\Group\Entity\Group($Event->getGroup());
+			$Group = new \BaksDev\Users\Groups\Group\Entity\Group($Event->getGroup());
 			$this->entityManager->persist($Group);
 		}
 		

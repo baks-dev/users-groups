@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Repository\RoleByUser;
+namespace BaksDev\Users\Groups\Users\Repository\RoleByUser;
 
-use App\Module\Users\Groups\Group\Entity as EntityGroup;
-use App\Module\Users\Groups\Users\Entity;
-use App\Module\Users\User\Type\Id\UserUid;
-use App\Module\Users\Groups\Users\Repository\RoleByUser\RoleByUserInterface;
+use BaksDev\Users\Groups\Group\Entity as EntityGroup;
+use BaksDev\Users\Groups\Users\Entity;
+use BaksDev\Users\User\Type\Id\UserUid;
+use BaksDev\Users\Groups\Users\Repository\RoleByUser\RoleByUserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class RoleByUserRepository implements RoleByUserInterface
@@ -40,14 +40,14 @@ final class RoleByUserRepository implements RoleByUserInterface
     
         $qb->select(['groups_event', 'check_role', 'check_voter']);
     
-        $qb->from(\App\Module\Users\Groups\Users\Entity\CheckUsers::class, 'check');
-        $qb->join( \App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent::class, 'check_event',  'WITH', 'check_event.id = check.event');
+        $qb->from(\BaksDev\Users\Groups\Users\Entity\CheckUsers::class, 'check');
+        $qb->join( \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::class, 'check_event',  'WITH', 'check_event.id = check.event');
         
-        $qb->join( \App\Module\Users\Groups\Group\Entity\Group::class, 'groups',  'WITH', 'groups.id = check_event.group');
-        $qb->join( \App\Module\Users\Groups\Group\Entity\Event\GroupEvent::class, 'groups_event',  'WITH', 'groups_event.id = groups.event');
+        $qb->join( \BaksDev\Users\Groups\Group\Entity\Group::class, 'groups',  'WITH', 'groups.id = check_event.group');
+        $qb->join( \BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class, 'groups_event',  'WITH', 'groups_event.id = groups.event');
     
-        $qb->leftJoin( \App\Module\Users\Groups\Group\Entity\CheckRole\CheckRole::class, 'check_role',  'WITH', 'check_role.event = groups.event');
-        $qb->leftJoin( \App\Module\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoter::class, 'check_voter',  'WITH', 'check_voter.check = check_role.id');
+        $qb->leftJoin( \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class, 'check_role',  'WITH', 'check_role.event = groups.event');
+        $qb->leftJoin( \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoter::class, 'check_voter',  'WITH', 'check_voter.check = check_role.id');
         
         $qb->where('check.id = :user_id');
         $qb->setParameter('user_id', $userUid, UserUid::TYPE);

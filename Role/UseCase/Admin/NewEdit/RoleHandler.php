@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Role\UseCase\Admin\NewEdit;
+namespace BaksDev\Users\Groups\Role\UseCase\Admin\NewEdit;
 
-use App\Module\Users\Groups\Role\Entity;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Role\Entity;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
@@ -46,8 +46,8 @@ final class RoleHandler
 	}
 	
 	public function handle(
-		\App\Module\Users\Groups\Role\Entity\Event\RoleEventInterface $command,
-	) : string|\App\Module\Users\Groups\Role\Entity\Role
+		\BaksDev\Users\Groups\Role\Entity\Event\RoleEventInterface $command,
+	) : string|\BaksDev\Users\Groups\Role\Entity\Role
 	{
 		
 		/* Валидация */
@@ -64,14 +64,14 @@ final class RoleHandler
 		
 		if($command->getEvent())
 		{
-			$EventRepo = $this->entityManager->getRepository(\App\Module\Users\Groups\Role\Entity\Event\RoleEvent::class)->find($command->getEvent());
+			$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class)->find($command->getEvent());
 			
 			if($EventRepo === null)
 			{
 				$uniqid = uniqid('', false);
 				$errorsString = sprintf(
 					'Ошибка при получении сущности %s с id: %s',
-					\App\Module\Users\Groups\Role\Entity\Event\RoleEvent::class,
+					\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class,
 					$command->getEvent()
 				);
 				$this->logger->error($uniqid.': '.$errorsString);
@@ -81,7 +81,7 @@ final class RoleHandler
 			$Event = $EventRepo->cloneEntity();
 		} else
 		{
-			$Event = new \App\Module\Users\Groups\Role\Entity\Event\RoleEvent();
+			$Event = new \BaksDev\Users\Groups\Role\Entity\Event\RoleEvent();
 		}
 		
 		$Event->setEntity($command);
@@ -100,11 +100,11 @@ final class RoleHandler
 		
 		$this->entityManager->persist($Event);
 		
-		$Role = $this->entityManager->getRepository(\App\Module\Users\Groups\Role\Entity\Role::class)->find($Event->getRole());
+		$Role = $this->entityManager->getRepository(\BaksDev\Users\Groups\Role\Entity\Role::class)->find($Event->getRole());
 		
 		if(empty($Role))
 		{
-			$Role = new \App\Module\Users\Groups\Role\Entity\Role($Event->getRole());
+			$Role = new \BaksDev\Users\Groups\Role\Entity\Role($Event->getRole());
 			$this->entityManager->persist($Role);
 		}
 		

@@ -16,13 +16,13 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\Controller\Admin;
+namespace BaksDev\Users\Groups\Users\Controller\Admin;
 
-use App\Module\Users\Groups\Users\Repository\AllUsers\AllCheckUsersInterface;
-use App\System\Controller\AbstractController;
-use App\System\Form\Search\SearchDTO;
-use App\System\Form\Search\SearchForm;
-use App\System\Services\Paginator;
+use BaksDev\Users\Groups\Users\Repository\AllUsers\AllCheckUsersInterface;
+use BaksDev\Core\Controller\AbstractController;
+use BaksDev\Core\Form\Search\SearchDTO;
+use BaksDev\Core\Form\Search\SearchForm;
+use BaksDev\Core\Services\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;

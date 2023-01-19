@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\Entity\Event;
+namespace BaksDev\Users\Groups\Group\Entity\Event;
 
-//use App\Module\Users\Groups\Entity\GroupRole;
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckRole;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use App\Module\Users\Groups\Group\Entity\Modify\GroupModify;
-use App\Module\Users\Groups\Group\Entity\Quota\GroupQuota;
-use App\Module\Users\Groups\Group\Entity\Trans\GroupTrans;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-//use App\Module\Users\Groups\Repository\Group\Event\GroupEventRepository;
-use App\System\Entity\EntityEvent;
-use App\System\Type\Locale\Locale;
-use App\System\Type\Modify\ModifyAction;
-use App\System\Type\Modify\ModifyActionEnum;
+//use BaksDev\Users\Groups\Entity\GroupRole;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
+use BaksDev\Users\Groups\Group\Entity\Modify\GroupModify;
+use BaksDev\Users\Groups\Group\Entity\Quota\GroupQuota;
+use BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+//use BaksDev\Users\Groups\Repository\Group\Event\GroupEventRepository;
+use BaksDev\Core\Entity\EntityEvent;
+use BaksDev\Core\Type\Locale\Locale;
+use BaksDev\Core\Type\Modify\ModifyAction;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

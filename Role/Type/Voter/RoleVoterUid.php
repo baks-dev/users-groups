@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Type\Voter;
+namespace BaksDev\Users\Groups\Role\Type\Voter;
 
 use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Uuid;

@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Type\Settings;
+namespace BaksDev\Users\Groups\Group\Type\Settings;
 
-use App\Module\Users\Groups\Group\Type\Settings\GroupSettings;
+use BaksDev\Users\Groups\Group\Type\Settings\GroupSettings;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Type\Event;
+namespace BaksDev\Users\Groups\Group\Type\Event;
 
 use Symfony\Component\Uid\AbstractUid;
 use Symfony\Component\Uid\Uuid;

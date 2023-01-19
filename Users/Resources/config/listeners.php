@@ -18,13 +18,12 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Module\Users\Groups\Group\Entity\Group;
-use App\Module\Users\Groups\Users\Entity\Modify\CheckUserModify;
-use App\Module\Users\Groups\Users\EntityListeners;
-use App\Module\Users\User\Entity\User;
-use Symfony\Component\Security\Core\User\UserInterface;
+use BaksDev\Users\Groups\Group\Entity\Group;
+use BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModify;
+use BaksDev\Users\Groups\Users\EntityListeners;
+use BaksDev\Users\User\Entity\User;
 
-//use App\Module\Users\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 return static function (ContainerConfigurator $configurator)
 {
@@ -32,28 +31,28 @@ return static function (ContainerConfigurator $configurator)
       ->defaults()
       ->autowire()
       ->autoconfigure();
+	
     
     /** EntityListeners */
-    $services->set(\App\Module\Users\Groups\Users\EntityListeners\ModifyListener::class)
-      ->class(\App\Module\Users\Groups\Users\EntityListeners\ModifyListener::class)
+    $services->set(EntityListeners\ModifyListener::class)
+      ->class(EntityListeners\ModifyListener::class)
       ->tag(
         'doctrine.orm.entity_listener',
         ['event' => 'prePersist', 'lazy' => true, 'entity' => CheckUserModify::class]);
     
 	
-    $services->set(\App\Module\Users\Groups\Users\EntityListeners\GroupListener::class)
-      ->class(\App\Module\Users\Groups\Users\EntityListeners\GroupListener::class)
+    $services->set(EntityListeners\GroupListener::class)
+      ->class(EntityListeners\GroupListener::class)
       ->tag(
         'doctrine.orm.entity_listener',
         ['event' => 'preUpdate', 'lazy' => true, 'entity' => Group::class]);
 	
 
-	$services->set(\App\Module\Users\Groups\Users\EntityListeners\UserListener::class)
-		->class(\App\Module\Users\Groups\Users\EntityListeners\UserListener::class)
+	$services->set(EntityListeners\UserListener::class)
+		->class(EntityListeners\UserListener::class)
 		->tag(
 			'doctrine.orm.entity_listener',
 			['event' => 'postLoad', 'lazy' => true, 'entity' => User::class])
-		//->arg()
 	;
 	
 };

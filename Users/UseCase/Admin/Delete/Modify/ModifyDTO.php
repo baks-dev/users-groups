@@ -16,11 +16,11 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\UseCase\Admin\Delete\Modify;
+namespace BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify;
 
-use App\Module\Users\Groups\Users\Entity\Modify\CheckUserModifyInterface;
-use App\System\Type\Modify\ModifyAction;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModifyInterface;
+use BaksDev\Core\Type\Modify\ModifyAction;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class ModifyDTO implements CheckUserModifyInterface

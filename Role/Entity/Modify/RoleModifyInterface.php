@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Modify;
+namespace BaksDev\Users\Groups\Role\Entity\Modify;
 
 interface RoleModifyInterface
 {

@@ -12,12 +12,12 @@ return static function (ContainerConfigurator $configurator)
       ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
     ;
     
-    $services->load('App\Module\Users\Groups\Group\Controller\\', '../../Controller')
+    $services->load('BaksDev\Users\Groups\Group\Controller\\', '../../Controller')
       ->tag('controller.service_arguments');
     
-    $services->load('App\Module\Users\Groups\Group\Repository\\', '../../Repository');
+    $services->load('BaksDev\Users\Groups\Group\Repository\\', '../../Repository');
     
-    $services->load('App\Module\Users\Groups\Group\UseCase\\', '../../UseCase')
+    $services->load('BaksDev\Users\Groups\Group\UseCase\\', '../../UseCase')
       ->exclude('../../UseCase/**/*DTO.php');
 	
 };

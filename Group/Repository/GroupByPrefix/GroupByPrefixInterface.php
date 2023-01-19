@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\Repository\GroupByPrefix;
+namespace BaksDev\Users\Groups\Group\Repository\GroupByPrefix;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Group\Entity;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\Entity;
 
 interface GroupByPrefixInterface
 {
-    public function get(GroupPrefix $prefix) : ?\App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
+    public function get(GroupPrefix $prefix) : ?\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
 }

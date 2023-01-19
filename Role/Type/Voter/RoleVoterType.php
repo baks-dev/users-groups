@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Type\Voter;
+namespace BaksDev\Users\Groups\Role\Type\Voter;
 
-use App\Module\Users\Groups\Role\Type\Voter\RoleVoterUid;
-use App\System\Type\UidType\UidType;
+use BaksDev\Users\Groups\Role\Type\Voter\RoleVoterUid;
+use BaksDev\Core\Type\UidType\UidType;
 
 final class RoleVoterType extends UidType
 {

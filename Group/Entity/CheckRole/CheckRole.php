@@ -16,15 +16,15 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity\CheckRole;
+namespace BaksDev\Users\Groups\Group\Entity\CheckRole;
 
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
-use App\Module\Users\Groups\Group\Type\Check\GroupCheckUid;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
-//use App\System\Entity\EntityEvent;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
+use BaksDev\Users\Groups\Group\Type\Check\GroupCheckUid;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+//use BaksDev\Core\Entity\EntityEvent;
 
-use App\System\Entity\EntityEvent;
+use BaksDev\Core\Entity\EntityEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -55,7 +55,7 @@ class CheckRole extends EntityEvent
     protected RolePrefix $role;
     
     /** Правила роли */
-    #[ORM\OneToMany(mappedBy: 'check', targetEntity: \App\Module\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoter::class, cascade: ['all'])]
+    #[ORM\OneToMany(mappedBy: 'check', targetEntity: \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoter::class, cascade: ['all'])]
     protected Collection $voter;
     
     public function __construct(GroupEvent $event)

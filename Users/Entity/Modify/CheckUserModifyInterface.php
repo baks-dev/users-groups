@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\Entity\Modify;
+namespace BaksDev\Users\Groups\Users\Entity\Modify;
 
 interface CheckUserModifyInterface
 {

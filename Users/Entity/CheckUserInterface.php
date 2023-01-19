@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Entity;
+namespace BaksDev\Users\Groups\Users\Entity;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\User\Type\Id\UserUid;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\User\Type\Id\UserUid;
 
 interface CheckUserInterface
 {

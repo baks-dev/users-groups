@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role\Trans;
+namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role\Trans;
 
-use App\Module\Users\Groups\Role\Entity\Trans\RoleTransInterface;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Role\Entity\Trans\RoleTransInterface;
+use BaksDev\Core\Type\Locale\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class RoleTransDTO implements RoleTransInterface

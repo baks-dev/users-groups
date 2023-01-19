@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\Delete;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\Delete;
 
 
 use Symfony\Component\Form\AbstractType;

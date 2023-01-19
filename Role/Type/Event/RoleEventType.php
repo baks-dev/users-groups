@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Type\Event;
+namespace BaksDev\Users\Groups\Role\Type\Event;
 
-use App\Module\Users\Groups\Role\Type\Event\RoleEventUid;
-use App\System\Type\UidType\UidType;
+use BaksDev\Users\Groups\Role\Type\Event\RoleEventUid;
+use BaksDev\Core\Type\UidType\UidType;
 
 final class RoleEventType extends UidType
 {

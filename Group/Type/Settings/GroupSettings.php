@@ -16,7 +16,7 @@
 *
 */
 
-namespace App\Module\Users\Groups\Group\Type\Settings;
+namespace BaksDev\Users\Groups\Group\Type\Settings;
 
 final class GroupSettings
 {

@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\UseCase\Admin\Delete;
+namespace BaksDev\Users\Groups\Users\UseCase\Admin\Delete;
 
-use App\Module\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserDTO;
+use BaksDev\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

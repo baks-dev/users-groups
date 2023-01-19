@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\DataFixtures\Security\Group;
+namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Group;
 
 
 use App\Module\Users\Auth\Email\DataFixtures\Account\AccountFixtures;
 use App\Module\Users\Auth\Email\Entity\Event\AccountEvent;
-use App\Module\Users\Groups\Group\Repository\GroupByPrefix\GroupByPrefixInterface;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-//use App\Module\Users\Groups\Group\UseCase\Fixtures;
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\GroupHandler;
-use App\Module\Users\Groups\Group\UseCase\GroupAggregate;
-use App\Module\Users\Groups\Role\Repository\TruncateRole\TruncateRoleInterface;
-use App\Module\Users\Groups\Users\Entity\CheckUsers;
-use App\Module\Users\Groups\Users\UseCase\CheckUserAggregate;
+use BaksDev\Users\Groups\Group\Repository\GroupByPrefix\GroupByPrefixInterface;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+//use BaksDev\Users\Groups\Group\UseCase\Fixtures;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupHandler;
+use BaksDev\Users\Groups\Group\UseCase\GroupAggregate;
+use BaksDev\Users\Groups\Role\Repository\TruncateRole\TruncateRoleInterface;
+use BaksDev\Users\Groups\Users\Entity\CheckUsers;
+use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -63,7 +63,7 @@ final class GroupFixtures extends Fixture implements DependentFixtureInterface
         
         /* Группа Администраторов */
     
-        $GroupDTO = new \App\Module\Users\Groups\Group\DataFixtures\Security\Group\Group\GroupDTO();
+        $GroupDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\GroupDTO();
 		
         $GroupEvent = $this->groupByPrefix->get($GroupDTO->getGroup());
 		
@@ -90,7 +90,7 @@ final class GroupFixtures extends Fixture implements DependentFixtureInterface
         $cache = new FilesystemAdapter();
         $cache->delete('group-'.$AccountEvent->getAccount());
 		
-        $CheckUsersDTO = new \App\Module\Users\Groups\Group\DataFixtures\Security\Group\CheckUser\CheckUsersDTO($AccountEvent->getAccount(), $GroupEvent->getGroup());
+        $CheckUsersDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\CheckUser\CheckUsersDTO($AccountEvent->getAccount(), $GroupEvent->getGroup());
         $CheckUsers = $manager->getRepository(CheckUsers::class)->find($CheckUsersDTO->getUser());
 	
 	

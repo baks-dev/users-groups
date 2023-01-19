@@ -2,14 +2,14 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Module\Users\Groups\Group\Type\Check\GroupCheckType;
-use App\Module\Users\Groups\Group\Type\Check\GroupCheckUid;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUidType;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefixType;
-use App\Module\Users\Groups\Group\Type\Settings\GroupSettings;
-use App\Module\Users\Groups\Group\Type\Settings\GroupSettingsType;
+use BaksDev\Users\Groups\Group\Type\Check\GroupCheckType;
+use BaksDev\Users\Groups\Group\Type\Check\GroupCheckUid;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUidType;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefixType;
+use BaksDev\Users\Groups\Group\Type\Settings\GroupSettings;
+use BaksDev\Users\Groups\Group\Type\Settings\GroupSettingsType;
 
 use Symfony\Config\DoctrineConfig;
 
@@ -28,6 +28,6 @@ return static function (DoctrineConfig $doctrine)
       ->type('attribute')
       ->dir('%kernel.project_dir%/src/Module/Users/Groups/Group/Entity')
       ->isBundle(false)
-      ->prefix('App\Module\Users\Groups\Group\Entity')
+      ->prefix('BaksDev\Users\Groups\Group\Entity')
       ->alias('UserGroup');
 };

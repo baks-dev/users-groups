@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Type\RolePrefix;
+namespace BaksDev\Users\Groups\Role\Type\RolePrefix;
 
 
 use InvalidArgumentException;

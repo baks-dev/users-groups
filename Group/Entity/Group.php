@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\Entity;
+namespace BaksDev\Users\Groups\Group\Entity;
 
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 use Doctrine\ORM\Mapping as ORM;
 
-//use App\Module\Users\Groups\Type\Group\Id\GroupUid;
+//use BaksDev\Users\Groups\Type\Group\Id\GroupUid;
 
 /* Group */
 

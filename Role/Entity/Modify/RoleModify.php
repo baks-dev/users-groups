@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Modify;
+namespace BaksDev\Users\Groups\Role\Entity\Modify;
 
 
-use App\Module\Users\Groups\Role\Entity\Event\RoleEvent;
-use App\Module\Users\User\Entity\User;
-use App\Module\Users\User\Type\Id\UserUid;
-use App\Module\Users\Groups\Role\Entity\Modify\RoleModifyInterface;
-use App\System\Entity\EntityEvent;
-use App\System\Type\Ip\IpAddress;
-use App\System\Type\Modify\ModifyAction;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
+use BaksDev\Users\User\Entity\User;
+use BaksDev\Users\User\Type\Id\UserUid;
+use BaksDev\Users\Groups\Role\Entity\Modify\RoleModifyInterface;
+use BaksDev\Core\Entity\EntityEvent;
+use BaksDev\Core\Type\Ip\IpAddress;
+use BaksDev\Core\Type\Modify\ModifyAction;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

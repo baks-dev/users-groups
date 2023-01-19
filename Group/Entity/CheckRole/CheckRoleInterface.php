@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity\CheckRole;
+namespace BaksDev\Users\Groups\Group\Entity\CheckRole;
 
 interface CheckRoleInterface
 {

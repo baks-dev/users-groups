@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Voters\Trans;
+namespace BaksDev\Users\Groups\Role\Entity\Voters\Trans;
 
 interface VoterTransInterface
 {

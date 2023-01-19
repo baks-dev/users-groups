@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Role\Repository\VoterChoice;
+namespace BaksDev\Users\Groups\Role\Repository\VoterChoice;
 
-use App\Module\Users\Groups\Role\Entity;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
-use App\Module\Users\Groups\Role\Repository\VoterChoice\VoterChoiceInterface;
-use App\System\Services\EntityEvent\EntityEventInterface;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Role\Entity;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Users\Groups\Role\Repository\VoterChoice\VoterChoiceInterface;
+use BaksDev\Core\Services\EntityEvent\EntityEventInterface;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,10 +47,10 @@ final class VoterChoiceRepository implements VoterChoiceInterface
         $select = sprintf('new %s(voter.voter, trans.name)', VoterPrefix::class);
     
         $qb->select($select);
-        $qb->from(\App\Module\Users\Groups\Role\Entity\Role::class, 'role');
-        $qb->join(\App\Module\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
-        $qb->join(\App\Module\Users\Groups\Role\Entity\Voters\RoleVoter::class, 'voter', 'WITH', 'voter.event = role.event');
-        $qb->join(\App\Module\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class, 'trans', 'WITH', 'trans.voter = voter.id AND trans.local = :local');
+        $qb->from(\BaksDev\Users\Groups\Role\Entity\Role::class, 'role');
+        $qb->join(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
+        $qb->join(\BaksDev\Users\Groups\Role\Entity\Voters\RoleVoter::class, 'voter', 'WITH', 'voter.event = role.event');
+        $qb->join(\BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class, 'trans', 'WITH', 'trans.voter = voter.id AND trans.local = :local');
         $qb->setParameter('local', $this->local, Locale::TYPE);
         
         $qb->where('role.id = :role');

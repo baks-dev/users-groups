@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Repository\TruncateRole;
+namespace BaksDev\Users\Groups\Role\Repository\TruncateRole;
 
 interface TruncateRoleInterface
 {

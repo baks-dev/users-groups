@@ -16,12 +16,12 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\GroupDTO;
-use App\Module\Users\Groups\Role\Repository\RoleChoice\RoleChoiceInterface;
-use App\Module\Users\Groups\Role\Repository\VoterChoice\VoterChoiceInterface;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupDTO;
+use BaksDev\Users\Groups\Role\Repository\RoleChoice\RoleChoiceInterface;
+use BaksDev\Users\Groups\Role\Repository\VoterChoice\VoterChoiceInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -63,11 +63,11 @@ final class GroupForm extends AbstractType
         
         $builder->add('sort', TextType::class);
         
-        $builder->add('quota', \App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaForm::class, ['label' => false]);
+        $builder->add('quota', \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaForm::class, ['label' => false]);
         
         /* TRANS CollectionType */
         $builder->add('translate', CollectionType::class, [
-			'entry_type' => \App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransForm::class,
+			'entry_type' => \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransForm::class,
 			'entry_options' => ['label' => false],
 			'label' => false,
 			'by_reference' => false,
@@ -93,7 +93,7 @@ final class GroupForm extends AbstractType
   
                       if(empty($isHash))
                       {
-                          $CheckRoleDTO = new \App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO();
+                          $CheckRoleDTO = new \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO();
                           $CheckRoleDTO->setRole($role);
                           $data->addRole($CheckRoleDTO);
                       }
@@ -110,7 +110,7 @@ final class GroupForm extends AbstractType
         
         /* TRANS CollectionType */
         $builder->add('role', CollectionType::class, [
-			'entry_type' => \App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleForm::class,
+			'entry_type' => \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleForm::class,
 			'entry_options' => ['label' => false, 'role' => $this->roleChoice->get()],
 			'label' => false,
 			'by_reference' => false,

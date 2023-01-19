@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\Repository\ChoiceGroups;
+namespace BaksDev\Users\Groups\Group\Repository\ChoiceGroups;
 
-use App\Module\Users\Groups\Group\Entity as EntityGroup;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Group\Repository\ChoiceGroups\ChoiceGroupsInterface;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\Entity as EntityGroup;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\Repository\ChoiceGroups\ChoiceGroupsInterface;
+use BaksDev\Core\Type\Locale\Locale;
 //use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 //use Doctrine\Persistence\ManagerRegistry;
@@ -44,9 +44,9 @@ final class ChoiceGroupsRepository implements ChoiceGroupsInterface
         $select = sprintf('new %s(groups.id, trans.name)', GroupPrefix::class);
         
         $qb->select($select);
-        $qb->from(\App\Module\Users\Groups\Group\Entity\Group::class, 'groups');
-        $qb->join(\App\Module\Users\Groups\Group\Entity\Event\GroupEvent::class, 'event', 'WITH', 'event.id = groups.event');
-        $qb->join(\App\Module\Users\Groups\Group\Entity\Trans\GroupTrans::class, 'trans', 'WITH', 'trans.event = groups.event AND trans.local = :local');
+        $qb->from(\BaksDev\Users\Groups\Group\Entity\Group::class, 'groups');
+        $qb->join(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class, 'event', 'WITH', 'event.id = groups.event');
+        $qb->join(\BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::class, 'trans', 'WITH', 'trans.event = groups.event AND trans.local = :local');
         
         $qb->setParameter('local', $this->local, Locale::TYPE);
         

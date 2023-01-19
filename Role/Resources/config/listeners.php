@@ -18,9 +18,9 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use App\Module\Users\Groups\Role\Entity;
-use App\Module\Users\Groups\Role\EntityListeners;
-use App\Module\Users\User\Entity\User;
+use BaksDev\Users\Groups\Role\Entity;
+use BaksDev\Users\Groups\Role\EntityListeners;
+use BaksDev\Users\User\Entity\User;
 
 //use App\Module\Users\Entity\User;
 
@@ -32,11 +32,11 @@ return static function (ContainerConfigurator $configurator)
       ->autoconfigure();
     
     /** EntityListeners */
-    $services->set(\App\Module\Users\Groups\Role\EntityListeners\ModifyListener::class)
-      ->class(\App\Module\Users\Groups\Role\EntityListeners\ModifyListener::class)
+    $services->set(EntityListeners\ModifyListener::class)
+      ->class(EntityListeners\ModifyListener::class)
       ->tag(
         'doctrine.orm.entity_listener',
-        ['event' => 'prePersist', 'lazy' => true, 'entity' => \App\Module\Users\Groups\Role\Entity\Modify\RoleModify::class]);
+        ['event' => 'prePersist', 'lazy' => true, 'entity' => Entity\Modify\RoleModify::class]);
     
     
 };

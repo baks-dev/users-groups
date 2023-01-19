@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity\Event;
+namespace BaksDev\Users\Groups\Group\Entity\Event;
 
-use App\Module\Users\Groups\Group\Type\Event\GroupEventUid;
+use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
 
 interface GroupEventInterface
 {

@@ -16,14 +16,14 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\DataFixtures\Security;
+namespace BaksDev\Users\Groups\Users\DataFixtures\Security;
 
-use App\Module\Users\Groups\Group\DataFixtures\Security\Group\GroupFixtures;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRoleHandler;
-use App\Module\Users\Groups\Role\Entity\Role;
-use App\Module\Users\Groups\Role\UseCase\Admin\NewEdit\RoleHandler;
-use App\Module\Users\Groups\Users\DataFixtures\Security\Role\RoleDTO;
+use BaksDev\Users\Groups\Group\DataFixtures\Security\Group\GroupFixtures;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRoleHandler;
+use BaksDev\Users\Groups\Role\Entity\Role;
+use BaksDev\Users\Groups\Role\UseCase\Admin\NewEdit\RoleHandler;
+use BaksDev\Users\Groups\Users\DataFixtures\Security\Role\RoleDTO;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -63,7 +63,7 @@ final class RoleFixtures extends Fixture implements DependentFixtureInterface
         /** @var GroupEvent $GroupEvent */
         $GroupEvent = $this->getReference(GroupFixtures::class);
         
-        $CheckRoleDTO = new \App\Module\Users\Groups\Users\DataFixtures\Security\Check\CheckRoleDTO($GroupEvent, $RoleDTO);
+        $CheckRoleDTO = new \BaksDev\Users\Groups\Users\DataFixtures\Security\Check\CheckRoleDTO($GroupEvent, $RoleDTO);
         $this->checkRoleAggregate->handle($CheckRoleDTO);
 
     }

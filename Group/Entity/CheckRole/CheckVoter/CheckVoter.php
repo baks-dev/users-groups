@@ -16,14 +16,14 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity\CheckRole\CheckVoter;
+namespace BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter;
 
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckRole;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
 
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoterInterface;
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
-use App\System\Entity\EntityEvent;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoterInterface;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Core\Entity\EntityEvent;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use InvalidArgumentException;

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\UseCase\Admin\Edit;
+namespace BaksDev\Users\Groups\Users\UseCase\Admin\Edit;
 
-use App\Module\Users\AuthEmail\Account\Repository\GetUserAccountByEvent\GetUserAccountByIdInterface;
-use App\Module\Users\Groups\Group\Repository\ChoiceGroups\ChoiceGroupsInterface;
+use BaksDev\Auth\EmailAccount\Repository\GetUserAccountByEvent\GetUserAccountByIdInterface;
+use BaksDev\Users\Groups\Group\Repository\ChoiceGroups\ChoiceGroupsInterface;
 use App\Module\Users\Profile\UserProfile\Repository\UsersChoiceForm\UsersChoiceInterface;
-use App\Module\Users\Groups\Users\UseCase\Admin\Edit\CheckUsersDTO;
+use BaksDev\Users\Groups\Users\UseCase\Admin\Edit\CheckUsersDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

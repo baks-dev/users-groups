@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\Type\Event;
+namespace BaksDev\Users\Groups\Users\Type\Event;
 
-use App\Module\Users\Groups\Users\Type\Event\CheckUsersEventUid;
-use App\System\Type\UidType\UidType;
+use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
+use BaksDev\Core\Type\UidType\UidType;
 
 final class CheckUsersEventType extends UidType
 {

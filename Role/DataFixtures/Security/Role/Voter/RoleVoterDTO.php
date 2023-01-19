@@ -16,11 +16,11 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\DataFixtures\Security\Role\Voter;
+namespace BaksDev\Users\Groups\Role\DataFixtures\Security\Role\Voter;
 
-use App\Module\Users\Groups\Role\Entity\Voters\RoleVoterInterface;
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Role\Entity\Voters\RoleVoterInterface;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 
 final class RoleVoterDTO implements RoleVoterInterface
@@ -118,7 +118,7 @@ final class RoleVoterDTO implements RoleVoterInterface
         /* Вычисляем расхождение и добавляем неопределенные локали */
         foreach(Locale::diffLocale($this->translate) as $locale)
         {
-            $TransFormDTO = new \App\Module\Users\Groups\Role\DataFixtures\Security\Role\Voter\Trans\VoterTransDTO();
+            $TransFormDTO = new \BaksDev\Users\Groups\Role\DataFixtures\Security\Role\Voter\Trans\VoterTransDTO();
             $TransFormDTO->setLocal($locale);
             $TransFormDTO->setName(self::VOTERS[$this->key][(string)$locale]);
 
@@ -129,15 +129,15 @@ final class RoleVoterDTO implements RoleVoterInterface
     }
     
 
-    public function addTranslate(\App\Module\Users\Groups\Role\DataFixtures\Security\Role\Voter\Trans\VoterTransDTO $translate) : void
+    public function addTranslate(\BaksDev\Users\Groups\Role\DataFixtures\Security\Role\Voter\Trans\VoterTransDTO $translate) : void
     {
         $this->translate->add($translate);
     }
     
     /** Метод для инициализации и маппинга сущности на DTO в коллекции  */
-    public function getTranslateClass() : \App\Module\Users\Groups\Role\DataFixtures\Security\Role\Voter\Trans\VoterTransDTO
+    public function getTranslateClass() : \BaksDev\Users\Groups\Role\DataFixtures\Security\Role\Voter\Trans\VoterTransDTO
     {
-        return new \App\Module\Users\Groups\Role\DataFixtures\Security\Role\Voter\Trans\VoterTransDTO();
+        return new \BaksDev\Users\Groups\Role\DataFixtures\Security\Role\Voter\Trans\VoterTransDTO();
     }
     
     /* KEY */

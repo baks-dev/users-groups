@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Role\Repository\RoleChoice;
+namespace BaksDev\Users\Groups\Role\Repository\RoleChoice;
 
-use App\Module\Users\Groups\Role\Entity;
-use App\Module\Users\Groups\Role\Repository\RoleChoice\RoleChoiceInterface;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Role\Entity;
+use BaksDev\Users\Groups\Role\Repository\RoleChoice\RoleChoiceInterface;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -46,9 +46,9 @@ final class RoleChoiceRepository implements RoleChoiceInterface
         $select = sprintf('new %s(event.role, trans.name)', RolePrefix::class);
         
         $qb->select($select);
-        $qb->from(\App\Module\Users\Groups\Role\Entity\Role::class, 'role');
-        $qb->join(\App\Module\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
-        $qb->join(\App\Module\Users\Groups\Role\Entity\Trans\RoleTrans::class, 'trans', 'WITH', 'trans.event = event.id AND trans.local = :local');
+        $qb->from(\BaksDev\Users\Groups\Role\Entity\Role::class, 'role');
+        $qb->join(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
+        $qb->join(\BaksDev\Users\Groups\Role\Entity\Trans\RoleTrans::class, 'trans', 'WITH', 'trans.event = event.id AND trans.local = :local');
         $qb->setParameter('local', $this->local, Locale::TYPE);
         
       return $qb->getQuery()->getResult();

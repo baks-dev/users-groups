@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\Repository\AllUsers;
+namespace BaksDev\Users\Groups\Users\Repository\AllUsers;
 
-use App\System\Form\Search\SearchDTO;
+use BaksDev\Core\Form\Search\SearchDTO;
 
 interface AllCheckUsersInterface
 {

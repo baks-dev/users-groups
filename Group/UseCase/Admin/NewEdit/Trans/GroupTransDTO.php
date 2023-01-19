@@ -16,11 +16,11 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Trans;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans;
 
 
-use App\Module\Users\Groups\Group\Entity\Trans\GroupTransInterface;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\Entity\Trans\GroupTransInterface;
+use BaksDev\Core\Type\Locale\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class GroupTransDTO implements GroupTransInterface

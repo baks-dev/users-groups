@@ -17,14 +17,14 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Voters;
+namespace BaksDev\Users\Groups\Role\Entity\Voters;
 
-use App\Module\Users\Groups\Role\Entity\Event\RoleEvent;
-use App\Module\Users\Groups\Role\Type\Voter\RoleVoterUid;
-use App\Module\Users\Groups\Role\Entity\Voters\RoleVoterInterface;
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
-use App\System\Entity\EntityEvent;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
+use BaksDev\Users\Groups\Role\Type\Voter\RoleVoterUid;
+use BaksDev\Users\Groups\Role\Entity\Voters\RoleVoterInterface;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Core\Entity\EntityEvent;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -55,7 +55,7 @@ class RoleVoter extends EntityEvent
     protected VoterPrefix $voter;
     
     /** Настройки локали */
-    #[ORM\OneToMany(mappedBy: 'voter', targetEntity: \App\Module\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class, cascade: ['all'])]
+    #[ORM\OneToMany(mappedBy: 'voter', targetEntity: \BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class, cascade: ['all'])]
     protected Collection $translate;
     
     /**
@@ -138,7 +138,7 @@ class RoleVoter extends EntityEvent
     {
         $name = null;
         
-        /** @var \App\Module\Users\Groups\Role\Entity\Voters\Trans\VoterTrans $trans */
+        /** @var \BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans $trans */
         foreach($this->translate as $trans)
         {
             if($name = $trans->name($locale))

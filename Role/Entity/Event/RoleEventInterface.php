@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Event;
+namespace BaksDev\Users\Groups\Role\Entity\Event;
 
-use App\Module\Users\Groups\Role\Type\Event\RoleEventUid;
+use BaksDev\Users\Groups\Role\Type\Event\RoleEventUid;
 
 interface RoleEventInterface
 {

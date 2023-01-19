@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity\Modify;
+namespace BaksDev\Users\Groups\Group\Entity\Modify;
 
 interface GroupModifyInterface
 {

@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\Entity\Event;
+namespace BaksDev\Users\Groups\Users\Entity\Event;
 
-use App\Module\Users\Groups\Users\Type\Event\CheckUsersEventUid;
+use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
 
 interface CheckUsersEventInterface
 {

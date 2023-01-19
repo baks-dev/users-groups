@@ -2,29 +2,30 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-
 return static function (ContainerConfigurator $configurator)
 {
     $services = $configurator->services()
       ->defaults()
-      ->autowire()      // Automatically injects dependencies in your services.
-      ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
+      ->autowire()
+      ->autoconfigure()
     ;
     
-    $services->load('App\Module\Users\Groups\Users\Controller\\', '../../Controller')
+	$namespace = 'BaksDev\Users\Groups\Users';
+	
+    $services->load($namespace.'\Controller\\', __DIR__.'/../../Controller')
       ->tag('controller.service_arguments');
 
-    $services->load('App\Module\Users\Groups\Users\Repository\\', '../../Repository');
+    $services->load($namespace.'\Repository\\', __DIR__.'/../../Repository');
 
-    $services->load('App\Module\Users\Groups\Users\UseCase\\', '../../UseCase')
-      ->exclude('../../UseCase/**/*DTO.php');
+    $services->load($namespace.'\UseCase\\', __DIR__.'/../../UseCase')
+      ->exclude(__DIR__.'/../../UseCase/**/*DTO.php');
 	
 	
 	
 	//App\Service\XpCalculatorInterface: '@App\Service\XpCalculator'
 	
 
-//    $services->load('App\Module\Users\Groups\Handler\\', '../../Handler')
+//    $services->load('BaksDev\Users\Groups\Handler\\', '../../Handler')
 //      //->exclude('../../Handler/**/*Command.php')
 //      ->tag('controller.service_arguments');
 

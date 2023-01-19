@@ -16,14 +16,14 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Controller\Admin;
+namespace BaksDev\Users\Groups\Group\Controller\Admin;
 
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Group\Entity\Group;
-use App\Module\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupForm;
-use App\Module\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupDTO;
-use App\Module\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupHandler;
-use App\System\Controller\AbstractController;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Group\Entity\Group;
+use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupForm;
+use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupDTO;
+use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupHandler;
+use BaksDev\Core\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;

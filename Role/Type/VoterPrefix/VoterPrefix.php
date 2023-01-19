@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Type\VoterPrefix;
+namespace BaksDev\Users\Groups\Role\Type\VoterPrefix;
 
 
 use InvalidArgumentException;

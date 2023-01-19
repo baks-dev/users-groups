@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Repository\ExistGroup;
+namespace BaksDev\Users\Groups\Group\Repository\ExistGroup;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 
 interface ExistGroupInterface
 {

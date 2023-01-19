@@ -16,11 +16,11 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\EntityListeners;
+namespace BaksDev\Users\Groups\Role\EntityListeners;
 
 
-use App\Module\Users\Groups\Role\Entity\Modify\RoleModify;
-use App\System\Type\Ip\IpAddress;
+use BaksDev\Users\Groups\Role\Entity\Modify\RoleModify;
+use BaksDev\Core\Type\Ip\IpAddress;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

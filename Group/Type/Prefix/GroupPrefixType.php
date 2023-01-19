@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Type\Prefix;
+namespace BaksDev\Users\Groups\Group\Type\Prefix;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

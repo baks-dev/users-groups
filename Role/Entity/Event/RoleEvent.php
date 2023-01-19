@@ -16,22 +16,22 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Event;
+namespace BaksDev\Users\Groups\Role\Entity\Event;
 
-use App\Module\Users\Groups\Role\Entity\Event\RoleEventInterface;
-use App\Module\Users\Groups\Role\Entity\Modify\RoleModify;
-use App\Module\Users\Groups\Role\Entity\Role;
-use App\Module\Users\Groups\Role\Entity\Trans\RoleTrans;
-use App\Module\Users\Groups\Role\Entity\Voters\RoleVoter;
-use App\Module\Users\Groups\Role\Type\Event\RoleEventUid;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
-use App\System\Type\Modify\ModifyAction;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEventInterface;
+use BaksDev\Users\Groups\Role\Entity\Modify\RoleModify;
+use BaksDev\Users\Groups\Role\Entity\Role;
+use BaksDev\Users\Groups\Role\Entity\Trans\RoleTrans;
+use BaksDev\Users\Groups\Role\Entity\Voters\RoleVoter;
+use BaksDev\Users\Groups\Role\Type\Event\RoleEventUid;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Core\Type\Modify\ModifyAction;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
-use App\System\Entity\EntityEvent;
+use BaksDev\Core\Entity\EntityEvent;
 use Exception;
 use InvalidArgumentException;
 

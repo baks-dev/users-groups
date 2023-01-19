@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity;
+namespace BaksDev\Users\Groups\Group\Entity;
 
-use App\Module\Users\Groups\Group\Type\Settings\GroupSettings;
+use BaksDev\Users\Groups\Group\Type\Settings\GroupSettings;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 

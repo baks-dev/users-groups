@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Quota;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Quota;
 
 
-use App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaDTO;
+use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

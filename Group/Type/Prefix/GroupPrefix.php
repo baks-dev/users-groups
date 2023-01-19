@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Type\Prefix;
+namespace BaksDev\Users\Groups\Group\Type\Prefix;
 
 
 

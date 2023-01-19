@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\UseCase\Admin\Edit;
+namespace BaksDev\Users\Groups\Users\UseCase\Admin\Edit;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Users\Entity\Event\CheckUsersEventInterface;
-use App\Module\Users\Groups\Users\Type\Event\CheckUsersEventUid;
-use App\Module\Users\User\Type\Id\UserUid;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEventInterface;
+use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
+use BaksDev\Users\User\Type\Id\UserUid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class CheckUsersDTO implements CheckUsersEventInterface

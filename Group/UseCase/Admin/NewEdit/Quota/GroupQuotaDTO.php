@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\Quota;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Quota;
 
-use App\Module\Users\Groups\Group\Entity\Quota\GroupQuota;
-use App\Module\Users\Groups\Group\Entity\Quota\GroupQuotaInterface;
+use BaksDev\Users\Groups\Group\Entity\Quota\GroupQuota;
+use BaksDev\Users\Groups\Group\Entity\Quota\GroupQuotaInterface;
 
 /**
  * Builder instance for {@see GroupQuota}.

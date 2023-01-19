@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Repository\UsersByGroup;
+namespace BaksDev\Users\Groups\Users\Repository\UsersByGroup;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Users\Entity;
-use App\Module\Users\Groups\Users\Repository\UsersByGroup\UsersByGroupInterface;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Users\Entity;
+use BaksDev\Users\Groups\Users\Repository\UsersByGroup\UsersByGroupInterface;
 use Doctrine\DBAL\Connection;
 
 final class UsersByGroupQuery implements UsersByGroupInterface
@@ -36,10 +36,10 @@ final class UsersByGroupQuery implements UsersByGroupInterface
     {
         $qb = $this->connection->createQueryBuilder();
         $qb->select('check_users.user_id');
-        $qb->from(\App\Module\Users\Groups\Users\Entity\CheckUsers::TABLE, 'check_users');
+        $qb->from(\BaksDev\Users\Groups\Users\Entity\CheckUsers::TABLE, 'check_users');
         $qb->join(
           'check_users',
-          \App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent::TABLE,
+          \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::TABLE,
           'check_event',
           'check_event.id = check_users.event AND check_event.group_id = :prefix');
         $qb->setParameter('prefix', $prefix, GroupPrefix::TYPE);

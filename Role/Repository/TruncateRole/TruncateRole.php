@@ -16,15 +16,15 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Repository\TruncateRole;
+namespace BaksDev\Users\Groups\Role\Repository\TruncateRole;
 
-use App\Module\Users\Groups\Role\Entity\Event\RoleEvent;
-use App\Module\Users\Groups\Role\Entity\Modify\RoleModify;
-use App\Module\Users\Groups\Role\Entity\Role;
-use App\Module\Users\Groups\Role\Entity\Trans\RoleTrans;
-use App\Module\Users\Groups\Role\Entity\Voters\RoleVoter;
-use App\Module\Users\Groups\Role\Entity\Voters\Trans\VoterTrans;
-use App\Module\Users\Groups\Role\Repository\TruncateRole\TruncateRoleInterface;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
+use BaksDev\Users\Groups\Role\Entity\Modify\RoleModify;
+use BaksDev\Users\Groups\Role\Entity\Role;
+use BaksDev\Users\Groups\Role\Entity\Trans\RoleTrans;
+use BaksDev\Users\Groups\Role\Entity\Voters\RoleVoter;
+use BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans;
+use BaksDev\Users\Groups\Role\Repository\TruncateRole\TruncateRoleInterface;
 use Doctrine\DBAL\Connection;
 
 final class TruncateRole implements TruncateRoleInterface

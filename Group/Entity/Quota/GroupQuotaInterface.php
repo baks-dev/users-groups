@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\Entity\Quota;
+namespace BaksDev\Users\Groups\Group\Entity\Quota;
 
 interface GroupQuotaInterface
 {

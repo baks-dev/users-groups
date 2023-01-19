@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\Repository\UsersGroupChoiceForm;
+namespace BaksDev\Users\Groups\Users\Repository\UsersGroupChoiceForm;
 
 interface UsersGroupChoiceInterface
 {

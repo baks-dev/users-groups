@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\EntityListeners;
+namespace BaksDev\Users\Groups\Group\EntityListeners;
 
-use App\Module\Users\Groups\Group\Entity\Modify\GroupModify;
-use App\System\Type\Ip\IpAddress;
+use BaksDev\Users\Groups\Group\Entity\Modify\GroupModify;
+use BaksDev\Core\Type\Ip\IpAddress;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

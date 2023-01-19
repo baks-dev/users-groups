@@ -16,9 +16,9 @@
  *
  */
 
-namespace App\Module\Users\Groups\Users\Repository\UsersByGroup;
+namespace BaksDev\Users\Groups\Users\Repository\UsersByGroup;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 
 interface UsersByGroupInterface
 {

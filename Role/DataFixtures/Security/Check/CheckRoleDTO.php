@@ -16,12 +16,12 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\DataFixtures\Security\Check;
+namespace BaksDev\Users\Groups\Role\DataFixtures\Security\Check;
 
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEvent;
-use App\Module\Users\Groups\Role\Entity\Event\RoleEventInterface;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEventInterface;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -49,7 +49,7 @@ final class CheckRoleDTO implements CheckRoleInterface
         
         foreach($roleDTO->getVoter() as $voter)
         {
-            $CheckVoterDTO = new \App\Module\Users\Groups\Role\DataFixtures\Security\Check\Voter\CheckVoterDTO();
+            $CheckVoterDTO = new \BaksDev\Users\Groups\Role\DataFixtures\Security\Check\Voter\CheckVoterDTO();
             $CheckVoterDTO->setVoter($voter->getVoter());
             $this->addVoter($CheckVoterDTO);
         }
@@ -85,7 +85,7 @@ final class CheckRoleDTO implements CheckRoleInterface
     }
     
 
-    public function addVoter(\App\Module\Users\Groups\Role\DataFixtures\Security\Check\Voter\CheckVoterDTO $voter) : void
+    public function addVoter(\BaksDev\Users\Groups\Role\DataFixtures\Security\Check\Voter\CheckVoterDTO $voter) : void
     {
         
         if(!$this->voter->contains($voter))
@@ -95,9 +95,9 @@ final class CheckRoleDTO implements CheckRoleInterface
     }
     
     /** Метод для инициализации и маппинга сущности на DTO в коллекции  */
-    public function getVoterClass() : \App\Module\Users\Groups\Role\DataFixtures\Security\Check\Voter\CheckVoterDTO
+    public function getVoterClass() : \BaksDev\Users\Groups\Role\DataFixtures\Security\Check\Voter\CheckVoterDTO
     {
-        return new \App\Module\Users\Groups\Role\DataFixtures\Security\Check\Voter\CheckVoterDTO();
+        return new \BaksDev\Users\Groups\Role\DataFixtures\Security\Check\Voter\CheckVoterDTO();
     }
 }
 

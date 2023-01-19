@@ -16,13 +16,13 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity;
+namespace BaksDev\Users\Groups\Role\Entity;
 
-use App\Module\Users\Groups\Role\Entity\Event\RoleEvent;
-use App\Module\Users\Groups\Role\Type\Event\RoleEventUid;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
+use BaksDev\Users\Groups\Role\Type\Event\RoleEventUid;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 use Doctrine\ORM\Mapping as ORM;
-use App\System\Entity\EntityEvent;
+use BaksDev\Core\Entity\EntityEvent;
 
 /* Role */
 

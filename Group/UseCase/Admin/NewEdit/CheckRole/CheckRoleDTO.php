@@ -16,11 +16,11 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole;
 
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -69,11 +69,11 @@ class CheckRoleDTO implements CheckRoleInterface
     /**
      * @param ArrayCollection $voter
      */
-    public function addVoter(\App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO $voter) : void
+    public function addVoter(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO $voter) : void
     {
         if($voter instanceof VoterPrefix)
         {
-            $CheckVoterDTO = new \App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO();
+            $CheckVoterDTO = new \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO();
             $CheckVoterDTO->setVoter($voter);
             
             if(!$this->voter->contains($CheckVoterDTO))

@@ -16,12 +16,12 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Entity\Trans;
+namespace BaksDev\Users\Groups\Role\Entity\Trans;
 
-use App\Module\Users\Groups\Role\Entity\Event\RoleEvent;
-use App\Module\Users\Groups\Role\Entity\Trans\RoleTransInterface;
-use App\System\Entity\EntityEvent;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
+use BaksDev\Users\Groups\Role\Entity\Trans\RoleTransInterface;
+use BaksDev\Core\Entity\EntityEvent;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;

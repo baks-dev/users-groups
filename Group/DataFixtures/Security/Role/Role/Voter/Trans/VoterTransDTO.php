@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role\Voter\Trans;
+namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role\Voter\Trans;
 
-use App\Module\Users\Groups\Role\Entity\Voters\Trans\VoterTransInterface;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTransInterface;
+use BaksDev\Core\Type\Locale\Locale;
 
 final class VoterTransDTO implements VoterTransInterface
 {

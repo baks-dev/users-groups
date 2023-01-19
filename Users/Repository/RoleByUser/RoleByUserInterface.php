@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\Repository\RoleByUser;
+namespace BaksDev\Users\Groups\Users\Repository\RoleByUser;
 
-use App\Module\Users\User\Type\Id\UserUid;
+use BaksDev\Users\User\Type\Id\UserUid;
 
 interface RoleByUserInterface
 {

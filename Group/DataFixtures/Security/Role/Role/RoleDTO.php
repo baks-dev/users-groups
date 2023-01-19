@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role;
+namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role;
 
-use App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role;
-use App\Module\Users\Groups\Role\Entity\Event\RoleEventInterface;
-use App\Module\Users\Groups\Role\Type\Event\RoleEventUid;
-use App\Module\Users\Groups\Role\Type\RolePrefix\RolePrefix;
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEventInterface;
+use BaksDev\Users\Groups\Role\Type\Event\RoleEventUid;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 
 final class RoleDTO implements RoleEventInterface
@@ -89,7 +89,7 @@ final class RoleDTO implements RoleEventInterface
         foreach(Locale::diffLocale($this->translate) as $locale)
         {
             
-            $TransFormDTO = new \App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role\Trans\RoleTransDTO();
+            $TransFormDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role\Trans\RoleTransDTO();
             $TransFormDTO->setLocal($locale);
             $TransFormDTO->setName(self::ROLE_NAME[(string)$locale]);
             $TransFormDTO->setDescription(self::ROLE_DESC[(string)$locale]);
@@ -100,9 +100,9 @@ final class RoleDTO implements RoleEventInterface
     }
     
     /**
-     * @param \App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role\Trans\RoleTransDTO $translate
+     * @param \BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role\Trans\RoleTransDTO $translate
      */
-    public function addTranslate(\App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role\Trans\RoleTransDTO $translate) : void
+    public function addTranslate(\BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role\Trans\RoleTransDTO $translate) : void
     {
         $this->translate->add($translate);
     }
@@ -117,9 +117,9 @@ final class RoleDTO implements RoleEventInterface
     {
         if($this->voter->isEmpty())
         {
-            foreach(\App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role\Voter\RoleVoterDTO::VOTERS as $prefix => $voter)
+            foreach(\BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role\Voter\RoleVoterDTO::VOTERS as $prefix => $voter)
             {
-				$RoleVoterDTO = new \App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role\Voter\RoleVoterDTO();
+				$RoleVoterDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role\Voter\RoleVoterDTO();
                 $RoleVoterDTO->setVoter(new VoterPrefix(self::ROLE_PREFIX.'_'.$prefix));
                 $RoleVoterDTO->setKey($prefix);
                 $this->addVoter($RoleVoterDTO);
@@ -129,7 +129,7 @@ final class RoleDTO implements RoleEventInterface
         return $this->voter;
     }
     
-    public function addVoter(\App\Module\Users\Groups\Group\DataFixtures\Security\Role\Role\Voter\RoleVoterDTO $voter) : void
+    public function addVoter(\BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Role\Voter\RoleVoterDTO $voter) : void
     {
         $this->voter->add($voter);
     }

@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\UseCase\Admin\Delete;
+namespace BaksDev\Users\Groups\Users\UseCase\Admin\Delete;
 
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
-use App\Module\Users\Groups\Users\Entity\CheckUserInterface;
-use App\Module\Users\Groups\Users\Entity\Event\CheckUsersEventInterface;
-use App\Module\Users\Groups\Users\Entity\Modify\CheckUserModifyInterface;
-use App\Module\Users\Groups\Users\Type\Event\CheckUsersEventUid;
-use App\Module\Users\User\Type\Id\UserUid;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Users\Entity\CheckUserInterface;
+use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEventInterface;
+use BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModifyInterface;
+use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
+use BaksDev\Users\User\Type\Id\UserUid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class DeleteCheckUserDTO implements CheckUsersEventInterface
@@ -30,10 +30,10 @@ final class DeleteCheckUserDTO implements CheckUsersEventInterface
     /** ID */
     private readonly CheckUsersEventUid $id;
 
-    private \App\Module\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO $modify;
+    private \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO $modify;
     
     public function __construct() {
-        $this->modify = new \App\Module\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO();
+        $this->modify = new \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO();
     }
     
     /**
@@ -57,9 +57,9 @@ final class DeleteCheckUserDTO implements CheckUsersEventInterface
     
     
     /**
-     * @return \App\Module\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO
+     * @return \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO
      */
-    public function getModify() : \App\Module\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO
+    public function getModify() : \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO
     {
         return $this->modify;
     }
@@ -67,7 +67,7 @@ final class DeleteCheckUserDTO implements CheckUsersEventInterface
     /** Метод для инициализации и маппинга сущности на DTO в коллекции  */
     public function getModifyClass() : CheckUserModifyInterface
     {
-        return new \App\Module\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO();
+        return new \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO();
     }
     
 }

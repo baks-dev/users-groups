@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Users\UseCase;
+namespace BaksDev\Users\Groups\Users\UseCase;
 
-use App\Module\Users\Groups\Users\Entity;
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use App\Module\Users\Groups\Users\Entity\CheckUserInterface;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Users\Entity;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
+use BaksDev\Users\Groups\Users\Entity\CheckUserInterface;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\ApcuAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -52,7 +52,7 @@ final class CheckUserAggregate
     }
     
     public function handle(
-      \App\Module\Users\Groups\Users\Entity\Event\CheckUsersEventInterface $command
+      \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEventInterface $command
     ) : mixed
     {
 
@@ -70,13 +70,13 @@ final class CheckUserAggregate
         
         if($command->getEvent())
         {
-            $EventRepo = $this->entityManager->getRepository(\App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent::class)
+            $EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::class)
               ->find($command->getEvent());
             $Event = $EventRepo->cloneEntity();
         }
         else
         {
-            $Event = new \App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent();
+            $Event = new \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent();
         }
         
         $Event->setEntity($command);
@@ -85,11 +85,11 @@ final class CheckUserAggregate
         
         if($Event->getUser())
         {
-            $CheckUsers = $this->entityManager->getRepository(\App\Module\Users\Groups\Users\Entity\CheckUsers::class)->find($Event->getUser());
+            $CheckUsers = $this->entityManager->getRepository(\BaksDev\Users\Groups\Users\Entity\CheckUsers::class)->find($Event->getUser());
             
             if(empty($CheckUsers))
             {
-                $CheckUsers = new \App\Module\Users\Groups\Users\Entity\CheckUsers($Event->getUser());
+                $CheckUsers = new \BaksDev\Users\Groups\Users\Entity\CheckUsers($Event->getUser());
                 $this->entityManager->persist($CheckUsers);
             }
             
@@ -97,7 +97,7 @@ final class CheckUserAggregate
             if($Event->isModifyActionEquals(ModifyActionEnum::RESTORE))
             {
                 $remove = $this->entityManager->getRepository(
-					\App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent::class)
+					\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::class)
                   ->find($command->getEvent());
                 $this->entityManager->remove($remove);
             }

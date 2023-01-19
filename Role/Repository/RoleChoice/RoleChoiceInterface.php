@@ -16,7 +16,7 @@
  *
  */
 
-namespace App\Module\Users\Groups\Role\Repository\RoleChoice;
+namespace BaksDev\Users\Groups\Role\Repository\RoleChoice;
 
 interface RoleChoiceInterface
 {

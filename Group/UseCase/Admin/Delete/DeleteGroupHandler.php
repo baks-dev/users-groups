@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\Delete;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\Delete;
 
-use App\Module\Users\Groups\Group\Entity;
-use App\Module\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use App\Module\Users\Groups\Users\Entity\CheckUsers;
-use App\Module\Users\Groups\Users\Entity\Event\CheckUsersEvent;
-use App\System\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Group\Entity;
+use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
+use BaksDev\Users\Groups\Users\Entity\CheckUsers;
+use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -48,7 +48,7 @@ final class DeleteGroupHandler
 	
 	public function handle(
 		GroupEventInterface $command
-	) : string|\App\Module\Users\Groups\Group\Entity\Group
+	) : string|\BaksDev\Users\Groups\Group\Entity\Group
 	{
 		
 		/* Валидация */
@@ -63,7 +63,7 @@ final class DeleteGroupHandler
 		}
 		
 		
-		$EventRepo = $this->entityManager->getRepository(\App\Module\Users\Groups\Group\Entity\Event\GroupEvent::class)->find($command->getEvent());
+		$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class)->find($command->getEvent());
 		
 		if(empty($EventRepo))
 		{
@@ -97,7 +97,7 @@ final class DeleteGroupHandler
 		
 		$this->entityManager->clear();
 		$Group = $this->entityManager->getRepository(
-			\App\Module\Users\Groups\Group\Entity\Group::class)->findOneBy(['event' => $command->getEvent()]);
+			\BaksDev\Users\Groups\Group\Entity\Group::class)->findOneBy(['event' => $command->getEvent()]);
 		
 		if(empty($Group))
 		{

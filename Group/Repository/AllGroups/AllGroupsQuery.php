@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\Repository\AllGroups;
+namespace BaksDev\Users\Groups\Group\Repository\AllGroups;
 
-use App\Module\Users\Groups\Group\Entity;
-use App\Module\Users\Groups\Group\Repository\AllGroups\AllGroupsInterface;
-use App\System\Form\Search\SearchDTO;
-use App\System\Services\Paginator\PaginatorInterface;
-use App\System\Services\Switcher\Switcher;
-use App\System\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\Entity;
+use BaksDev\Users\Groups\Group\Repository\AllGroups\AllGroupsInterface;
+use BaksDev\Core\Form\Search\SearchDTO;
+use BaksDev\Core\Services\Paginator\PaginatorInterface;
+use BaksDev\Core\Services\Switcher\Switcher;
+use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function App\Module\Users\Groups\Group\Repository\AllGroups\mb_strtolower;
+use function BaksDev\Users\Groups\Group\Repository\AllGroups\mb_strtolower;
 
 final class AllGroupsQuery implements AllGroupsInterface
 {
@@ -58,11 +58,11 @@ final class AllGroupsQuery implements AllGroupsInterface
         
         $qb->select('groups.id');
         $qb->addSelect('groups.event');
-        $qb->from(\App\Module\Users\Groups\Group\Entity\Group::TABLE, 'groups');
+        $qb->from(\BaksDev\Users\Groups\Group\Entity\Group::TABLE, 'groups');
 	
 		
         $qb->addSelect('event.sort');
-        $qb->join('groups', \App\Module\Users\Groups\Group\Entity\Event\GroupEvent::TABLE, 'event', 'event.id = groups.event');
+        $qb->join('groups', \BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::TABLE, 'event', 'event.id = groups.event');
 	
 		
 		
@@ -70,7 +70,7 @@ final class AllGroupsQuery implements AllGroupsInterface
         $qb->addSelect('trans.description');
         $qb->join(
           'event',
-          \App\Module\Users\Groups\Group\Entity\Trans\GroupTrans::TABLE,
+          \BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::TABLE,
           'trans',
           'trans.event = event.id AND trans.local = :local');
         $qb->setParameter('local', $this->local, Locale::TYPE);

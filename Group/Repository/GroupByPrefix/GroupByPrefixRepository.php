@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-namespace App\Module\Users\Groups\Group\Repository\GroupByPrefix;
+namespace BaksDev\Users\Groups\Group\Repository\GroupByPrefix;
 
-use App\Module\Users\Groups\Group\Entity;
-use App\Module\Users\Groups\Group\Repository\GroupByPrefix\GroupByPrefixInterface;
-use App\Module\Users\Groups\Group\Type\Prefix\GroupPrefix;
+use BaksDev\Users\Groups\Group\Entity;
+use BaksDev\Users\Groups\Group\Repository\GroupByPrefix\GroupByPrefixInterface;
+use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
@@ -35,13 +35,13 @@ final class GroupByPrefixRepository implements GroupByPrefixInterface
     /**
      * @throws NonUniqueResultException
      */
-    public function get(GroupPrefix $prefix) : ?\App\Module\Users\Groups\Group\Entity\Event\GroupEvent
+    public function get(GroupPrefix $prefix) : ?\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent
     {
         $qb = $this->entityManager->createQueryBuilder();
         
         $qb->select('event');
-        $qb->from(\App\Module\Users\Groups\Group\Entity\Group::class, 'groups');
-        $qb->join(\App\Module\Users\Groups\Group\Entity\Event\GroupEvent::class, 'event', 'WITH', 'event.id = groups.event');
+        $qb->from(\BaksDev\Users\Groups\Group\Entity\Group::class, 'groups');
+        $qb->join(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class, 'event', 'WITH', 'event.id = groups.event');
         $qb->where('groups.id = :prefix');
         $qb->setParameter('prefix', $prefix, GroupPrefix::TYPE);
         

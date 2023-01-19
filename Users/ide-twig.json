@@ -1,0 +1,8 @@
+{
+  "namespaces": [
+    {
+      "namespace": "UserGroupRole",
+      "path": "Resources/view"
+    }
+  ]
+}

@@ -16,10 +16,10 @@
  *
  */
 
-namespace App\Module\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter;
+namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter;
 
-use App\Module\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoterInterface;
-use App\Module\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoterInterface;
+use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class CheckVoterDTO implements CheckVoterInterface
