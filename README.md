@@ -7,7 +7,7 @@
 ## Установка
 
 ``` bash
-$ composer require baks-dev/users-user
+$ composer require baks-dev/users-group
 ```
 
 ## Журнал изменений ![Changelog](https://img.shields.io/badge/changelog-yellow)

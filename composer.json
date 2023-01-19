@@ -28,13 +28,13 @@
 
   "autoload": {
     "psr-4": {
-      "BaksDev\\Users\\Group\\": ""
+      "BaksDev\\Users\\Groups\\": ""
     }
   },
 
   "autoload-dev": {
     "psr-4": {
-      "BaksDev\\Users\\Group\\Tests\\": "Tests/"
+      "BaksDev\\Users\\Groups\\Tests\\": "Tests/"
     }
   },
 
