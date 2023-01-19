@@ -1,0 +1,104 @@
+{% trans_default_domain 'groups.group' %}
+
+
+{#<ul class="nav nav-pills gap-3 mb-3" id="nav-{{ form.translate.vars.id }}" role="tablist">
+    {% for seo in form.seo %}
+        <li class="nav-item" role="presentation">
+
+            <button class="btn fw-bolder nav-link{{ app.request.locale == translate.vars.value.local? ' active' : '' }}"
+                    data-bs-toggle="tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+
+                    id="nav-{{ form.translate.vars.id }}-{{ translate.vars.value.local }}-tab"
+                    data-bs-target="#nav-{{ form.translate.vars.id }}-{{ translate.vars.value.local }}"
+                    aria-controls="nav-{{ form.translate.vars.id }}-{{ translate.vars.value.local }}"
+            >
+                <small class="text-uppercase px-3">{{ translate.vars.value.local|trans({}, 'messages') }}</small>
+            </button>
+
+            #}{#<button class="btn nav-link fw-bolder active" id="pills-home-tab" data-bs-toggle="pill"
+									data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+									aria-selected="true"><span class="text-uppercase px-3">Альтернатива</span></button>#}{#
+        </li>
+
+    {% endfor %}
+</ul>#}
+
+
+<ul class="nav nav-pills gap-3 mb-3" id="nav-tab_main">
+    <li class="nav-item" role="presentation">
+
+        <button class="btn fw-bolder nav-link active"
+                data-bs-toggle="tab"
+                type="button"
+                role="tab"
+                aria-selected="true"
+
+                id="tab_main-tab"
+                data-bs-target="#tab_main"
+                aria-controls="nav-tab_main"
+        >
+            <small class="text-uppercase px-3">Группа</small>
+        </button>
+
+        {#<a class="nav-link active" data-bs-toggle="tab" href="#tab_main">Группа</a>#}
+    </li>
+
+
+
+    <li class="nav-item">
+
+
+        <button class="btn fw-bolder nav-link"
+                data-bs-toggle="tab"
+                type="button"
+                role="tab"
+                aria-selected="true"
+
+                id="tab_description-tab"
+                data-bs-target="#tab_description"
+                aria-controls="nav-tab_main"
+        >
+            <small class="text-uppercase px-3">Роли группы</small>
+        </button>
+
+        {#<a class="nav-link" data-bs-toggle="tab" href="#tab_description">Роли группы</a>#}
+    </li>
+
+</ul>
+
+
+<div class="tab-content" id="groupTabContent">
+
+    {# ОСНОВНЫЕ НАСТРОЙКИ #}
+    <div class="tab-pane fade show active" id="tab_main" role="tabpanel">
+
+        <div class="d-flex align-items-start gap-3">
+            <div class="d-flex flex-column w-100 gap-3">
+
+                {# Основные настройки #}
+                {{ include(_self|replace({ "form.html.twig": "_basic.html.twig" })) }}
+
+                {# Настройки локали #}
+                {{ include(_self|replace({ "form.html.twig": "_trans.html.twig" })) }}
+
+            </div>
+
+            <div class="d-flex flex-column w-100 gap-3">
+
+                {# Ограничения #}
+                {{ include(_self|replace({ "form.html.twig": "_quotum.html.twig"})) }}
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tab-pane fade" id="tab_description" role="tabpanel">
+
+            {{ include(_self|replace({ "form.html.twig": "_role.html.twig"})) }}
+
+    </div>
+</div>

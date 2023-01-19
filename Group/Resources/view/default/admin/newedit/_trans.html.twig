@@ -1,0 +1,133 @@
+{% trans_default_domain 'groups.group' %}
+
+
+<div class="card w-100 border-light">
+
+	<div class="card-header border-light bg-body">
+		<div class="card-title">
+			<h4>
+				{{ 'admin.group.form.locale.label'|trans }}
+			</h4>
+		</div>
+	</div>
+
+	<div class="card-body pb-0">
+
+		{% if form.translate.count > 1 %}
+
+			<ul class="nav nav-pills gap-3 mb-3" id="nav-{{ form.translate.vars.id }}" role="tablist">
+				{% for seo in form.seo %}
+					<li class="nav-item" role="presentation">
+
+						<button class="btn fw-bolder nav-link{{ app.request.locale == translate.vars.value.local? ' active' : '' }}"
+								data-bs-toggle="tab"
+								type="button"
+								role="tab"
+								aria-selected="true"
+
+								id="nav-{{ form.translate.vars.id }}-{{ translate.vars.value.local }}-tab"
+								data-bs-target="#nav-{{ form.translate.vars.id }}-{{ translate.vars.value.local }}"
+								aria-controls="nav-{{ form.translate.vars.id }}-{{ translate.vars.value.local }}"
+						>
+							<small class="text-uppercase px-3">{{ translate.vars.value.local|trans({}, 'messages') }}</small>
+						</button>
+
+						{#<button class="btn nav-link fw-bolder active" id="pills-home-tab" data-bs-toggle="pill"
+									data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+									aria-selected="true"><span class="text-uppercase px-3">Альтернатива</span></button>#}
+					</li>
+
+				{% endfor %}
+			</ul>
+
+		{% endif %}
+
+		<div class="tab-content" id="nav-{{ form.translate.vars.id  }}Content">
+
+			{% for translate in form.translate %}
+
+				<div class="tab-pane fade{{ app.request.locale == translate.vars.value.local? ' show active' : '' }}"
+					 role="tabpanel"
+					 id="nav-{{ form.translate.vars.id }}-{{ translate.vars.value.local }}"
+					 aria-labelledby="nav-{{ form.translate.vars.id }}-{{ translate.vars.value.local }}-tab"
+				>
+					{# Название группы#}
+					{{ form_row(translate.name, {
+						label : 'admin.group.form.name'|trans, attr: { 'data-lang' : "product_form_trans_"~translate.vars.value.local  }
+					}) }}
+
+					{# Краткое описание #}
+					{{ form_row(translate.description, {
+						label : 'admin.group.form.desc'|trans, attr: { 'data-lang' : "product_form_trans_"~translate.vars.value.local  }
+					}) }}
+				</div>
+			{% endfor %}
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
+
+<div class="card-header">
+	<div class="card-title">
+		<h2>
+			#}{#Настройки локали #}{#
+			{{ 'admin.group.form.locale.label'|trans }}
+		</h2>
+	</div>
+</div>
+
+<div class="card-body pt-0">
+
+	<nav>
+		<div class="nav nav-tabs" id="nav-{{ form.translate.vars.id }}" role="tablist">
+			{% for trans in form.translate %}
+				<button class="nav-link{{ app.request.locale == trans.vars.value.local? ' active' : '' }}"
+						id="nav-{{ trans.vars.id }}-tab" data-bs-toggle="tab"
+						data-bs-target="#nav-{{ trans.vars.id }}"
+						type="button" role="tab" aria-controls="nav-{{ trans.vars.id }}" aria-selected="true">
+					{{ trans.vars.value.local|trans({}, 'messages') }}
+				</button>
+			{% endfor %}
+		</div>
+	</nav>
+
+	<div class="tab-content mt-5" id="nav-{{ form.translate.vars.id }}Content">
+
+		{% for trans in form.translate %}
+			<div class="tab-pane fade{{ app.request.locale == trans.vars.value.local ? ' show active' : '' }}"
+				 id="nav-{{ trans.vars.id }}" role="tabpanel"
+				 aria-labelledby="nav-{{ trans.vars.id }}-tab">
+
+				#}{# Локаль #}{#
+				{{ form_row(trans.local) }}
+
+				#}{# Название группы#}{#
+				{{ form_row(trans.name, {
+					label : 'admin.group.form.name'|trans, attr: { 'data-lang' : "product_form_trans_"~trans.vars.value.local  }
+				}) }}
+
+				#}{# Краткое описание #}{#
+				{{ form_row(trans.description, {
+					label : 'admin.group.form.desc'|trans, attr: { 'data-lang' : "product_form_trans_"~trans.vars.value.local  }
+				}) }}
+
+			</div>
+		{% endfor %}
+
+	</div>
+
+</div>#}

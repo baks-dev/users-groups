@@ -1,0 +1,46 @@
+{% trans_default_domain('groups.group') %}
+
+{% set ROLE = 'ROLE_GROUP' %}
+
+{# ---- ШАБЛОН ------------------------------------------------------------ #}
+{% extends '@Template/default/admin/base.html.twig' %}
+
+ {% block title %}{{ 'admin.page.index'|trans }}{% endblock %}
+
+{# ---- CSS ------------------------------------------------------------ #}
+ {% block stylesheets %}
+
+ {% endblock %}
+
+{# ---- HEADER-БЛОК ------------------------------------------------------------ #}
+{# {% block header %}
+    {{ include(_self|replace({ "template.html.twig": "header.html.twig" })) }}
+{% endblock %} #}
+
+
+{# ---- LEFT-БЛОК ------------------------------------------------------------ #}
+{# {% block left %} #}
+{#   {% include '@Template/flowers/left.html.twig' %} #}
+{# {% endblock %} #}
+
+
+{# ---- КОНТЕНТ-БЛОК ------------------------------------------------------------ #}
+{% block content %}
+	{{ include(_self|replace({ "template.html.twig": "content.html.twig" })) }}
+    <div style="display: none !important;"
+         class="popover popover-body popover-arrow fade show rounded-pill spinner-border spinner-border-sm vertical-middle d-none">
+    </div>
+{% endblock %}
+
+
+{# ---- FOOTER-БЛОК ------------------------------------------------------------ #}
+{# {% block footer %}
+    {{ include(_self|replace({ "template.html.twig": "footer.html.twig" })) }}
+{% endblock %} #}
+
+
+ {% block javascript %}
+
+ {% endblock %}
+
+

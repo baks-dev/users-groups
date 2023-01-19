@@ -1,0 +1,24 @@
+{% trans_default_domain 'groups.group' %}
+
+<div class="card w-100 border-light">
+
+    <div class="card-header border-light bg-body">
+        <div class="card-title">
+            <h4>
+                {# Основные настройки группы  #}
+                {{ 'admin.group.form.label.basic'|trans }}
+            </h4>
+        </div>
+    </div>
+
+
+    <div class="card-body text-start pb-0">
+
+        {# Префикс #}
+        {{ form_row(form.group, { label : 'admin.group.form.prefix'|trans }) }}
+
+        {# Сортировка #}
+        {{ form_row(form.sort, {  label : 'label.sort'|trans({}, 'messages') }) }}
+
+    </div>
+</div>

@@ -1,0 +1,47 @@
+{%  trans_default_domain('groups.group') %}
+
+{# ---- ШАБЛОН ------------------------------------------------------------ #}
+{% extends '@Template/default/admin/base.html.twig' %}
+
+{% block title %} {{ 'admin.page.new'|trans }} {% endblock %}
+
+{# ---- CSS ------------------------------------------------------------ #}
+{#{% block stylesheets %}
+    <link href="{{ path(app.request.attributes.get('_route')~'.css') }}" rel="stylesheet">
+{% endblock %}#}
+
+{# ---- HEADER-БЛОК ------------------------------------------------------------ #}
+{# {% block header %}
+    {{ include(_self|replace({ "template.html.twig": "header.html.twig" })) }}
+{% endblock %} #}
+
+
+{# ---- LEFT-БЛОК ------------------------------------------------------------ #}
+{# {% block left %} #}
+{#   {% include '@Template/flowers/left.html.twig' %} #}
+{# {% endblock %} #}
+
+
+{# ---- КОНТЕНТ-БЛОК ------------------------------------------------------------ #}
+{% block content %}
+    {{ include(_self|replace({ "template.html.twig": "content.html.twig" })) }}
+{% endblock %}
+
+
+{# ---- FOOTER-БЛОК ------------------------------------------------------------ #}
+{#
+{% block footer %}
+    {{ include(_self|replace({ "template.html.twig": "footer.html.twig" })) }}
+{% endblock %}
+#}
+
+{% block javascript %}
+<script async nonce="{{ csp_nonce() }}" class="lazy" data-src="/groups_group/script.min.js" ></script>
+{#<script defer src="{{ path(app.request.attributes.get('_route')~'.js') }}"></script>#}
+{#<script>
+    window.addEventListener('load', function () {
+    jsRequire('/groups_group/script.min.js');
+});
+
+</script>#}
+{% endblock %}
