@@ -14,7 +14,7 @@
   
   "require": {
     "php": ">=8.1",
-    "baks-dev/auth-email": "^6.2",
+    "baks-dev/users-user": "^6.2",
     "symfony/uid": "^6.2",
     "symfony/security-bundle": "^6.2",
     "doctrine/doctrine-bundle": "^2.8"
