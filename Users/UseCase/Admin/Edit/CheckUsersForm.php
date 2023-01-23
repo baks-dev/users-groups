@@ -17,10 +17,7 @@
 
 namespace BaksDev\Users\Groups\Users\UseCase\Admin\Edit;
 
-use BaksDev\Auth\EmailAccount\Repository\GetUserAccountByEvent\GetUserAccountByIdInterface;
 use BaksDev\Users\Groups\Group\Repository\ChoiceGroups\ChoiceGroupsInterface;
-use App\Module\Users\Profile\UserProfile\Repository\UsersChoiceForm\UsersChoiceInterface;
-use BaksDev\Users\Groups\Users\UseCase\Admin\Edit\CheckUsersDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

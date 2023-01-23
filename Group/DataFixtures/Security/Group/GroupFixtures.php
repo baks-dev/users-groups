@@ -18,20 +18,16 @@
 namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Group;
 
 
-use App\Module\Users\Auth\Email\DataFixtures\Account\AccountFixtures;
-use App\Module\Users\Auth\Email\Entity\Event\AccountEvent;
+use BaksDev\Auth\Email\DataFixtures\Account\AccountFixtures;
+use BaksDev\Auth\Email\Entity\Event\AccountEvent;
 use BaksDev\Users\Groups\Group\Repository\GroupByPrefix\GroupByPrefixInterface;
-use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
-//use BaksDev\Users\Groups\Group\UseCase\Fixtures;
 use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupHandler;
-use BaksDev\Users\Groups\Group\UseCase\GroupAggregate;
 use BaksDev\Users\Groups\Role\Repository\TruncateRole\TruncateRoleInterface;
 use BaksDev\Users\Groups\Users\Entity\CheckUsers;
 use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Cache\Adapter\ApcuAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /** Создаем группу Администратор */

@@ -19,15 +19,11 @@ namespace BaksDev\Users\Groups\Users\UseCase\Admin\Add;
 
 use BaksDev\Users\Groups\Group\Repository\ChoiceGroups\ChoiceGroupsInterface;
 use BaksDev\Users\Groups\Users\Repository\UsersGroupChoiceForm\UsersGroupChoiceInterface;
-use App\Module\Users\Profile\UserProfile\Repository\UsersChoiceForm\UsersChoiceInterface;
-use BaksDev\Users\Groups\Users\UseCase\Admin\Add\CheckUsersDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class CheckUsersForm extends AbstractType
 {

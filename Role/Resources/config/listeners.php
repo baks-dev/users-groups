@@ -20,9 +20,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use BaksDev\Users\Groups\Role\Entity;
 use BaksDev\Users\Groups\Role\EntityListeners;
-use BaksDev\Users\User\Entity\User;
-
-//use App\Module\Users\Entity\User;
 
 return static function (ContainerConfigurator $configurator)
 {

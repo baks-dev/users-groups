@@ -17,11 +17,7 @@
 
 namespace BaksDev\Users\Groups\Group\Entity\Quota;
 
-use App\Module\Users\Entity\User;
 use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
-use BaksDev\Users\Groups\Group\Entity\Quota\GroupQuotaInterface;
-use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
-use BaksDev\Users\Groups\Repository\Group\Modify\GroupModifyRepository;
 use BaksDev\Core\Entity\EntityEvent;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
