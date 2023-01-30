@@ -1,0 +1,28 @@
+{% trans_default_domain 'groups.group' %}
+
+<div class="card w-100 border-light">
+	
+	<div class="card-header border-light bg-body">
+		<div class="card-title">
+			<h4>
+				{{ 'admin.form.roles.label'|trans }}
+			</h4>
+		</div>
+	</div>
+	
+	
+	<div class="card-body pb-0">
+		
+		{# Роли группы #}
+		{% for role in form.role %}
+			
+			<h5>{{ form_row(role.checked) }}</h5>
+			
+			<div id="voter_{{ role.checked.vars.id }}" class="d-{{ role.checked.vars.data ? 'block' : 'none' }}">
+				{{ form_row(role.voter) }}
+			</div>
+		
+		{% endfor %}
+	
+	</div>
+</div>

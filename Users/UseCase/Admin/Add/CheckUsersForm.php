@@ -27,75 +27,77 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CheckUsersForm extends AbstractType
 {
-    private UsersGroupChoiceInterface $choiceUsers;
-    private ChoiceGroupsInterface $choiceGroups;
-    
-    public function __construct(UsersGroupChoiceInterface $choiceUsers, ChoiceGroupsInterface $choiceGroups) {
-        $this->choiceUsers = $choiceUsers;
-        $this->choiceGroups = $choiceGroups;
-    }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options) : void
-    {
-        /* TextType */
-        
-        $builder->add(
-          'user', ChoiceType::class,
-          [
-            'choices' => $this->choiceUsers->get(),
-            'choice_value' => function ($users)
-            {
-                return $users?->getValue();
-            },
-            'choice_label' => function ($users)
-            {
-                return $users->getName();
-            },
-            'multiple' => false,
-            'expanded' => false,
-            'label' => false,
-            'required' => true,
-          ]
-        );
-        
-        $builder->add(
-          'group', ChoiceType::class,
-          [
-            'choices' => $this->choiceGroups->get(),
-            'choice_value' => function ($group)
-            {
-                return $group?->getValue();
-            },
-            'choice_label' => function ($group)
-            {
-                return $group->getName();
-            },
-            'multiple' => false,
-            'expanded' => false,
-            'label' => false,
-            'required' => true,
-          ]
-        );
-        
-        
-        /* Сохранить ******************************************************/
-        $builder->add
-        (
-          'Save',
-          SubmitType::class,
-          ['label' => 'Save', 'label_html' => true, 'attr' => ['class' => 'btn-primary']]);
-        
-    }
-    
-    public function configureOptions(OptionsResolver $resolver) : void
-    {
-        $resolver->setDefaults
-        (
-          [
-            'data_class' => CheckUsersDTO::class,
-            'method' => 'POST',
-            'attr' => ['class' => 'w-100'],
-          ]);
-    }
-    
+	private UsersGroupChoiceInterface $choiceUsers;
+	
+	private ChoiceGroupsInterface $choiceGroups;
+	
+	
+	public function __construct(UsersGroupChoiceInterface $choiceUsers, ChoiceGroupsInterface $choiceGroups)
+	{
+		$this->choiceUsers = $choiceUsers;
+		$this->choiceGroups = $choiceGroups;
+	}
+	
+	
+	public function buildForm(FormBuilderInterface $builder, array $options) : void
+	{
+		/* TextType */
+		
+		$builder->add(
+			'user', ChoiceType::class,
+			[
+				'choices' => $this->choiceUsers->get(),
+				'choice_value' => function($users) {
+					return $users?->getValue();
+				},
+				'choice_label' => function($users) {
+					return $users->getName();
+				},
+				'multiple' => false,
+				'expanded' => false,
+				'label' => false,
+				'required' => true,
+			]
+		);
+		
+		$builder->add(
+			'group', ChoiceType::class,
+			[
+				'choices' => $this->choiceGroups->get(),
+				'choice_value' => function($group) {
+					return $group?->getValue();
+				},
+				'choice_label' => function($group) {
+					return $group->getName();
+				},
+				'multiple' => false,
+				'expanded' => false,
+				'label' => false,
+				'required' => true,
+			]
+		);
+		
+		/* Сохранить ******************************************************/
+		$builder->add
+		(
+			'Save',
+			SubmitType::class,
+			['label' => 'Save', 'label_html' => true, 'attr' => ['class' => 'btn-primary']]
+		);
+		
+	}
+	
+	
+	public function configureOptions(OptionsResolver $resolver) : void
+	{
+		$resolver->setDefaults
+		(
+			[
+				'data_class' => CheckUsersDTO::class,
+				'method' => 'POST',
+				'attr' => ['class' => 'w-100'],
+			]
+		);
+	}
+	
 }

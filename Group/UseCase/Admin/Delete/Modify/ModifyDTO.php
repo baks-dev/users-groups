@@ -18,7 +18,6 @@
 
 namespace BaksDev\Users\Groups\Group\UseCase\Admin\Delete\Modify;
 
-
 use BaksDev\Users\Groups\Group\Entity\Modify\GroupModifyInterface;
 use BaksDev\Core\Type\Modify\ModifyAction;
 use BaksDev\Core\Type\Modify\ModifyActionEnum;
@@ -26,22 +25,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class ModifyDTO implements GroupModifyInterface
 {
-    /** Модификатор */
+	/** Модификатор */
 	#[Assert\NotBlank]
-    private readonly ModifyAction $action;
-    
-    public function __construct() {
-        $this->action = new ModifyAction(ModifyActionEnum::DELETE);
-    }
-    
-    /**
-     * @return ModifyAction
-     */
-    public function getAction() : ModifyAction
-    {
-        return $this->action;
-    }
-    
-    
+	private readonly ModifyAction $action;
+	
+	
+	public function __construct()
+	{
+		$this->action = new ModifyAction(ModifyActionEnum::DELETE);
+	}
+	
+	
+	/**
+	 * @return ModifyAction
+	 */
+	public function getAction() : ModifyAction
+	{
+		return $this->action;
+	}
+	
 }
 

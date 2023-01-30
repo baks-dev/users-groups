@@ -18,7 +18,6 @@
 
 namespace BaksDev\Users\Groups\Users\EntityListeners;
 
-
 use BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModify;
 use BaksDev\Core\Type\Ip\IpAddress;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
@@ -27,36 +26,39 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 final class ModifyListener
 {
-    private RequestStack $request;
-    private TokenStorageInterface $token;
-    
-    public function __construct(
-      RequestStack $request,
-      TokenStorageInterface $token,
-    )
-    {
-        $this->request = $request;
-        $this->token = $token;
-    }
-    
-    public function prePersist(CheckUserModify $data, LifecycleEventArgs $event) : void
-    {
-        $token = $this->token->getToken();
-    
-        if($token)
-        {
-            $data->setUser($token->getUser());
-        }
-    
-        /* Если пользователь не из консоли */
-        if($this->request->getCurrentRequest())
-        {
-        
-            $data->upModifyAgent(
-              new IpAddress($this->request->getCurrentRequest()->getClientIp()), /* Ip */
-              $this->request->getCurrentRequest()->headers->get('User-Agent') /* User-Agent */
-            );
-        }
-    }
-    
+	private RequestStack $request;
+	
+	private TokenStorageInterface $token;
+	
+	
+	public function __construct(
+		RequestStack $request,
+		TokenStorageInterface $token,
+	)
+	{
+		$this->request = $request;
+		$this->token = $token;
+	}
+	
+	
+	public function prePersist(CheckUserModify $data, LifecycleEventArgs $event) : void
+	{
+		$token = $this->token->getToken();
+		
+		if($token)
+		{
+			$data->setUser($token->getUser());
+		}
+		
+		/* Если пользователь не из консоли */
+		if($this->request->getCurrentRequest())
+		{
+			
+			$data->upModifyAgent(
+				new IpAddress($this->request->getCurrentRequest()->getClientIp()), /* Ip */
+				$this->request->getCurrentRequest()->headers->get('User-Agent') /* User-Agent */
+			);
+		}
+	}
+	
 }

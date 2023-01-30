@@ -22,13 +22,15 @@ use BaksDev\Users\User\Type\Id\UserUid;
 
 interface CheckUserInterface
 {
-    /**
-     * @return UserUid
-     */
-    public function getUser() : UserUid;
-    
-    /**
-     * @return GroupPrefix
-     */
-    public function getGroup() : GroupPrefix;
+	/**
+	 * @return UserUid
+	 */
+	public function getUser() : UserUid;
+	
+	
+	/**
+	 * @return GroupPrefix
+	 */
+	public function getGroup() : GroupPrefix;
+	
 }

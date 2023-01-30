@@ -1,0 +1,40 @@
+{% trans_default_domain 'groups.group' %}
+
+
+<div class="card w-100 border-light">
+	
+	<div class="card-header border-light bg-body">
+		<div class="card-title">
+			<h4>
+				{{ 'admin.form.label.quotum'|trans }}
+			</h4>
+		</div>
+	</div>
+	
+	
+	<div class="card-body pb-0">
+		
+		{# Лимит дискового пространства (Mb) #}
+		{# Оставьте поле пустым если без ограничений #}
+		{{ form_row(form.quota.size, {
+			'label' : 'admin.group.form.size'|trans, 'help' : 'admin.group.form.help.quota'|trans,
+			attr: { placeholder: 'Неограничено' }
+		}) }}
+		
+		{# Лимит макс. числа файлов #}
+		{# Оставьте поле пустым если без ограничений #}
+		{{ form_row(form.quota.files, {
+			'label' : 'admin.group.form.files'|trans, 'help' : 'admin.group.form.help.quota'|trans,
+			attr: { placeholder: 'Неограничено' }
+		}) }}
+		
+		{#  Лимит макс. размера одного файла (Mb) #}
+		{# Оставьте поле пустым если без ограничений #}
+		
+		{{ form_row(form.quota.filesize, {
+			'label' : 'admin.group.form.filesize'|trans, 'help' : 'admin.group.form.help.quota'|trans,
+			attr: { placeholder: 'Неограничено' }
+		}) }}
+	
+	</div>
+</div>

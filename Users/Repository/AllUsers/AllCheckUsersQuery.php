@@ -27,26 +27,30 @@ use BaksDev\Core\Services\Switcher\Switcher;
 use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use function BaksDev\Users\Groups\Users\Repository\AllUsers\mb_strtolower;
 
+use function BaksDev\Users\Groups\Users\Repository\AllUsers\mb_strtolower;
 
 final class AllCheckUsersQuery implements AllCheckUsersInterface
 {
 	
 	private Connection $connection;
+	
 	private Switcher $switcher;
+	
 	private PaginatorInterface $paginator;
+	
 	
 	public function __construct(
 		Connection $connection,
 		Switcher $switcher,
-		PaginatorInterface $paginator
+		PaginatorInterface $paginator,
 	)
 	{
 		$this->connection = $connection;
 		$this->switcher = $switcher;
 		$this->paginator = $paginator;
 	}
+	
 	
 	public function get(SearchDTO $search) : PaginatorInterface
 	{
@@ -56,8 +60,11 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 		$qb->addSelect('checker.event');
 		$qb->from(\BaksDev\Users\Groups\Users\Entity\CheckUsers::TABLE, 'checker');
 		
-		
-		$qb->join('checker', \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::TABLE, 'event', 'event.id = checker.event');
+		$qb->join('checker',
+			\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::TABLE,
+			'event',
+			'event.id = checker.event'
+		);
 		
 		/* Модификатор */
 		$qb->addSelect('checker_modify.mod_date as update');
@@ -67,7 +74,6 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 			'checker_modify',
 			'checker_modify.event = checker.event'
 		);
-		
 		
 		/* АККАУНТ */
 		
@@ -88,15 +94,16 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 			'account_status.event = account.event'
 		);
 		
-		
 		/* ГРУППА */
-		
 		
 		$qb->join('event', \BaksDev\Users\Groups\Group\Entity\Group::TABLE, 'groups', 'groups.id = event.group_id');
 		
-		
 		$qb->addSelect('group_event.sort');
-		$qb->join('groups', \BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::TABLE, 'group_event', 'group_event.id = groups.event');
+		$qb->join('groups',
+			\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::TABLE,
+			'group_event',
+			'group_event.id = groups.event'
+		);
 		
 		$qb->addSelect('trans.name');
 		$qb->addSelect('trans.description');
@@ -107,7 +114,6 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 			'trans.event = group_event.id AND trans.local = :local'
 		);
 		$qb->setParameter('local', $this->local, Locale::TYPE);
-		
 		
 		/* Поиск */
 		if($search->query)

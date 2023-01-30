@@ -20,5 +20,5 @@ namespace BaksDev\Users\Groups\Role\Entity\Trans;
 
 interface RoleTransInterface
 {
-    
+	
 }

@@ -30,33 +30,37 @@ class DeleteGroupDTO implements GroupEventInterface
 {
 	
 	#[Assert\NotBlank]
-    #[Assert\Uuid]
-    private GroupEventUid $id;
-    
-    #[Assert\Valid]
-    private Modify\ModifyDTO $modify;
-    
-    
-    public function __construct() {
-        $this->modify = new Modify\ModifyDTO();
-    }
-    
-    public function getEvent() : ?GroupEventUid
-    {
-        return $this->id;
- 
-    }
-    
-    public function setId(GroupEventUid $id) : void
-    {
-        $this->id = $id;
-    }
-    
-    /* Modify  */
-
-    public function getModify() : Modify\ModifyDTO
-    {
-        return $this->modify;
-    }
-    
+	#[Assert\Uuid]
+	private GroupEventUid $id;
+	
+	#[Assert\Valid]
+	private Modify\ModifyDTO $modify;
+	
+	
+	public function __construct()
+	{
+		$this->modify = new Modify\ModifyDTO();
+	}
+	
+	
+	public function getEvent() : ?GroupEventUid
+	{
+		return $this->id;
+		
+	}
+	
+	
+	public function setId(GroupEventUid $id) : void
+	{
+		$this->id = $id;
+	}
+	
+	
+	/* Modify  */
+	
+	public function getModify() : Modify\ModifyDTO
+	{
+		return $this->modify;
+	}
+	
 }

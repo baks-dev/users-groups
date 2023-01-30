@@ -26,53 +26,58 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class CheckUsersDTO implements CheckUsersEventInterface
 {
-    /** ID */
-    private ?CheckUsersEventUid $id = null;
-    
-    /** ID пользователя */
-    #[Assert\Uuid]
-    #[Assert\NotBlank]
-    private UserUid $user;
-    
-    /** Префикс Группы */
-    #[Assert\NotBlank]
-    private GroupPrefix $group;
-    
-    /**
-     * @param UserUid $user
-     * @param GroupPrefix $group
-     */
-    public function __construct(UserUid $user, GroupPrefix $group)
-    {
-        $this->user = $user;
-        $this->group = $group;
-    }
-    
-    public function getEvent() : ?CheckUsersEventUid
-    {
-        return $this->id;
-    }
-    
-    public function setId(CheckUsersEventUid $id) : void
-    {
-        $this->id = $id;
-    }
-    
-    /**
-     * @return UserUid
-     */
-    public function getUser() : UserUid
-    {
-        return $this->user;
-    }
-    
-    /**
-     * @return GroupPrefix
-     */
-    public function getGroup() : GroupPrefix
-    {
-        return $this->group;
-    }
-
+	/** ID */
+	private ?CheckUsersEventUid $id = null;
+	
+	/** ID пользователя */
+	#[Assert\Uuid]
+	#[Assert\NotBlank]
+	private UserUid $user;
+	
+	/** Префикс Группы */
+	#[Assert\NotBlank]
+	private GroupPrefix $group;
+	
+	
+	/**
+	 * @param UserUid $user
+	 * @param GroupPrefix $group
+	 */
+	public function __construct(UserUid $user, GroupPrefix $group)
+	{
+		$this->user = $user;
+		$this->group = $group;
+	}
+	
+	
+	public function getEvent() : ?CheckUsersEventUid
+	{
+		return $this->id;
+	}
+	
+	
+	public function setId(CheckUsersEventUid $id) : void
+	{
+		$this->id = $id;
+	}
+	
+	
+	/**
+	 * @return UserUid
+	 */
+	public function getUser() : UserUid
+	{
+		return $this->user;
+	}
+	
+	
+	/**
+	 * @return GroupPrefix
+	 */
+	public function getGroup() : GroupPrefix
+	{
+		return $this->group;
+	}
+	
 }
 

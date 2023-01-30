@@ -27,48 +27,52 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class DeleteCheckUserDTO implements CheckUsersEventInterface
 {
-    /** ID */
-    private readonly CheckUsersEventUid $id;
-
-    private \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO $modify;
-    
-    public function __construct() {
-        $this->modify = new \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO();
-    }
-    
-    /**
-     * @param CheckUsersEventUid $id
-     */
-    public function setId(CheckUsersEventUid $id) : void
-    {
-        $this->id = $id;
-    }
-    
-    /**
-     * @return CheckUsersEventUid
-     */
-    public function getEvent() : CheckUsersEventUid
-    {
-        return $this->id;
-    }
-
-    
-    /* MODIFY  */
-    
-    
-    /**
-     * @return \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO
-     */
-    public function getModify() : \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO
-    {
-        return $this->modify;
-    }
-    
-    /** Метод для инициализации и маппинга сущности на DTO в коллекции  */
-    public function getModifyClass() : CheckUserModifyInterface
-    {
-        return new \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO();
-    }
-    
+	/** ID */
+	private readonly CheckUsersEventUid $id;
+	
+	private \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO $modify;
+	
+	
+	public function __construct()
+	{
+		$this->modify = new \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO();
+	}
+	
+	
+	/**
+	 * @param CheckUsersEventUid $id
+	 */
+	public function setId(CheckUsersEventUid $id) : void
+	{
+		$this->id = $id;
+	}
+	
+	
+	/**
+	 * @return CheckUsersEventUid
+	 */
+	public function getEvent() : CheckUsersEventUid
+	{
+		return $this->id;
+	}
+	
+	
+	/* MODIFY  */
+	
+	/**
+	 * @return \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO
+	 */
+	public function getModify() : \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO
+	{
+		return $this->modify;
+	}
+	
+	
+	/** Метод для инициализации и маппинга сущности на DTO в коллекции  */
+	public function getModifyClass() : CheckUserModifyInterface
+	{
+		return new \BaksDev\Users\Groups\Users\UseCase\Admin\Delete\Modify\ModifyDTO();
+	}
+	
 }
 

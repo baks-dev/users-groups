@@ -1,14 +1,14 @@
-{%  trans_default_domain('groups.group') %}
+{% trans_default_domain('groups.group') %}
 
 {# ---- ШАБЛОН ------------------------------------------------------------ #}
-{% extends '@Template/default/admin/base.html.twig' %}
+{% extends '@Core/admin/base.html.twig' %}
 
 {% block title %} {{ 'admin.page.edit'|trans }} {% endblock %}
 
 {# ---- CSS ------------------------------------------------------------ #}
-{#{% block stylesheets %}
+{# {% block stylesheets %}
 
-{% endblock %}#}
+{% endblock %} #}
 
 {# ---- HEADER-БЛОК ------------------------------------------------------------ #}
 {# {% block header %}
@@ -24,7 +24,8 @@
 
 {# ---- КОНТЕНТ-БЛОК ------------------------------------------------------------ #}
 {% block content %}
-    {{ include(_self|replace({ "template.html.twig": "content.html.twig" })) }}
+	
+	{{ include(_self|replace({ "template.html.twig": "content.html.twig" })) }}
 {% endblock %}
 
 
@@ -36,7 +37,7 @@
 #}
 
 {% block javascript %}
-<script async nonce="{{ csp_nonce() }}" class="lazy" data-src="/groups_group/script.min.js" ></script>
+<script async nonce="{{ csp_nonce() }}" class="lazy" data-src="/assets/groups_group/script.min.js" ></script>
 {#<script defer src="{{ path(app.request.attributes.get('_route')~'.js') }}"></script>#}
 {#<script>
     window.addEventListener('load', function () {

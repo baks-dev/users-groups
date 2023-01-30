@@ -26,15 +26,18 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class CheckRoleHandler
 {
 	private EntityManagerInterface $entityManager;
+	
 	//private RequestStack $request;
 	//private TranslatorInterface $translator;
 	private ValidatorInterface $validator;
+	
 	private LoggerInterface $logger;
+	
 	
 	public function __construct(
 		EntityManagerInterface $entityManager,
 		ValidatorInterface $validator,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	)
 	{
 		$this->entityManager = $entityManager;
@@ -42,8 +45,9 @@ final class CheckRoleHandler
 		$this->logger = $logger;
 	}
 	
+	
 	public function handle(
-		CheckRoleInterface $command
+		CheckRoleInterface $command,
 	) : string|\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole
 	{
 		/* Валидация */
@@ -54,24 +58,28 @@ final class CheckRoleHandler
 			$uniqid = uniqid('', false);
 			$errorsString = (string) $errors;
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
-		
 		
 		if(empty($command->getEvent()) || empty($command->getRole()))
 		{
 			$uniqid = uniqid('', false);
-			$errorsString = sprintf('Не указана роль или событие %s', \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class);
+			$errorsString = sprintf('Не указана роль или событие %s',
+				\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class
+			);
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
 		
-		
 		if($command->getEvent())
 		{
-			$Event = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class)->findOneBy(
-				['event' => $command->getEvent(), 'role' => $command->getRole()]
-			);
+			$Event = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class)
+				->findOneBy(
+					['event' => $command->getEvent(), 'role' => $command->getRole()]
+				)
+			;
 			
 			if(empty($Event))
 			{

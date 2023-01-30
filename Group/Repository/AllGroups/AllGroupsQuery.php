@@ -26,84 +26,90 @@ use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
 use function BaksDev\Users\Groups\Group\Repository\AllGroups\mb_strtolower;
 
 final class AllGroupsQuery implements AllGroupsInterface
 {
-    
-    private Connection $connection;
-    private Switcher $switcher;
-    
-//    public function __construct(Connection $connection, TranslatorInterface $translator, Switcher $switcher)
-//    {
-//        $this->connection = $connection;
-//        $this->local = new Locale($translator->getLocale());
-//        $this->switcher = $switcher;
-//    }
+	
+	private Connection $connection;
+	
+	private Switcher $switcher;
+	
+	//    public function __construct(Connection $connection, TranslatorInterface $translator, Switcher $switcher)
+	//    {
+	//        $this->connection = $connection;
+	//        $this->local = new Locale($translator->getLocale());
+	//        $this->switcher = $switcher;
+	//    }
 	private PaginatorInterface $paginator;
 	
 	
-	public function __construct(Connection $connection, TranslatorInterface $translator, Switcher $switcher, PaginatorInterface $paginator)
-    {
-        $this->connection = $connection;
-        $this->local = new Locale($translator->getLocale());
-        $this->switcher = $switcher;
+	public function __construct(
+		Connection $connection,
+		TranslatorInterface $translator,
+		Switcher $switcher,
+		PaginatorInterface $paginator,
+	)
+	{
+		$this->connection = $connection;
+		$this->local = new Locale($translator->getLocale());
+		$this->switcher = $switcher;
 		$this->paginator = $paginator;
 	}
 	
 	
-    public function get(SearchDTO $search) : PaginatorInterface
-    {
-        $qb = $this->connection->createQueryBuilder();
-        
-        $qb->select('groups.id');
-        $qb->addSelect('groups.event');
-        $qb->from(\BaksDev\Users\Groups\Group\Entity\Group::TABLE, 'groups');
-	
+	public function get(SearchDTO $search) : PaginatorInterface
+	{
+		$qb = $this->connection->createQueryBuilder();
 		
-        $qb->addSelect('event.sort');
-        $qb->join('groups', \BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::TABLE, 'event', 'event.id = groups.event');
-	
+		$qb->select('groups.id');
+		$qb->addSelect('groups.event');
+		$qb->from(\BaksDev\Users\Groups\Group\Entity\Group::TABLE, 'groups');
 		
+		$qb->addSelect('event.sort');
+		$qb->join('groups',
+			\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::TABLE,
+			'event',
+			'event.id = groups.event'
+		);
 		
-        $qb->addSelect('trans.name');
-        $qb->addSelect('trans.description');
-        $qb->join(
-          'event',
-          \BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::TABLE,
-          'trans',
-          'trans.event = event.id AND trans.local = :local');
-        $qb->setParameter('local', $this->local, Locale::TYPE);
-	
-
-        /* Поиск */
-        if($search->query)
-        {
+		$qb->addSelect('trans.name');
+		$qb->addSelect('trans.description');
+		$qb->join(
+			'event',
+			\BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::TABLE,
+			'trans',
+			'trans.event = event.id AND trans.local = :local'
+		);
+		$qb->setParameter('local', $this->local, Locale::TYPE);
+		
+		/* Поиск */
+		if($search->query)
+		{
 			$search->query = mb_strtolower($search->query);
-	
+			
 			$searcher = $this->connection->createQueryBuilder();
-	
+			
 			$searcher->orWhere('LOWER(groups.id) LIKE :query');
 			$searcher->orWhere('LOWER(groups.id) LIKE :switcher');
 			
 			$searcher->orWhere('LOWER(trans.name) LIKE :query');
 			$searcher->orWhere('LOWER(trans.name) LIKE :switcher');
-	
+			
 			$searcher->orWhere('LOWER(trans.description) LIKE :query');
 			$searcher->orWhere('LOWER(trans.description) LIKE :switcher');
 			
-			$qb->andWhere('('.$searcher->getQueryPart('where').')' );
+			$qb->andWhere('('.$searcher->getQueryPart('where').')');
 			$qb->setParameter('query', '%'.$this->switcher->toRus($search->query).'%');
 			$qb->setParameter('switcher', '%'.$this->switcher->toEng($search->query).'%');
-        }
-        
-        $qb->orderBy('event.sort');
+		}
 		
+		$qb->orderBy('event.sort');
 		
-	
 		return $this->paginator->fetchAllAssociative($qb);
-
-        //return $qb;
-    }
-    
+		
+		//return $qb;
+	}
+	
 }

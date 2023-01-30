@@ -20,5 +20,6 @@ namespace BaksDev\Users\Groups\Group\Repository\ChoiceGroups;
 
 interface ChoiceGroupsInterface
 {
-    public function get() : mixed;
+	public function get() : mixed;
+	
 }

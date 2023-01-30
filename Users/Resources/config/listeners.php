@@ -25,34 +25,36 @@ use BaksDev\Users\User\Entity\User;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-return static function (ContainerConfigurator $configurator)
-{
-    $services = $configurator->services()
-      ->defaults()
-      ->autowire()
-      ->autoconfigure();
+return static function(ContainerConfigurator $configurator) {
+	$services = $configurator->services()
+		->defaults()
+		->autowire()
+		->autoconfigure()
+	;
 	
-    
-    /** EntityListeners */
-    $services->set(EntityListeners\ModifyListener::class)
-      ->class(EntityListeners\ModifyListener::class)
-      ->tag(
-        'doctrine.orm.entity_listener',
-        ['event' => 'prePersist', 'lazy' => true, 'entity' => CheckUserModify::class]);
-    
+	/** EntityListeners */
+	$services->set(EntityListeners\ModifyListener::class)
+		->class(EntityListeners\ModifyListener::class)
+		->tag(
+			'doctrine.orm.entity_listener',
+			['event' => 'prePersist', 'lazy' => true, 'entity' => CheckUserModify::class]
+		)
+	;
 	
-    $services->set(EntityListeners\GroupListener::class)
-      ->class(EntityListeners\GroupListener::class)
-      ->tag(
-        'doctrine.orm.entity_listener',
-        ['event' => 'preUpdate', 'lazy' => true, 'entity' => Group::class]);
+	$services->set(EntityListeners\GroupListener::class)
+		->class(EntityListeners\GroupListener::class)
+		->tag(
+			'doctrine.orm.entity_listener',
+			['event' => 'preUpdate', 'lazy' => true, 'entity' => Group::class]
+		)
+	;
 	
-
 	$services->set(EntityListeners\UserListener::class)
 		->class(EntityListeners\UserListener::class)
 		->tag(
 			'doctrine.orm.entity_listener',
-			['event' => 'postLoad', 'lazy' => true, 'entity' => User::class])
+			['event' => 'postLoad', 'lazy' => true, 'entity' => User::class]
+		)
 	;
 	
 };

@@ -26,53 +26,56 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class CheckUsersForm extends AbstractType
 {
-    private ChoiceGroupsInterface $choiceGroups;
-    
-    public function __construct(ChoiceGroupsInterface $choiceGroups) {
-        $this->choiceGroups = $choiceGroups;
-    }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options) : void
-    {
-
-        $builder->add(
-          'group', ChoiceType::class,
-          [
-            'choices' => $this->choiceGroups->get(),
-            'choice_value' => function ($group)
-            {
-                return $group?->getValue();
-            },
-            'choice_label' => function ($group)
-            {
-                return $group->getName();
-            },
-            'multiple' => false,
-            'expanded' => false,
-            'label' => false,
-            'required' => true,
-          ]
-        );
-        
-        
-        /* Сохранить ******************************************************/
-        $builder->add
-        (
-          'Save',
-          SubmitType::class,
-          ['label' => 'Save', 'label_html' => true, 'attr' => ['class' => 'btn-primary']]);
-        
-    }
-    
-    public function configureOptions(OptionsResolver $resolver) : void
-    {
-        $resolver->setDefaults
-        (
-          [
-            'data_class' => CheckUsersDTO::class,
-            'method' => 'POST',
-            'attr' => ['class' => 'w-100'],
-          ]);
-    }
-    
+	private ChoiceGroupsInterface $choiceGroups;
+	
+	
+	public function __construct(ChoiceGroupsInterface $choiceGroups)
+	{
+		$this->choiceGroups = $choiceGroups;
+	}
+	
+	
+	public function buildForm(FormBuilderInterface $builder, array $options) : void
+	{
+		
+		$builder->add(
+			'group', ChoiceType::class,
+			[
+				'choices' => $this->choiceGroups->get(),
+				'choice_value' => function($group) {
+					return $group?->getValue();
+				},
+				'choice_label' => function($group) {
+					return $group->getName();
+				},
+				'multiple' => false,
+				'expanded' => false,
+				'label' => false,
+				'required' => true,
+			]
+		);
+		
+		/* Сохранить ******************************************************/
+		$builder->add
+		(
+			'Save',
+			SubmitType::class,
+			['label' => 'Save', 'label_html' => true, 'attr' => ['class' => 'btn-primary']]
+		);
+		
+	}
+	
+	
+	public function configureOptions(OptionsResolver $resolver) : void
+	{
+		$resolver->setDefaults
+		(
+			[
+				'data_class' => CheckUsersDTO::class,
+				'method' => 'POST',
+				'attr' => ['class' => 'w-100'],
+			]
+		);
+	}
+	
 }

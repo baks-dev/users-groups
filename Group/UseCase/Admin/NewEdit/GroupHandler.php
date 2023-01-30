@@ -32,17 +32,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class GroupHandler
 {
 	private EntityManagerInterface $entityManager;
+	
 	private RequestStack $request;
+	
 	private TranslatorInterface $translator;
+	
 	private ValidatorInterface $validator;
+	
 	private LoggerInterface $logger;
+	
 	
 	public function __construct(
 		EntityManagerInterface $entityManager,
 		RequestStack $request,
 		TranslatorInterface $translator,
 		ValidatorInterface $validator,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	)
 	{
 		$this->entityManager = $entityManager;
@@ -52,8 +57,9 @@ final class GroupHandler
 		$this->logger = $logger;
 	}
 	
+	
 	public function handle(
-		GroupEventInterface $command
+		GroupEventInterface $command,
 	) : string|\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent
 	{
 		
@@ -65,6 +71,7 @@ final class GroupHandler
 			$uniqid = uniqid('', false);
 			$errorsString = (string) $errors;
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
 		
@@ -72,7 +79,8 @@ final class GroupHandler
 		{
 			$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class)
 				->find($command->getEvent()
-			);
+				)
+			;
 			
 			if($EventRepo === null)
 			{
@@ -83,22 +91,21 @@ final class GroupHandler
 					$command->getEvent()
 				);
 				$this->logger->error($uniqid.': '.$errorsString);
+				
 				return $uniqid;
 			}
 			
 			$Event = $EventRepo->cloneEntity();
-		} else
+		}
+		else
 		{
 			$Event = new \BaksDev\Users\Groups\Group\Entity\Event\GroupEvent();
 		}
-		
-		
 		
 		$this->entityManager->clear();
 		
 		$Event->setEntity($command);
 		$this->entityManager->persist($Event);
-		
 		
 		if(empty($Event->getGroup()))
 		{
@@ -108,14 +115,16 @@ final class GroupHandler
 				self::class
 			);
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
-		
 		
 		/* Делаем проверку, что префикс свободен */
 		if($command->getEvent() === null)
 		{
-			$GroupExist = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Group::class)->find($Event->getGroup());
+			$GroupExist = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Group::class)
+				->find($Event->getGroup())
+			;
 			
 			if(!empty($GroupExist))
 			{
@@ -126,7 +135,7 @@ final class GroupHandler
 					$Event->getGroup()
 				);
 				$this->logger->error($uniqid.': '.$errorsString);
-			
+				
 				/* Уведомление пользовтаелю */
 				$this->request->getSession()->getFlashBag()->add(
 					'danger',
@@ -153,4 +162,5 @@ final class GroupHandler
 		return $Event;
 		
 	}
+	
 }

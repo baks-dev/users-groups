@@ -26,96 +26,102 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CheckRoleDTO implements CheckRoleInterface
 {
-    
-    private bool $checked = false;
-    
-    /** Префикс роли */
-    #[Assert\NotBlank]
-    private RolePrefix $role;
-    
-    /** Правила роли */
-    #[Assert\Valid]
-    protected ArrayCollection $voter;
-    
-    public function __construct()
-    {
-        $this->voter = new ArrayCollection();
-    }
-    
-    /**
-     * @return RolePrefix
-     */
-    public function getRole() : RolePrefix
-    {
-        return $this->role;
-    }
-    
-    /**
-     * @param RolePrefix $role
-     */
-    public function setRole(RolePrefix $role) : void
-    {
-        $this->role = $role;
-    }
-    
-    /* VOTER */
-    
-
-    public function getVoter() : array
-    {
-        return $this->voter->toArray();
-    }
-    
-    /**
-     * @param ArrayCollection $voter
-     */
-    public function addVoter(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO $voter) : void
-    {
-        if($voter instanceof VoterPrefix)
-        {
-            $CheckVoterDTO = new \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO();
-            $CheckVoterDTO->setVoter($voter);
-            
-            if(!$this->voter->contains($CheckVoterDTO))
-            {
-                $this->voter->add($CheckVoterDTO);
-            }
-            
-            
-        }
-        else
-        {
-            $this->voter->add($voter);
-        }
-
-    }
-    
-    public function removeVoter($voter) : void
-    {
-        $this->voter->removeElement($voter);
-    }
-    
-
-    
-    /**
-     * @return bool
-     */
-    public function isChecked() : bool
-    {
-        return $this->checked;
-    }
-    
-    /**
-     * @param bool $checked
-     */
-    public function setChecked(bool $checked) : void
-    {
-        $this->checked = $checked;
-    }
-    
-
-    public function checked() : void
-    {
-        $this->checked = true;
-    }
+	
+	private bool $checked = false;
+	
+	/** Префикс роли */
+	#[Assert\NotBlank]
+	private RolePrefix $role;
+	
+	/** Правила роли */
+	#[Assert\Valid]
+	protected ArrayCollection $voter;
+	
+	
+	public function __construct()
+	{
+		$this->voter = new ArrayCollection();
+	}
+	
+	
+	/**
+	 * @return RolePrefix
+	 */
+	public function getRole() : RolePrefix
+	{
+		return $this->role;
+	}
+	
+	
+	/**
+	 * @param RolePrefix $role
+	 */
+	public function setRole(RolePrefix $role) : void
+	{
+		$this->role = $role;
+	}
+	
+	
+	/* VOTER */
+	
+	public function getVoter() : array
+	{
+		return $this->voter->toArray();
+	}
+	
+	
+	/**
+	 * @param ArrayCollection $voter
+	 */
+	public function addVoter(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO $voter,
+	) : void
+	{
+		if($voter instanceof VoterPrefix)
+		{
+			$CheckVoterDTO = new \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckVoter\CheckVoterDTO();
+			$CheckVoterDTO->setVoter($voter);
+			
+			if(!$this->voter->contains($CheckVoterDTO))
+			{
+				$this->voter->add($CheckVoterDTO);
+			}
+			
+		}
+		else
+		{
+			$this->voter->add($voter);
+		}
+		
+	}
+	
+	
+	public function removeVoter($voter) : void
+	{
+		$this->voter->removeElement($voter);
+	}
+	
+	
+	/**
+	 * @return bool
+	 */
+	public function isChecked() : bool
+	{
+		return $this->checked;
+	}
+	
+	
+	/**
+	 * @param bool $checked
+	 */
+	public function setChecked(bool $checked) : void
+	{
+		$this->checked = $checked;
+	}
+	
+	
+	public function checked() : void
+	{
+		$this->checked = true;
+	}
+	
 }

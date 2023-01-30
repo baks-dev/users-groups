@@ -23,13 +23,15 @@ use BaksDev\Core\Type\UidType\UidType;
 
 final class GroupEventUidType extends UidType
 {
-    public function getClassType() : string
-    {
-        return GroupEventUid::class;
-    }
-    
-    public function getName() : string
-    {
-        return GroupEventUid::TYPE;
-    }
+	public function getClassType() : string
+	{
+		return GroupEventUid::class;
+	}
+	
+	
+	public function getName() : string
+	{
+		return GroupEventUid::TYPE;
+	}
+	
 }

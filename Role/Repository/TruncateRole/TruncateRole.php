@@ -29,26 +29,28 @@ use Doctrine\DBAL\Connection;
 
 final class TruncateRole implements TruncateRoleInterface
 {
-    
-    private Connection $connection;
-    
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
-    
-    public function clear() : void
-    {
-        $qb = $this->connection;
-        
-        $qb->prepare("TRUNCATE TABLE ".VoterTrans::TABLE." CASCADE")->executeQuery();
-        $qb->prepare("TRUNCATE TABLE ".RoleVoter::TABLE." CASCADE")->executeQuery();
-        
-        $qb->prepare("TRUNCATE TABLE ".RoleModify::TABLE." CASCADE")->executeQuery();
-        $qb->prepare("TRUNCATE TABLE ".RoleTrans::TABLE." CASCADE")->executeQuery();
-        $qb->prepare("TRUNCATE TABLE ".RoleEvent::TABLE." CASCADE")->executeQuery();
-        $qb->prepare("TRUNCATE TABLE ".Role::TABLE." CASCADE")->executeQuery();
-        
-    }
-    
+	
+	private Connection $connection;
+	
+	
+	public function __construct(Connection $connection)
+	{
+		$this->connection = $connection;
+	}
+	
+	
+	public function clear() : void
+	{
+		$qb = $this->connection;
+		
+		$qb->prepare("TRUNCATE TABLE ".VoterTrans::TABLE." CASCADE")->executeQuery();
+		$qb->prepare("TRUNCATE TABLE ".RoleVoter::TABLE." CASCADE")->executeQuery();
+		
+		$qb->prepare("TRUNCATE TABLE ".RoleModify::TABLE." CASCADE")->executeQuery();
+		$qb->prepare("TRUNCATE TABLE ".RoleTrans::TABLE." CASCADE")->executeQuery();
+		$qb->prepare("TRUNCATE TABLE ".RoleEvent::TABLE." CASCADE")->executeQuery();
+		$qb->prepare("TRUNCATE TABLE ".Role::TABLE." CASCADE")->executeQuery();
+		
+	}
+	
 }

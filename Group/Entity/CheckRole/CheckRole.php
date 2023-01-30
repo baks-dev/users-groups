@@ -22,6 +22,7 @@ use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
 use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
 use BaksDev\Users\Groups\Group\Type\Check\GroupCheckUid;
 use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+
 //use BaksDev\Core\Entity\EntityEvent;
 
 use BaksDev\Core\Entity\EntityEvent;
@@ -32,80 +33,86 @@ use Exception;
 use InvalidArgumentException;
 
 /** Отмеченные роли для группы */
-
 #[ORM\Entity]
 #[ORM\Table(name: 'users_group_check_role')]
 #[ORM\UniqueConstraint(columns: ['event', 'role'])]
 class CheckRole extends EntityEvent
 {
-    public const TABLE = 'users_group_check_role';
-    
-    /** ID */
-    #[ORM\Id]
-    #[ORM\Column(type: GroupCheckUid::TYPE)]
-    protected GroupCheckUid $id;
-    
-    /** Связь на событие группы */
-    #[ORM\ManyToOne(targetEntity: GroupEvent::class, inversedBy: "role")]
-    #[ORM\JoinColumn(name: 'event', referencedColumnName: "id")]
-    protected GroupEvent $event;
-    
-    /** Префикс роли */
-    #[ORM\Column(type: RolePrefix::TYPE)]
-    protected RolePrefix $role;
-    
-    /** Правила роли */
-    #[ORM\OneToMany(mappedBy: 'check', targetEntity: \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoter::class, cascade: ['all'])]
-    protected Collection $voter;
-    
-    public function __construct(GroupEvent $event)
-    {
-        $this->id = new GroupCheckUid();
-        $this->event = $event;
-        //$this->voter = new ArrayCollection();
-    }
-    
-    public function __clone()
-    {
-        $this->id = new GroupCheckUid();
-    }
-    
-    /**
-     * @return GroupCheckUid
-     */
-    public function getId() : GroupCheckUid
-    {
-        return $this->id;
-    }
-    
-    /**
-     * @throws Exception
-     */
-    public function getDto($dto) : mixed
-    {
-        if($dto instanceof CheckRoleInterface)
-        {
-            return parent::getDto($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    /**
-     * @throws Exception
-     */
-    public function setEntity($dto) : mixed
-    {
-        if($dto instanceof CheckRoleInterface)
-        {
-            return parent::setEntity($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    public function getUserRole() : RolePrefix
-    {
-        return $this->role;
-    }
+	public const TABLE = 'users_group_check_role';
+	
+	/** ID */
+	#[ORM\Id]
+	#[ORM\Column(type: GroupCheckUid::TYPE)]
+	protected GroupCheckUid $id;
+	
+	/** Связь на событие группы */
+	#[ORM\ManyToOne(targetEntity: GroupEvent::class, inversedBy: "role")]
+	#[ORM\JoinColumn(name: 'event', referencedColumnName: "id")]
+	protected GroupEvent $event;
+	
+	/** Префикс роли */
+	#[ORM\Column(type: RolePrefix::TYPE)]
+	protected RolePrefix $role;
+	
+	/** Правила роли */
+	#[ORM\OneToMany(mappedBy: 'check', targetEntity: \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoter::class, cascade: ['all'])]
+	protected Collection $voter;
+	
+	
+	public function __construct(GroupEvent $event)
+	{
+		$this->id = new GroupCheckUid();
+		$this->event = $event;
+		//$this->voter = new ArrayCollection();
+	}
+	
+	
+	public function __clone()
+	{
+		$this->id = new GroupCheckUid();
+	}
+	
+	
+	/**
+	 * @return GroupCheckUid
+	 */
+	public function getId() : GroupCheckUid
+	{
+		return $this->id;
+	}
+	
+	
+	/**
+	 * @throws Exception
+	 */
+	public function getDto($dto) : mixed
+	{
+		if($dto instanceof CheckRoleInterface)
+		{
+			return parent::getDto($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	/**
+	 * @throws Exception
+	 */
+	public function setEntity($dto) : mixed
+	{
+		if($dto instanceof CheckRoleInterface)
+		{
+			return parent::setEntity($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	public function getUserRole() : RolePrefix
+	{
+		return $this->role;
+	}
+	
 }

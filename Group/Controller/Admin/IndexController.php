@@ -18,7 +18,6 @@
 
 namespace BaksDev\Users\Groups\Group\Controller\Admin;
 
-
 use BaksDev\Users\Groups\Group\Repository\AllGroups\AllGroupsInterface;
 use BaksDev\Core\Controller\AbstractController;
 use BaksDev\Core\Form\Search\SearchDTO;
@@ -55,4 +54,5 @@ final class IndexController extends AbstractController
 			'search' => $searchForm->createView(),
 		]);
 	}
+	
 }

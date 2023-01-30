@@ -22,5 +22,6 @@ use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 
 interface VoterChoiceInterface
 {
-    public function get(RolePrefix $role) : mixed;
+	public function get(RolePrefix $role) : mixed;
+	
 }

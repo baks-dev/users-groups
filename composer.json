@@ -2,16 +2,24 @@
   "name": "baks-dev/users-group",
   "description": "Модуль групп и ролей пользователя",
   "homepage": "https://github.com/baks-dev/users-group",
-  "keywords": ["symfony", "bundle", "library", "module", "plugin", "user", "group", "baksdev"],
+  "keywords": [
+    "symfony",
+    "bundle",
+    "library",
+    "module",
+    "plugin",
+    "user",
+    "group",
+    "baksdev"
+  ],
   "license": "MIT",
-  "type": "library",
+  "type": "symfony-bundle",
   "authors": [
     {
       "name": "Baks Development",
       "email": "admin@baks.dev"
     }
   ],
-  
   "require": {
     "php": ">=8.1",
     "baks-dev/users-user": "^6.2",
@@ -19,24 +27,20 @@
     "symfony/security-bundle": "^6.2",
     "doctrine/doctrine-bundle": "^2.8"
   },
-
   "require-dev": {
     "roave/security-advisories": "dev-latest",
     "symfony/test-pack": "^1.0"
   },
-
   "autoload": {
     "psr-4": {
       "BaksDev\\Users\\Groups\\": ""
     }
   },
-
   "autoload-dev": {
     "psr-4": {
       "BaksDev\\Users\\Groups\\Tests\\": "Tests/"
     }
   },
-
   "config": {
     "sort-packages": true,
     "allow-plugins": {

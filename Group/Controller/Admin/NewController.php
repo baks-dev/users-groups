@@ -35,34 +35,36 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_GROUPS_NEW" in role_names'))]
 final class NewController extends AbstractController
 {
-    #[Route('/admin/group/new', name: 'admin.newedit.new', methods: ['GET', 'POST'])]
-    public function new(
-      Request $request,
-      GroupHandler $handler,
-    ) : Response
-    {
-        $GroupDTO = new GroupDTO();
-
-        /* Форма добавления */
-        $form = $this->createForm(GroupForm::class, $GroupDTO);
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $Group = $handler->handle($GroupDTO);
-            
-            if($Group instanceof GroupEvent)
-            {
-                $this->addFlash('success', 'admin.success.new', 'groups.group');
-                return $this->redirectToRoute('UserGroup:admin.index');
-            }
-    
-            $this->addFlash('danger', 'admin.danger.new', 'groups.group', $Group);
-            return $this->redirectToRoute('UserGroup:admin.index');
-        }
-        
-        return $this->render(['form' => $form->createView()]);
-        
-    }
-
+	#[Route('/admin/group/new', name: 'admin.newedit.new', methods: ['GET', 'POST'])]
+	public function new(
+		Request $request,
+		GroupHandler $handler,
+	) : Response
+	{
+		$GroupDTO = new GroupDTO();
+		
+		/* Форма добавления */
+		$form = $this->createForm(GroupForm::class, $GroupDTO);
+		$form->handleRequest($request);
+		
+		if($form->isSubmitted() && $form->isValid())
+		{
+			$Group = $handler->handle($GroupDTO);
+			
+			if($Group instanceof GroupEvent)
+			{
+				$this->addFlash('success', 'admin.success.new', 'groups.group');
+				
+				return $this->redirectToRoute('UserGroup:admin.index');
+			}
+			
+			$this->addFlash('danger', 'admin.danger.new', 'groups.group', $Group);
+			
+			return $this->redirectToRoute('UserGroup:admin.index');
+		}
+		
+		return $this->render(['form' => $form->createView()]);
+		
+	}
+	
 }

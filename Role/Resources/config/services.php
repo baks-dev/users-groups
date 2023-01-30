@@ -2,8 +2,7 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-
-return static function(ContainerConfigurator $configurator){
+return static function(ContainerConfigurator $configurator) {
 	
 	$services = $configurator->services()
 		->defaults()

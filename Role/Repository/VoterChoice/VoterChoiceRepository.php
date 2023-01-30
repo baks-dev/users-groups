@@ -30,33 +30,45 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class VoterChoiceRepository implements VoterChoiceInterface
 {
-    
-    private EntityManagerInterface $entityManager;
-    private Locale $local;
-    
-    public function __construct(EntityManagerInterface $entityManager,  TranslatorInterface $translator) {
-        
-        $this->entityManager = $entityManager;
-        $this->local = new Locale($translator->getLocale());
-    }
-    
-    public function get(RolePrefix $role) : mixed
-    {
-        $qb = $this->entityManager->createQueryBuilder();
-        
-        $select = sprintf('new %s(voter.voter, trans.name)', VoterPrefix::class);
-    
-        $qb->select($select);
-        $qb->from(\BaksDev\Users\Groups\Role\Entity\Role::class, 'role');
-        $qb->join(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
-        $qb->join(\BaksDev\Users\Groups\Role\Entity\Voters\RoleVoter::class, 'voter', 'WITH', 'voter.event = role.event');
-        $qb->join(\BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class, 'trans', 'WITH', 'trans.voter = voter.id AND trans.local = :local');
-        $qb->setParameter('local', $this->local, Locale::TYPE);
-        
-        $qb->where('role.id = :role');
-        $qb->setParameter('role', $role, RolePrefix::TYPE);
-    
-        return $qb->getQuery()->getResult();
-    }
-    
+	
+	private EntityManagerInterface $entityManager;
+	
+	private Locale $local;
+	
+	
+	public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
+	{
+		
+		$this->entityManager = $entityManager;
+		$this->local = new Locale($translator->getLocale());
+	}
+	
+	
+	public function get(RolePrefix $role) : mixed
+	{
+		$qb = $this->entityManager->createQueryBuilder();
+		
+		$select = sprintf('new %s(voter.voter, trans.name)', VoterPrefix::class);
+		
+		$qb->select($select);
+		$qb->from(\BaksDev\Users\Groups\Role\Entity\Role::class, 'role');
+		$qb->join(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
+		$qb->join(\BaksDev\Users\Groups\Role\Entity\Voters\RoleVoter::class,
+			'voter',
+			'WITH',
+			'voter.event = role.event'
+		);
+		$qb->join(\BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class,
+			'trans',
+			'WITH',
+			'trans.voter = voter.id AND trans.local = :local'
+		);
+		$qb->setParameter('local', $this->local, Locale::TYPE);
+		
+		$qb->where('role.id = :role');
+		$qb->setParameter('role', $role, RolePrefix::TYPE);
+		
+		return $qb->getQuery()->getResult();
+	}
+	
 }

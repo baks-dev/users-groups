@@ -23,15 +23,16 @@ use BaksDev\Core\Type\UidType\UidType;
 
 final class GroupCheckType extends UidType
 {
-    
-    public function getClassType() : string
-    {
-        return GroupCheckUid::class;
-    }
-    
-    public function getName() : string
-    {
-        return GroupCheckUid::TYPE;
-    }
-    
+	
+	public function getClassType() : string
+	{
+		return GroupCheckUid::class;
+	}
+	
+	
+	public function getName() : string
+	{
+		return GroupCheckUid::TYPE;
+	}
+	
 }

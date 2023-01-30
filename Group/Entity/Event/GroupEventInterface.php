@@ -22,7 +22,9 @@ use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
 
 interface GroupEventInterface
 {
-    public function getEvent() : ?GroupEventUid;
-    
-    public function setId(GroupEventUid $id) : void;
+	public function getEvent() : ?GroupEventUid;
+	
+	
+	public function setId(GroupEventUid $id) : void;
+	
 }

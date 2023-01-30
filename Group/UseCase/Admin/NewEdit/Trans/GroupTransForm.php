@@ -28,23 +28,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class GroupTransForm extends AbstractType
 {
-
-    
-    public function buildForm(FormBuilderInterface $builder, array $options) : void
-    {
-        $builder->add('local', HiddenType::class);
-        $builder->add('name', TextType::class);
-        $builder->add('description', TextareaType::class, ['required' => false, 'sanitizer' => 'app.sanitizer']);
-        
-    }
-    
-    public function configureOptions(OptionsResolver $resolver) : void
-    {
-        $resolver->setDefaults
-        (
-          [
-            'data_class' => GroupTransDTO::class,
-          ]);
-    }
-    
+	
+	public function buildForm(FormBuilderInterface $builder, array $options) : void
+	{
+		$builder->add('local', HiddenType::class);
+		$builder->add('name', TextType::class);
+		$builder->add('description', TextareaType::class, ['required' => false]);
+		
+	}
+	
+	
+	public function configureOptions(OptionsResolver $resolver) : void
+	{
+		$resolver->setDefaults
+		(
+			[
+				'data_class' => GroupTransDTO::class,
+			]
+		);
+	}
+	
 }

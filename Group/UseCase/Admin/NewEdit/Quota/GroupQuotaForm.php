@@ -18,7 +18,6 @@
 
 namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Quota;
 
-
 use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Quota\GroupQuotaDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -30,22 +29,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class GroupQuotaForm extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options) : void
-    {
-        /* TextType */
-        $builder->add('size', IntegerType::class, ['required' => false]);
-        $builder->add('files', IntegerType::class, ['required' => false]);
-        $builder->add('filesize', IntegerType::class, ['required' => false]);
-        
-    }
-    
-    public function configureOptions(OptionsResolver $resolver) : void
-    {
-        $resolver->setDefaults
-        (
-          [
-            'data_class' => GroupQuotaDTO::class,
-          ]);
-    }
-    
+	public function buildForm(FormBuilderInterface $builder, array $options) : void
+	{
+		/* TextType */
+		$builder->add('size', IntegerType::class, ['required' => false]);
+		$builder->add('files', IntegerType::class, ['required' => false]);
+		$builder->add('filesize', IntegerType::class, ['required' => false]);
+		
+	}
+	
+	
+	public function configureOptions(OptionsResolver $resolver) : void
+	{
+		$resolver->setDefaults
+		(
+			[
+				'data_class' => GroupQuotaDTO::class,
+			]
+		);
+	}
+	
 }

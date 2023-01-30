@@ -33,121 +33,125 @@ use InvalidArgumentException;
 
 /* Voter */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_voter')]
 #[ORM\Index(columns: ['event'])]
 class RoleVoter extends EntityEvent
 {
-    public const TABLE = 'users_voter';
-    
-    /** ID */
-    #[ORM\Id]
-    #[ORM\Column(type: RoleVoterUid::TYPE)]
-    protected RoleVoterUid $id;
-    
-    /** Связь на событие */
-    #[ORM\ManyToOne(targetEntity: RoleEvent::class, inversedBy: "voter")]
-    #[ORM\JoinColumn(name: 'event', referencedColumnName: "id")]
-    protected RoleEvent $event;
-
-    /** Префикс правила */
-    #[ORM\Column(type: VoterPrefix::TYPE)]
-    protected VoterPrefix $voter;
-    
-    /** Настройки локали */
-    #[ORM\OneToMany(mappedBy: 'voter', targetEntity: \BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class, cascade: ['all'])]
-    protected Collection $translate;
-    
-    /**
-     * @param RoleEvent $event
-     */
-    public function __construct(RoleEvent $event) {
-        $this->event = $event;
-        $this->id = new RoleVoterUid();
-    }
-   
-    public function __clone() : void
-    {
-        $this->id = new RoleVoterUid();
-    }
-    
-    /**
-     * @return RoleVoterUid
-     */
-    public function getId() : RoleVoterUid
-    {
-        return $this->id;
-    }
-    
-    
-
-    
-//    /** Отмеченные правила роли группы */
-//    #[ORM\OneToMany(mappedBy: 'voter', targetEntity: CheckVoter::class, cascade: ['all'])]
-//    protected Collection $checkVoter;
-    
-
-    
-    //    /**
-    //     * @param RoleVoter|VoterPrefix $voter
-    //     * @param GroupRole|RolePrefix $role
-    //     */
-    //    public function __construct(RoleVoter|VoterPrefix $voter, GroupRole|RolePrefix $role)
-    //    {
-    //        $this->role = $role instanceof GroupRole ? $role->getId() : $role;
-    //        $this->id = $voter instanceof RoleVoter ? $voter->getId() : $voter;
-    //    }
-    //
-    //
-    //    /**
-    //     * @return VoterPrefix
-    //     */
-    //    public function getId() : VoterPrefix
-    //    {
-    //        return $this->id;
-    //    }
-
-    
-    /**
-     * @throws Exception
-     */
-    public function getDto($dto) : mixed
-    {
-        if($dto instanceof RoleVoterInterface)
-        {
-            return parent::getDto($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    /**
-     * @throws Exception
-     */
-    public function setEntity($dto) : mixed
-    {
-        if($dto instanceof RoleVoterInterface)
-        {
-            return parent::setEntity($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    public function getNameByLocale(Locale $locale) : ?string
-    {
-        $name = null;
-        
-        /** @var \BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans $trans */
-        foreach($this->translate as $trans)
-        {
-            if($name = $trans->name($locale))
-            {
-                break;
-            }
-        }
-        
-        return $name;
-    }
-    
+	public const TABLE = 'users_voter';
+	
+	/** ID */
+	#[ORM\Id]
+	#[ORM\Column(type: RoleVoterUid::TYPE)]
+	protected RoleVoterUid $id;
+	
+	/** Связь на событие */
+	#[ORM\ManyToOne(targetEntity: RoleEvent::class, inversedBy: "voter")]
+	#[ORM\JoinColumn(name: 'event', referencedColumnName: "id")]
+	protected RoleEvent $event;
+	
+	/** Префикс правила */
+	#[ORM\Column(type: VoterPrefix::TYPE)]
+	protected VoterPrefix $voter;
+	
+	/** Настройки локали */
+	#[ORM\OneToMany(mappedBy: 'voter', targetEntity: \BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class, cascade: ['all'])]
+	protected Collection $translate;
+	
+	
+	/**
+	 * @param RoleEvent $event
+	 */
+	public function __construct(RoleEvent $event)
+	{
+		$this->event = $event;
+		$this->id = new RoleVoterUid();
+	}
+	
+	
+	public function __clone() : void
+	{
+		$this->id = new RoleVoterUid();
+	}
+	
+	
+	/**
+	 * @return RoleVoterUid
+	 */
+	public function getId() : RoleVoterUid
+	{
+		return $this->id;
+	}
+	
+	
+	
+	
+	//    /** Отмеченные правила роли группы */
+	//    #[ORM\OneToMany(mappedBy: 'voter', targetEntity: CheckVoter::class, cascade: ['all'])]
+	//    protected Collection $checkVoter;
+	
+	//    /**
+	//     * @param RoleVoter|VoterPrefix $voter
+	//     * @param GroupRole|RolePrefix $role
+	//     */
+	//    public function __construct(RoleVoter|VoterPrefix $voter, GroupRole|RolePrefix $role)
+	//    {
+	//        $this->role = $role instanceof GroupRole ? $role->getId() : $role;
+	//        $this->id = $voter instanceof RoleVoter ? $voter->getId() : $voter;
+	//    }
+	//
+	//
+	//    /**
+	//     * @return VoterPrefix
+	//     */
+	//    public function getId() : VoterPrefix
+	//    {
+	//        return $this->id;
+	//    }
+	
+	/**
+	 * @throws Exception
+	 */
+	public function getDto($dto) : mixed
+	{
+		if($dto instanceof RoleVoterInterface)
+		{
+			return parent::getDto($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	/**
+	 * @throws Exception
+	 */
+	public function setEntity($dto) : mixed
+	{
+		if($dto instanceof RoleVoterInterface)
+		{
+			return parent::setEntity($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	public function getNameByLocale(Locale $locale) : ?string
+	{
+		$name = null;
+		
+		/** @var \BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans $trans */
+		foreach($this->translate as $trans)
+		{
+			if($name = $trans->name($locale))
+			{
+				break;
+			}
+		}
+		
+		return $name;
+	}
+	
 }

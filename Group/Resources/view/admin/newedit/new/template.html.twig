@@ -1,16 +1,14 @@
 {% trans_default_domain('groups.group') %}
 
-{% set ROLE = 'ROLE_GROUP' %}
-
 {# ---- ШАБЛОН ------------------------------------------------------------ #}
-{% extends '@Template/default/admin/base.html.twig' %}
+{% extends '@Core/admin/base.html.twig' %}
 
- {% block title %}{{ 'admin.page.index'|trans }}{% endblock %}
+{% block title %} {{ 'admin.page.new'|trans }} {% endblock %}
 
 {# ---- CSS ------------------------------------------------------------ #}
- {% block stylesheets %}
+{# {% block stylesheets %}
 
- {% endblock %}
+{% endblock %} #}
 
 {# ---- HEADER-БЛОК ------------------------------------------------------------ #}
 {# {% block header %}
@@ -27,20 +25,23 @@
 {# ---- КОНТЕНТ-БЛОК ------------------------------------------------------------ #}
 {% block content %}
 	{{ include(_self|replace({ "template.html.twig": "content.html.twig" })) }}
-    <div style="display: none !important;"
-         class="popover popover-body popover-arrow fade show rounded-pill spinner-border spinner-border-sm vertical-middle d-none">
-    </div>
 {% endblock %}
 
 
 {# ---- FOOTER-БЛОК ------------------------------------------------------------ #}
-{# {% block footer %}
+{#
+{% block footer %}
     {{ include(_self|replace({ "template.html.twig": "footer.html.twig" })) }}
-{% endblock %} #}
+{% endblock %}
+#}
 
+{% block javascript %}
+<script async nonce="{{ csp_nonce() }}" class="lazy" data-src="/assets/groups_group/script.min.js" ></script>
+{#<script defer src="{{ path(app.request.attributes.get('_route')~'.js') }}"></script>#}
+{#<script>
+    window.addEventListener('load', function () {
+    jsRequire('/groups_group/script.min.js');
+});
 
- {% block javascript %}
-
- {% endblock %}
-
-
+</script>#}
+{% endblock %}

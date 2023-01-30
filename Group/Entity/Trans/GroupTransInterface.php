@@ -20,5 +20,5 @@ namespace BaksDev\Users\Groups\Group\Entity\Trans;
 
 interface GroupTransInterface
 {
-    
+	
 }

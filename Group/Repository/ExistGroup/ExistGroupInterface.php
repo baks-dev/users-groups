@@ -22,5 +22,6 @@ use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 
 interface ExistGroupInterface
 {
-    public function get(GroupPrefix $prefix) : bool;
+	public function get(GroupPrefix $prefix) : bool;
+	
 }

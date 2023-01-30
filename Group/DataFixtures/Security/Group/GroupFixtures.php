@@ -17,7 +17,6 @@
 
 namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Group;
 
-
 use BaksDev\Auth\Email\DataFixtures\Account\AccountFixtures;
 use BaksDev\Auth\Email\Entity\Event\AccountEvent;
 use BaksDev\Users\Groups\Group\Repository\GroupByPrefix\GroupByPrefixInterface;
@@ -34,74 +33,78 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 final class GroupFixtures extends Fixture implements DependentFixtureInterface
 {
 	
-    private GroupHandler $aggregate;
-    private GroupByPrefixInterface $groupByPrefix;
-    private CheckUserAggregate $checkUserAggregate;
-    private TruncateRoleInterface $truncateRole;
-    
-    public function __construct(
-      GroupByPrefixInterface $groupByPrefix,
-      GroupHandler $aggregate,
-      CheckUserAggregate $checkUserAggregate,
-      TruncateRoleInterface $truncateRole
-    )
-    {
-        
-        $this->aggregate = $aggregate;
-        $this->groupByPrefix = $groupByPrefix;
-        $this->checkUserAggregate = $checkUserAggregate;
-        $this->truncateRole = $truncateRole;
-    }
-    
-    public function load(ObjectManager $manager) : void
-    {
-        # php bin/console doctrine:fixtures:load --append
-        
-        /* Группа Администраторов */
-    
-        $GroupDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\GroupDTO();
-		
-        $GroupEvent = $this->groupByPrefix->get($GroupDTO->getGroup());
-		
-        if($GroupEvent === null)
-        {
-            $GroupEvent = $this->aggregate->handle($GroupDTO);
-        }
-    
-        $this->addReference(self::class, $GroupEvent);
-        
-        
-        /* сбрасываем роли и правила */
-        $this->truncateRole->clear();
-        
-        //dd($Group);
+	private GroupHandler $aggregate;
 	
-		
-		
-        /* Присваиваем группу администратору */
-        /** @var AccountEvent $AccountEvent */
-        $AccountEvent = $this->getReference(AccountFixtures::class);
-		
-        /* Сбрасываем кеш ролей пользователя */
-        $cache = new FilesystemAdapter();
-        $cache->delete('group-'.$AccountEvent->getAccount());
-		
-        $CheckUsersDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\CheckUser\CheckUsersDTO($AccountEvent->getAccount(), $GroupEvent->getGroup());
-        $CheckUsers = $manager->getRepository(CheckUsers::class)->find($CheckUsersDTO->getUser());
+	private GroupByPrefixInterface $groupByPrefix;
+	
+	private CheckUserAggregate $checkUserAggregate;
+	
+	private TruncateRoleInterface $truncateRole;
 	
 	
-        if(empty($CheckUsers))
-        {
-            $this->checkUserAggregate->handle($CheckUsersDTO);
-        }
- 
-    }
-    
-    public function getDependencies() : array
-    {
-        return [
-          AccountFixtures::class,
-        ];
-    }
-    
+	public function __construct(
+		GroupByPrefixInterface $groupByPrefix,
+		GroupHandler $aggregate,
+		CheckUserAggregate $checkUserAggregate,
+		TruncateRoleInterface $truncateRole,
+	)
+	{
+		
+		$this->aggregate = $aggregate;
+		$this->groupByPrefix = $groupByPrefix;
+		$this->checkUserAggregate = $checkUserAggregate;
+		$this->truncateRole = $truncateRole;
+	}
+	
+	
+	public function load(ObjectManager $manager) : void
+	{
+		# php bin/console doctrine:fixtures:load --append
+		
+		/* Группа Администраторов */
+		
+		$GroupDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\GroupDTO();
+		
+		$GroupEvent = $this->groupByPrefix->get($GroupDTO->getGroup());
+		
+		if($GroupEvent === null)
+		{
+			$GroupEvent = $this->aggregate->handle($GroupDTO);
+		}
+		
+		$this->addReference(self::class, $GroupEvent);
+		
+		/* сбрасываем роли и правила */
+		$this->truncateRole->clear();
+		
+		//dd($Group);
+		
+		/* Присваиваем группу администратору */
+		/** @var AccountEvent $AccountEvent */
+		$AccountEvent = $this->getReference(AccountFixtures::class);
+		
+		/* Сбрасываем кеш ролей пользователя */
+		$cache = new FilesystemAdapter();
+		$cache->delete('group-'.$AccountEvent->getAccount());
+		
+		$CheckUsersDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Group\CheckUser\CheckUsersDTO($AccountEvent->getAccount(
+		), $GroupEvent->getGroup()
+		);
+		$CheckUsers = $manager->getRepository(CheckUsers::class)->find($CheckUsersDTO->getUser());
+		
+		if(empty($CheckUsers))
+		{
+			$this->checkUserAggregate->handle($CheckUsersDTO);
+		}
+		
+	}
+	
+	
+	public function getDependencies() : array
+	{
+		return [
+			AccountFixtures::class,
+		];
+	}
+	
 }

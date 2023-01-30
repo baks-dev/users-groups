@@ -23,15 +23,16 @@ use BaksDev\Core\Type\UidType\UidType;
 
 final class RoleEventType extends UidType
 {
-    
-    public function getClassType() : string
-    {
-        return RoleEventUid::class;
-    }
-    
-    public function getName() : string
-    {
-        return RoleEventUid::TYPE;
-    }
-    
+	
+	public function getClassType() : string
+	{
+		return RoleEventUid::class;
+	}
+	
+	
+	public function getName() : string
+	{
+		return RoleEventUid::TYPE;
+	}
+	
 }

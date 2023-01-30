@@ -25,20 +25,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class ModifyDTO implements CheckUserModifyInterface
 {
-    /** Модификатор */
-    private readonly ModifyAction $action;
-    
-    public function __construct() {
-        $this->action = new ModifyAction(ModifyActionEnum::DELETE);
-    }
-    
-    /**
-     * @return ModifyAction
-     */
-    public function getAction() : ModifyAction
-    {
-        return $this->action;
-    }
-    
+	/** Модификатор */
+	private readonly ModifyAction $action;
+	
+	
+	public function __construct()
+	{
+		$this->action = new ModifyAction(ModifyActionEnum::DELETE);
+	}
+	
+	
+	/**
+	 * @return ModifyAction
+	 */
+	public function getAction() : ModifyAction
+	{
+		return $this->action;
+	}
+	
 }
 

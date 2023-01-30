@@ -38,50 +38,52 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_PRODUCT_DELETE" in role_names'))]
 final class DeleteController extends AbstractController
 {
-    
-    #[Route('/admin/user/check/delete/{id}', name: 'admin.delete', methods: ['POST', 'GET'])]
-    public function delete(
-      Request $request,
-      CheckUserAggregate $aggregate,
-      UserAccountByIdInterface $account,
-      CheckUsersEvent $Event,
-    ) : Response
-    {
-        $DeleteCheckUserDTO = new DeleteCheckUserDTO();
-        $Event->getDto($DeleteCheckUserDTO);
-        
-        $form = $this->createForm(DeleteCheckUserForm::class, $DeleteCheckUserDTO, [
-          'action' => $this->generateUrl('GroupCheckUser:admin.delete', ['id' => $DeleteCheckUserDTO->getEvent()]),
-        ]);
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid())
-        {
-            if($form->has('delete'))
-            {
-                $handle = $aggregate->handle($DeleteCheckUserDTO);
-                
-                if($handle)
-                {
-                    $this->addFlash('success', 'admin.delete.success', 'groups.users');
-                    return $this->redirectToRoute('GroupCheckUser:admin.index');
-                }
-            }
-            
-            $this->addFlash('danger', 'admin.delete.danger', 'groups.users');
-            return $this->redirectToRoute('GroupCheckUser:admin.index');
-            
-            //return $this->redirectToReferer();
-        }
-    
-    
-        $userAccount = $account->get($Event->getUser());
-        
-        return $this->render
-        ([
-            'form' => $form->createView(),
-            'name' => $userAccount?->getEmail()
-         ]);
-    }
-    
+	
+	#[Route('/admin/user/check/delete/{id}', name: 'admin.delete', methods: ['POST', 'GET'])]
+	public function delete(
+		Request $request,
+		CheckUserAggregate $aggregate,
+		UserAccountByIdInterface $account,
+		CheckUsersEvent $Event,
+	) : Response
+	{
+		$DeleteCheckUserDTO = new DeleteCheckUserDTO();
+		$Event->getDto($DeleteCheckUserDTO);
+		
+		$form = $this->createForm(DeleteCheckUserForm::class, $DeleteCheckUserDTO, [
+			'action' => $this->generateUrl('GroupCheckUser:admin.delete', ['id' => $DeleteCheckUserDTO->getEvent()]),
+		]);
+		$form->handleRequest($request);
+		
+		if($form->isSubmitted() && $form->isValid())
+		{
+			if($form->has('delete'))
+			{
+				$handle = $aggregate->handle($DeleteCheckUserDTO);
+				
+				if($handle)
+				{
+					$this->addFlash('success', 'admin.delete.success', 'groups.users');
+					
+					return $this->redirectToRoute('GroupCheckUser:admin.index');
+				}
+			}
+			
+			$this->addFlash('danger', 'admin.delete.danger', 'groups.users');
+			
+			return $this->redirectToRoute('GroupCheckUser:admin.index');
+			
+			//return $this->redirectToReferer();
+		}
+		
+		$userAccount = $account->get($Event->getUser());
+		
+		return $this->render
+		([
+			'form' => $form->createView(),
+			'name' => $userAccount?->getEmail(),
+		]
+		);
+	}
+	
 }

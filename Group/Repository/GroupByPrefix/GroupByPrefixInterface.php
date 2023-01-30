@@ -22,5 +22,6 @@ use BaksDev\Users\Groups\Group\Entity;
 
 interface GroupByPrefixInterface
 {
-    public function get(GroupPrefix $prefix) : ?\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+	public function get(GroupPrefix $prefix) : ?\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
+	
 }

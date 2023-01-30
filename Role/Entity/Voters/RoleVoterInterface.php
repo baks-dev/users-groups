@@ -18,10 +18,9 @@
 
 namespace BaksDev\Users\Groups\Role\Entity\Voters;
 
-
 interface RoleVoterInterface
 {
-    //public function getEvent() : ?VoterPrefix;
-    
-    //public function setId(VoterPrefix $id) : void;
+	//public function getEvent() : ?VoterPrefix;
+	
+	//public function setId(VoterPrefix $id) : void;
 }

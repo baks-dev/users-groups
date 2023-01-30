@@ -33,37 +33,36 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_CHECK_USERS" in role_names'))]
 final class IndexController extends AbstractController
 {
-    
-    #[Route('/admin/user/checks/{page<\d+>}', name: 'admin.index',  methods: [
-      'GET',
-      'POST'
-    ])]
-    public function index(
-      Request $request,
-
-      AllCheckUsersInterface $allCheckUsers,
-      //AllGroup $getAllGroup,
-      int $page = 0,
-    ) : Response
-    {
-        
-        
-        /* Поиск */
-        $search = new SearchDTO();
-        $searchForm = $this->createForm(SearchForm::class, $search);
-        $searchForm->handleRequest($request);
-
-        /* Получаем список */
-        $query = $allCheckUsers->get($search);
-        //$query = new Paginator($page, $stmt, $request);
-        
-        
-        return $this->render(
-          [
-            'query' => $query,
-            'search' => $searchForm->createView(),
-          ]);
-    }
-
-    
+	
+	#[Route('/admin/user/checks/{page<\d+>}', name: 'admin.index', methods: [
+		'GET',
+		'POST',
+	])]
+	public function index(
+		Request $request,
+		
+		AllCheckUsersInterface $allCheckUsers,
+		//AllGroup $getAllGroup,
+		int $page = 0,
+	) : Response
+	{
+		
+		/* Поиск */
+		$search = new SearchDTO();
+		$searchForm = $this->createForm(SearchForm::class, $search);
+		$searchForm->handleRequest($request);
+		
+		/* Получаем список */
+		$query = $allCheckUsers->get($search);
+		
+		//$query = new Paginator($page, $stmt, $request);
+		
+		return $this->render(
+			[
+				'query' => $query,
+				'search' => $searchForm->createView(),
+			]
+		);
+	}
+	
 }

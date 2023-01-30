@@ -27,14 +27,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class RoleHandler
 {
 	private EntityManagerInterface $entityManager;
+	
 	//private ImageUploadInterface $imageUpload;
 	private ValidatorInterface $validator;
+	
 	private LoggerInterface $logger;
+	
 	
 	public function __construct(
 		EntityManagerInterface $entityManager,
 		ValidatorInterface $validator,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 		//ImageUploadInterface $imageUpload,
 	
 	)
@@ -44,6 +47,7 @@ final class RoleHandler
 		$this->validator = $validator;
 		$this->logger = $logger;
 	}
+	
 	
 	public function handle(
 		\BaksDev\Users\Groups\Role\Entity\Event\RoleEventInterface $command,
@@ -58,13 +62,15 @@ final class RoleHandler
 			$uniqid = uniqid('', false);
 			$errorsString = (string) $errors;
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
 		
-		
 		if($command->getEvent())
 		{
-			$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class)->find($command->getEvent());
+			$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class)
+				->find($command->getEvent())
+			;
 			
 			if($EventRepo === null)
 			{
@@ -75,11 +81,13 @@ final class RoleHandler
 					$command->getEvent()
 				);
 				$this->logger->error($uniqid.': '.$errorsString);
+				
 				return $uniqid;
 			}
 			
 			$Event = $EventRepo->cloneEntity();
-		} else
+		}
+		else
 		{
 			$Event = new \BaksDev\Users\Groups\Role\Entity\Event\RoleEvent();
 		}
@@ -88,19 +96,20 @@ final class RoleHandler
 		$this->entityManager->clear();
 		$this->entityManager->persist($Event);
 		
-		
 		if(empty($Event->getRole()))
 		{
 			$uniqid = uniqid('', false);
 			$errorsString = sprintf('Необходимо указать роль группы');
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
 		
-		
 		$this->entityManager->persist($Event);
 		
-		$Role = $this->entityManager->getRepository(\BaksDev\Users\Groups\Role\Entity\Role::class)->find($Event->getRole());
+		$Role = $this->entityManager->getRepository(\BaksDev\Users\Groups\Role\Entity\Role::class)
+			->find($Event->getRole())
+		;
 		
 		if(empty($Role))
 		{
@@ -129,7 +138,6 @@ final class RoleHandler
 		$this->entityManager->flush();
 		
 		return $Role;
-		
 		
 	}
 	

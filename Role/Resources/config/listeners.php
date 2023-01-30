@@ -21,19 +21,20 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use BaksDev\Users\Groups\Role\Entity;
 use BaksDev\Users\Groups\Role\EntityListeners;
 
-return static function (ContainerConfigurator $configurator)
-{
-    $services = $configurator->services()
-      ->defaults()
-      ->autowire()
-      ->autoconfigure();
-    
-    /** EntityListeners */
-    $services->set(EntityListeners\ModifyListener::class)
-      ->class(EntityListeners\ModifyListener::class)
-      ->tag(
-        'doctrine.orm.entity_listener',
-        ['event' => 'prePersist', 'lazy' => true, 'entity' => Entity\Modify\RoleModify::class]);
-    
-    
+return static function(ContainerConfigurator $configurator) {
+	$services = $configurator->services()
+		->defaults()
+		->autowire()
+		->autoconfigure()
+	;
+	
+	/** EntityListeners */
+	$services->set(EntityListeners\ModifyListener::class)
+		->class(EntityListeners\ModifyListener::class)
+		->tag(
+			'doctrine.orm.entity_listener',
+			['event' => 'prePersist', 'lazy' => true, 'entity' => Entity\Modify\RoleModify::class]
+		)
+	;
+	
 };

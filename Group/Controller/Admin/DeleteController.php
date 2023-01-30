@@ -40,7 +40,7 @@ final class DeleteController extends AbstractController
 	public function delete(
 		Request $request,
 		DeleteGroupHandler $handler,
-		GroupEvent $Event
+		GroupEvent $Event,
 	) : Response
 	{
 		
@@ -56,14 +56,16 @@ final class DeleteController extends AbstractController
 		if($form->isSubmitted() && $form->isValid() && $form->has('delete'))
 		{
 			$GroupEvent = $handler->handle($GroupDTO);
-
+			
 			if($GroupEvent instanceof Group)
 			{
 				$this->addFlash('success', 'admin.success.delete', 'groups.group');
+				
 				return $this->redirectToRoute('UserGroup:admin.index');
 			}
 			
 			$this->addFlash('danger', 'admin.danger.delete', 'groups.group', $GroupEvent);
+			
 			return $this->redirectToRoute('UserGroup:admin.index', status: 400);
 		}
 		

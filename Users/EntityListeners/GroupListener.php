@@ -29,25 +29,27 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 final class GroupListener
 {
-    
-    private UsersByGroupInterface $usersByGroup;
-    
-    public function __construct(UsersByGroupInterface $usersByGroup)
-    {
-        
-        $this->usersByGroup = $usersByGroup;
-    }
-    
-    public function preUpdate(Group $data, LifecycleEventArgs $event) : void
-    {
-        $users = $this->usersByGroup->get($data->getId());
-        
-        $cache = new FilesystemAdapter();
-
-        foreach($users as $user)
-        {
-            $cache->delete('group-'.$user['user_id']);
-        }
-    }
-    
+	
+	private UsersByGroupInterface $usersByGroup;
+	
+	
+	public function __construct(UsersByGroupInterface $usersByGroup)
+	{
+		
+		$this->usersByGroup = $usersByGroup;
+	}
+	
+	
+	public function preUpdate(Group $data, LifecycleEventArgs $event) : void
+	{
+		$users = $this->usersByGroup->get($data->getId());
+		
+		$cache = new FilesystemAdapter();
+		
+		foreach($users as $user)
+		{
+			$cache->delete('group-'.$user['user_id']);
+		}
+	}
+	
 }

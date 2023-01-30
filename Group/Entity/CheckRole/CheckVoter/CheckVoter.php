@@ -29,69 +29,69 @@ use Exception;
 use InvalidArgumentException;
 
 /** Отмеченные правила для роли группы */
-
 #[ORM\Entity]
 #[ORM\Table(name: 'users_group_check_voter')]
 class CheckVoter extends EntityEvent
 {
-    public const TABLE = 'users_group_check_voter';
-    
-    /** Связь на событие группы */
-    #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: CheckRole::class, inversedBy: "voter")]
-    #[ORM\JoinColumn(name: 'check_id', referencedColumnName: "id")]
-    protected CheckRole $check;
-
-    /** Префикс правила */
-    #[ORM\Id]
-    #[ORM\Column(type: VoterPrefix::TYPE)]
-    protected VoterPrefix $voter;
-    
-
-    public function __construct(CheckRole $check) { $this->check = $check; }
-    
-    
-    /**
-     * @throws Exception
-     */
-    public function getDto($dto) : mixed
-    {
-        if($dto instanceof CheckVoterInterface)
-        {
-            return parent::getDto($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    /**
-     * @throws Exception
-     */
-    public function setEntity($dto) : mixed
-    {
-        if($dto instanceof CheckVoterInterface)
-        {
-            return parent::setEntity($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    public function getUserRole() : VoterPrefix
-    {
-        return $this->voter;
-    }
-    
-//    public function equals($dto) : bool
-//    {
-//        if($dto instanceof CheckVoterInterface)
-//        {
-//            return  ($this->check->getId()->getValue() === $dto->getEquals()?->getValue() &&
-//              $this->voter->getValue() === $dto->getVoter()->getValue());
-//        }
-//
-//        throw new Exception(sprintf('Class %s interface error', $dto::class));
-//    }
-
-    
+	public const TABLE = 'users_group_check_voter';
+	
+	/** Связь на событие группы */
+	#[ORM\Id]
+	#[ORM\ManyToOne(targetEntity: CheckRole::class, inversedBy: "voter")]
+	#[ORM\JoinColumn(name: 'check_id', referencedColumnName: "id")]
+	protected CheckRole $check;
+	
+	/** Префикс правила */
+	#[ORM\Id]
+	#[ORM\Column(type: VoterPrefix::TYPE)]
+	protected VoterPrefix $voter;
+	
+	
+	public function __construct(CheckRole $check) { $this->check = $check; }
+	
+	
+	/**
+	 * @throws Exception
+	 */
+	public function getDto($dto) : mixed
+	{
+		if($dto instanceof CheckVoterInterface)
+		{
+			return parent::getDto($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	/**
+	 * @throws Exception
+	 */
+	public function setEntity($dto) : mixed
+	{
+		if($dto instanceof CheckVoterInterface)
+		{
+			return parent::setEntity($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	public function getUserRole() : VoterPrefix
+	{
+		return $this->voter;
+	}
+	
+	//    public function equals($dto) : bool
+	//    {
+	//        if($dto instanceof CheckVoterInterface)
+	//        {
+	//            return  ($this->check->getId()->getValue() === $dto->getEquals()?->getValue() &&
+	//              $this->voter->getValue() === $dto->getVoter()->getValue());
+	//        }
+	//
+	//        throw new Exception(sprintf('Class %s interface error', $dto::class));
+	//    }
+	
 }

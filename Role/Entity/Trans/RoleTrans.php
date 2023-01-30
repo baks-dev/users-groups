@@ -29,80 +29,85 @@ use InvalidArgumentException;
 
 /* Перевод Role */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_role_trans')]
 class RoleTrans extends EntityEvent
 {
-    public const TABLE = 'users_role_trans';
-
-    /** Связь на событие */
-    #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: RoleEvent::class, inversedBy: "translate")]
-    #[ORM\JoinColumn(name: 'event', referencedColumnName: "id")]
-    protected RoleEvent $event;
-    
-    /** Локаль */
-    #[ORM\Id]
-    #[ORM\Column(name: 'local', type: Locale::TYPE, length: 2)]
-    protected Locale $local;
-    
-    /** Название */
-    #[ORM\Column(name: 'name', type: Types::STRING, length: 100)]
-    protected string $name;
-    
-    /** Описание */
-    #[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
-    protected ?string $description;
-    
-
-    public function __construct(RoleEvent $event) {
-        $this->event = $event;
-    }
-    
-    /**
-     * @throws Exception
-     */
-    public function getDto($dto) : mixed
-    {
-        if($dto instanceof RoleTransInterface)
-        {
-            return parent::getDto($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    /**
-     * @throws Exception
-     */
-    public function setEntity($dto) : mixed
-    {
-        if($dto instanceof RoleTransInterface)
-        {
-            return parent::setEntity($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    public function name(Locale $locale) : ?string
-    {
-        if($this->local->getValue() === $locale->getValue())
-        {
-            return $this->name;
-        }
-        
-        return null;
-    }
-    
-//    public function equals($dto) : bool
-//    {
-//        if($dto instanceof RoleTransInterface)
-//        {
-//            return  ($this->role->getId()->getValue() === $dto->getEquals()->getValue() &&
-//              $dto->getLocal()->getValue() === $this->local->getValue());
-//        }
-//
-//        throw new Exception(sprintf('Class %s interface error', $dto::class));
-//    }
+	public const TABLE = 'users_role_trans';
+	
+	/** Связь на событие */
+	#[ORM\Id]
+	#[ORM\ManyToOne(targetEntity: RoleEvent::class, inversedBy: "translate")]
+	#[ORM\JoinColumn(name: 'event', referencedColumnName: "id")]
+	protected RoleEvent $event;
+	
+	/** Локаль */
+	#[ORM\Id]
+	#[ORM\Column(name: 'local', type: Locale::TYPE, length: 2)]
+	protected Locale $local;
+	
+	/** Название */
+	#[ORM\Column(name: 'name', type: Types::STRING, length: 100)]
+	protected string $name;
+	
+	/** Описание */
+	#[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
+	protected ?string $description;
+	
+	
+	public function __construct(RoleEvent $event)
+	{
+		$this->event = $event;
+	}
+	
+	
+	/**
+	 * @throws Exception
+	 */
+	public function getDto($dto) : mixed
+	{
+		if($dto instanceof RoleTransInterface)
+		{
+			return parent::getDto($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	/**
+	 * @throws Exception
+	 */
+	public function setEntity($dto) : mixed
+	{
+		if($dto instanceof RoleTransInterface)
+		{
+			return parent::setEntity($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	public function name(Locale $locale) : ?string
+	{
+		if($this->local->getValue() === $locale->getValue())
+		{
+			return $this->name;
+		}
+		
+		return null;
+	}
+	
+	//    public function equals($dto) : bool
+	//    {
+	//        if($dto instanceof RoleTransInterface)
+	//        {
+	//            return  ($this->role->getId()->getValue() === $dto->getEquals()->getValue() &&
+	//              $dto->getLocal()->getValue() === $this->local->getValue());
+	//        }
+	//
+	//        throw new Exception(sprintf('Class %s interface error', $dto::class));
+	//    }
 }

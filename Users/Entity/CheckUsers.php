@@ -29,48 +29,51 @@ use InvalidArgumentException;
 
 /* CheckUsers */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_group_check_user')]
 class CheckUsers
 {
-    public const TABLE = 'users_group_check_user';
-    
-    /** ID пользователя */
-    #[ORM\Id]
-    #[ORM\Column(name: 'user_id', type: UserUid::TYPE)]
-    protected UserUid $id;
-    
-    /** ID События */
-    #[ORM\Column(type: CheckUsersEventUid::TYPE, unique: true)]
-    protected CheckUsersEventUid $event;
-    
-
-    public function __construct(UserUid|User $user) {
-        $this->id = $user instanceof User ? $user->getId() : $user;
-    }
-    
-    /**
-     * @return UserUid
-     */
-    public function getId() : UserUid
-    {
-        return $this->id;
-    }
-    
-    /**
-     * @return CheckUsersEventUid
-     */
-    public function getEvent() : CheckUsersEventUid
-    {
-        return $this->event;
-    }
-    
-
-    public function setEvent(CheckUsersEventUid|\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent $event) : void
-    {
-        $this->event = $event instanceof \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent ? $event->getId() : $event;
-    }
-    
-
-    
+	public const TABLE = 'users_group_check_user';
+	
+	/** ID пользователя */
+	#[ORM\Id]
+	#[ORM\Column(name: 'user_id', type: UserUid::TYPE)]
+	protected UserUid $id;
+	
+	/** ID События */
+	#[ORM\Column(type: CheckUsersEventUid::TYPE, unique: true)]
+	protected CheckUsersEventUid $event;
+	
+	
+	public function __construct(UserUid|User $user)
+	{
+		$this->id = $user instanceof User ? $user->getId() : $user;
+	}
+	
+	
+	/**
+	 * @return UserUid
+	 */
+	public function getId() : UserUid
+	{
+		return $this->id;
+	}
+	
+	
+	/**
+	 * @return CheckUsersEventUid
+	 */
+	public function getEvent() : CheckUsersEventUid
+	{
+		return $this->event;
+	}
+	
+	
+	public function setEvent(CheckUsersEventUid|\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent $event) : void
+	{
+		$this->event = $event instanceof \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent ? $event->getId(
+		) : $event;
+	}
+	
 }

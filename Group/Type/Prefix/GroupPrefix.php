@@ -18,51 +18,52 @@
 
 namespace BaksDev\Users\Groups\Group\Type\Prefix;
 
-
-
 use InvalidArgumentException;
 
 final class GroupPrefix
 {
-    public const TYPE = 'group_prefix';
-    
-    private $value;
-    
-    private ?string $name;
-    
-    public function __construct(?string $value = null, string $name = null)
-    {
-        if(empty($value))
-        {
-            throw new InvalidArgumentException('You need to pass a value Group Prefix');
-        }
-        
-        if(!preg_match('/ROLE_(\w{0,20})/', $value))
-        {
-            throw new InvalidArgumentException('Incorrect Group Prefix.');
-        }
-        
-        $this->value = \mb_strtoupper($value);
-        $this->name = $name;
-    }
-    
-    public function __toString() : string
-    {
-        return $this->value;
-    }
-    
-    public function getValue() : string
-    {
-        return $this->value;
-    }
-    
-    /**
-     * @return string|null
-     */
-    public function getName() : ?string
-    {
-        return $this->name;
-    }
-    
-    
+	public const TYPE = 'group_prefix';
+	
+	private $value;
+	
+	private ?string $name;
+	
+	
+	public function __construct(?string $value = null, string $name = null)
+	{
+		if(empty($value))
+		{
+			throw new InvalidArgumentException('You need to pass a value Group Prefix');
+		}
+		
+		if(!preg_match('/ROLE_(\w{0,20})/', $value))
+		{
+			throw new InvalidArgumentException('Incorrect Group Prefix.');
+		}
+		
+		$this->value = \mb_strtoupper($value);
+		$this->name = $name;
+	}
+	
+	
+	public function __toString() : string
+	{
+		return $this->value;
+	}
+	
+	
+	public function getValue() : string
+	{
+		return $this->value;
+	}
+	
+	
+	/**
+	 * @return string|null
+	 */
+	public function getName() : ?string
+	{
+		return $this->name;
+	}
+	
 }

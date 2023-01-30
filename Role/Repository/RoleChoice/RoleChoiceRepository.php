@@ -28,30 +28,35 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class RoleChoiceRepository implements RoleChoiceInterface
 {
-    
-    private EntityManagerInterface $entityManager;
-    
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
-    {
-    
-        $this->entityManager = $entityManager;
-        $this->local = new Locale($translator->getLocale());
-    }
-    
-    
-    public function get()
-    {
-        $qb = $this->entityManager->createQueryBuilder();
-        
-        $select = sprintf('new %s(event.role, trans.name)', RolePrefix::class);
-        
-        $qb->select($select);
-        $qb->from(\BaksDev\Users\Groups\Role\Entity\Role::class, 'role');
-        $qb->join(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
-        $qb->join(\BaksDev\Users\Groups\Role\Entity\Trans\RoleTrans::class, 'trans', 'WITH', 'trans.event = event.id AND trans.local = :local');
-        $qb->setParameter('local', $this->local, Locale::TYPE);
-        
-      return $qb->getQuery()->getResult();
-    }
-    
+	
+	private EntityManagerInterface $entityManager;
+	
+	
+	public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
+	{
+		
+		$this->entityManager = $entityManager;
+		$this->local = new Locale($translator->getLocale());
+	}
+	
+	
+	public function get()
+	{
+		$qb = $this->entityManager->createQueryBuilder();
+		
+		$select = sprintf('new %s(event.role, trans.name)', RolePrefix::class);
+		
+		$qb->select($select);
+		$qb->from(\BaksDev\Users\Groups\Role\Entity\Role::class, 'role');
+		$qb->join(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
+		$qb->join(\BaksDev\Users\Groups\Role\Entity\Trans\RoleTrans::class,
+			'trans',
+			'WITH',
+			'trans.event = event.id AND trans.local = :local'
+		);
+		$qb->setParameter('local', $this->local, Locale::TYPE);
+		
+		return $qb->getQuery()->getResult();
+	}
+	
 }

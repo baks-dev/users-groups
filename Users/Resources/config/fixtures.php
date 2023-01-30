@@ -2,19 +2,15 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-
-return static function (ContainerConfigurator $configurator)
-{
-    $services = $configurator->services()
-      ->defaults()
-      ->autowire()      // Automatically injects dependencies in your services.
-      ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
-    ;
-    
-
-//    $services->load('BaksDev\Users\Groups\Users\DataFixtures\\', '../../DataFixtures')
-//      ->exclude('../../DataFixtures/**/*DTO.php');
-
-
+return static function(ContainerConfigurator $configurator) {
+	$services = $configurator->services()
+		->defaults()
+		->autowire()      // Automatically injects dependencies in your services.
+		->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
+	;
+	
+	//    $services->load('BaksDev\Users\Groups\Users\DataFixtures\\', '../../DataFixtures')
+	//      ->exclude('../../DataFixtures/**/*DTO.php');
+	
 };
 

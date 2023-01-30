@@ -13,7 +13,7 @@ use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefixType;
 
 use Symfony\Config\DoctrineConfig;
 
-return static function(DoctrineConfig $doctrine){
+return static function(DoctrineConfig $doctrine) {
 	
 	$doctrine->dbal()->type(RoleEventUid::TYPE)->class(RoleEventType::class);
 	$doctrine->dbal()->type(RoleVoterUid::TYPE)->class(RoleVoterType::class);

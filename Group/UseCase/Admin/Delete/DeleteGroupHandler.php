@@ -32,13 +32,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class DeleteGroupHandler
 {
 	private EntityManagerInterface $entityManager;
+	
 	private ValidatorInterface $validator;
+	
 	private LoggerInterface $logger;
+	
 	
 	public function __construct(
 		EntityManagerInterface $entityManager,
 		ValidatorInterface $validator,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	)
 	{
 		$this->entityManager = $entityManager;
@@ -46,8 +49,9 @@ final class DeleteGroupHandler
 		$this->logger = $logger;
 	}
 	
+	
 	public function handle(
-		GroupEventInterface $command
+		GroupEventInterface $command,
 	) : string|\BaksDev\Users\Groups\Group\Entity\Group
 	{
 		
@@ -59,11 +63,13 @@ final class DeleteGroupHandler
 			$uniqid = uniqid('', false);
 			$errorsString = (string) $errors;
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
 		
-		
-		$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class)->find($command->getEvent());
+		$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class)
+			->find($command->getEvent())
+		;
 		
 		if(empty($EventRepo))
 		{
@@ -74,13 +80,13 @@ final class DeleteGroupHandler
 				$command->getEvent()
 			);
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
 		
 		/* Клонируем и мапим сущность $Event */
 		$Event = $EventRepo->cloneEntity();
 		$Event->setEntity($command);
-		
 		
 		if(!$Event->isModifyActionEquals(ModifyActionEnum::DELETE))
 		{
@@ -91,13 +97,14 @@ final class DeleteGroupHandler
 				(ModifyActionEnum::DELETE)->name
 			);
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
 		
-		
 		$this->entityManager->clear();
 		$Group = $this->entityManager->getRepository(
-			\BaksDev\Users\Groups\Group\Entity\Group::class)->findOneBy(['event' => $command->getEvent()]);
+			\BaksDev\Users\Groups\Group\Entity\Group::class
+		)->findOneBy(['event' => $command->getEvent()]);
 		
 		if(empty($Group))
 		{
@@ -108,6 +115,7 @@ final class DeleteGroupHandler
 				$command->getEvent()
 			);
 			$this->logger->error($uniqid.': '.$errorsString);
+			
 			return $uniqid;
 		}
 		

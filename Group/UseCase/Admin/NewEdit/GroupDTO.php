@@ -29,177 +29,187 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class GroupDTO implements GroupEventInterface
 {
-    /** ID события */
-    #[Assert\Uuid]
-    private ?GroupEventUid $id = null;
-    
-    /** Префикс группы  */
-    #[Assert\NotBlank]
-    private GroupPrefix $group;
-    
-    /** Сортировка */
-    #[Assert\Range(min: 0, max: 999)]
-    #[Assert\NotBlank]
-    private int $sort = 500;
-    
-    /** Настройки ограничений группы */
-    #[Assert\Valid]
-    private GroupQuotaDTO $quota;
-    
-    /** Роли группы */
-    #[Assert\Valid]
-    protected ArrayCollection $role;
-    
-    /** Настройки локали */
-    #[Assert\Valid]
-    private ArrayCollection $translate;
-    
-    public function __construct()
-    {
-        $this->quota = new GroupQuotaDTO();
-        $this->translate = new ArrayCollection();
-        $this->role = new ArrayCollection();
-    }
-    
-    public function getEvent() : ?GroupEventUid
-    {
-        return $this->id;
-        
-    }
-    
-    public function setId(GroupEventUid $id) : void
-    {
-        $this->id = $id;
-    }
-    
-    /* SORT */
-    
-    /**
-     * @return int
-     */
-    public function getSort() : int
-    {
-        return $this->sort;
-    }
-    
-    /**
-     * @param int $sort
-     */
-    public function setSort(int $sort) : void
-    {
-        $this->sort = $sort;
-    }
-    
-    
-    /* TRANSLATE */
-    
-    /**
-     * @param ArrayCollection $trans
-     */
-    public function setTranslate(ArrayCollection $trans) : void
-    {
-        $this->translate = $trans;
-    }
-    
-    /**
-     * @return ArrayCollection
-     */
-    public function getTranslate() : ArrayCollection
-    {
-        /* Вычисляем расхождение и добавляем неопределенные локали */
-        foreach(Locale::diffLocale($this->translate) as $locale)
-        {
-            $GroupTransDTO = new \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO();
-            $GroupTransDTO->setLocal($locale);
-            $this->addTranslate($GroupTransDTO);
-        }
-        
-        return $this->translate;
-    }
-    
-    /** Добавляем перевод категории
-     *
-     * @param \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO $trans
-     *
-     * @return void
-     */
-    public function addTranslate(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO $trans) : void
-    {
-        if(!$this->translate->contains($trans))
-        {
-            $this->translate[] = $trans;
-        }
-    }
-    
-//    public function getTranslateClass() : GroupTransInterface
-//    {
-//        return new Trans\GroupTransDTO();
-//    }
-    
-    /* QUOTA */
-    
-    /**
-     * @return GroupQuotaDTO
-     */
-    public function getQuota() : GroupQuotaDTO
-    {
-        return $this->quota;
-    }
-    
-    /**
-     * @param GroupQuotaDTO $quota
-     */
-    public function setQuota(GroupQuotaDTO $quota) : void
-    {
-        $this->quota = $quota;
-    }
-    
-//    public function getQuotaClass() : GroupQuotaDTO
-//    {
-//        return new GroupQuotaDTO();
-//    }
-    
-    /* GROUP */
-    
-    /**
-     * @return GroupPrefix
-     */
-    public function getGroup() : GroupPrefix
-    {
-        return $this->group;
-    }
-    
-    /**
-     * @param GroupPrefix $group
-     */
-    public function setGroup(GroupPrefix $group) : void
-    {
-        $this->group = $group;
-    }
-    
-    /* role */
-    
-    /**
-     * @return ArrayCollection
-     */
-    public function getRole() : ArrayCollection
-    {
-        return $this->role;
-    }
-
-    public function addRole(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO $role) : void
-    {
-        $this->role->add($role);
-    }
-    
-    public function removeRole(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO $role) : void
-    {
-        $this->role->removeElement($role);
-    }
-    
-//    public function getRoleClass() : CheckRole\CheckRoleDTO
-//    {
-//        return new CheckRole\CheckRoleDTO();
-//    }
-    
+	/** ID события */
+	#[Assert\Uuid]
+	private ?GroupEventUid $id = null;
+	
+	/** Префикс группы  */
+	#[Assert\NotBlank]
+	private GroupPrefix $group;
+	
+	/** Сортировка */
+	#[Assert\Range(min: 0, max: 999)]
+	#[Assert\NotBlank]
+	private int $sort = 500;
+	
+	/** Настройки ограничений группы */
+	#[Assert\Valid]
+	private GroupQuotaDTO $quota;
+	
+	/** Роли группы */
+	#[Assert\Valid]
+	protected ArrayCollection $role;
+	
+	/** Настройки локали */
+	#[Assert\Valid]
+	private ArrayCollection $translate;
+	
+	
+	public function __construct()
+	{
+		$this->quota = new GroupQuotaDTO();
+		$this->translate = new ArrayCollection();
+		$this->role = new ArrayCollection();
+	}
+	
+	
+	public function getEvent() : ?GroupEventUid
+	{
+		return $this->id;
+		
+	}
+	
+	
+	public function setId(GroupEventUid $id) : void
+	{
+		$this->id = $id;
+	}
+	
+	/* SORT */
+	
+	/**
+	 * @return int
+	 */
+	public function getSort() : int
+	{
+		return $this->sort;
+	}
+	
+	
+	/**
+	 * @param int $sort
+	 */
+	public function setSort(int $sort) : void
+	{
+		$this->sort = $sort;
+	}
+	
+	
+	/* TRANSLATE */
+	
+	/**
+	 * @param ArrayCollection $trans
+	 */
+	public function setTranslate(ArrayCollection $trans) : void
+	{
+		$this->translate = $trans;
+	}
+	
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getTranslate() : ArrayCollection
+	{
+		/* Вычисляем расхождение и добавляем неопределенные локали */
+		foreach(Locale::diffLocale($this->translate) as $locale)
+		{
+			$GroupTransDTO = new \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO();
+			$GroupTransDTO->setLocal($locale);
+			$this->addTranslate($GroupTransDTO);
+		}
+		
+		return $this->translate;
+	}
+	
+	
+	/** Добавляем перевод категории
+	 *
+	 * @param \BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO $trans
+	 *
+	 * @return void
+	 */
+	public function addTranslate(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans\GroupTransDTO $trans) : void
+	{
+		if(!$this->translate->contains($trans))
+		{
+			$this->translate[] = $trans;
+		}
+	}
+	
+	//    public function getTranslateClass() : GroupTransInterface
+	//    {
+	//        return new Trans\GroupTransDTO();
+	//    }
+	
+	/* QUOTA */
+	
+	/**
+	 * @return GroupQuotaDTO
+	 */
+	public function getQuota() : GroupQuotaDTO
+	{
+		return $this->quota;
+	}
+	
+	
+	/**
+	 * @param GroupQuotaDTO $quota
+	 */
+	public function setQuota(GroupQuotaDTO $quota) : void
+	{
+		$this->quota = $quota;
+	}
+	
+	//    public function getQuotaClass() : GroupQuotaDTO
+	//    {
+	//        return new GroupQuotaDTO();
+	//    }
+	
+	/* GROUP */
+	
+	/**
+	 * @return GroupPrefix
+	 */
+	public function getGroup() : GroupPrefix
+	{
+		return $this->group;
+	}
+	
+	
+	/**
+	 * @param GroupPrefix $group
+	 */
+	public function setGroup(GroupPrefix $group) : void
+	{
+		$this->group = $group;
+	}
+	
+	/* role */
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getRole() : ArrayCollection
+	{
+		return $this->role;
+	}
+	
+	
+	public function addRole(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO $role) : void
+	{
+		$this->role->add($role);
+	}
+	
+	
+	public function removeRole(\BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\CheckRole\CheckRoleDTO $role) : void
+	{
+		$this->role->removeElement($role);
+	}
+	
+	//    public function getRoleClass() : CheckRole\CheckRoleDTO
+	//    {
+	//        return new CheckRole\CheckRoleDTO();
+	//    }
+	
 }

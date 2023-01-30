@@ -21,5 +21,6 @@ use BaksDev\Users\User\Type\Id\UserUid;
 
 interface RoleByUserInterface
 {
-    public function get(UserUid $userUid) : array;
+	public function get(UserUid $userUid) : array;
+	
 }

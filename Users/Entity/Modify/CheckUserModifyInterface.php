@@ -20,5 +20,5 @@ namespace BaksDev\Users\Groups\Users\Entity\Modify;
 
 interface CheckUserModifyInterface
 {
-    
+	
 }

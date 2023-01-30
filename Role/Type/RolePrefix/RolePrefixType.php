@@ -24,26 +24,30 @@ use Doctrine\DBAL\Types\StringType;
 
 final class RolePrefixType extends StringType
 {
-    public const NAME = 'role_prefix';
-    
-    public function convertToDatabaseValue($value, AbstractPlatform $platform) : mixed
-    {
-        return $value instanceof RolePrefix ? $value->getValue() : $value;
-    }
-    
-    public function convertToPHPValue($value, AbstractPlatform $platform) : mixed
-    {
-        return !empty($value) ? new RolePrefix($value) : null;
-    }
-    
-    public function getName() : string
-    {
-        return self::NAME;
-    }
-    
-    public function requiresSQLCommentHint(AbstractPlatform $platform) : bool
-    {
-        return true;
-    }
-    
+	public const NAME = 'role_prefix';
+	
+	
+	public function convertToDatabaseValue($value, AbstractPlatform $platform) : mixed
+	{
+		return $value instanceof RolePrefix ? $value->getValue() : $value;
+	}
+	
+	
+	public function convertToPHPValue($value, AbstractPlatform $platform) : mixed
+	{
+		return !empty($value) ? new RolePrefix($value) : null;
+	}
+	
+	
+	public function getName() : string
+	{
+		return self::NAME;
+	}
+	
+	
+	public function requiresSQLCommentHint(AbstractPlatform $platform) : bool
+	{
+		return true;
+	}
+	
 }

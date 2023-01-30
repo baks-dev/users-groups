@@ -23,15 +23,16 @@ use BaksDev\Core\Type\UidType\UidType;
 
 final class RoleVoterType extends UidType
 {
-    
-    public function getClassType() : string
-    {
-        return RoleVoterUid::class;
-    }
-    
-    public function getName() : string
-    {
-        return RoleVoterUid::TYPE;
-    }
-    
+	
+	public function getClassType() : string
+	{
+		return RoleVoterUid::class;
+	}
+	
+	
+	public function getName() : string
+	{
+		return RoleVoterUid::TYPE;
+	}
+	
 }

@@ -22,7 +22,9 @@ use BaksDev\Users\Groups\Role\Type\Event\RoleEventUid;
 
 interface RoleEventInterface
 {
-    public function getEvent() : ?RoleEventUid;
-    
-    public function setId(RoleEventUid $id) : void;
+	public function getEvent() : ?RoleEventUid;
+	
+	
+	public function setId(RoleEventUid $id) : void;
+	
 }

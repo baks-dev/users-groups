@@ -20,5 +20,5 @@ namespace BaksDev\Users\Groups\Role\Repository\TruncateRole;
 
 interface TruncateRoleInterface
 {
-    
+	
 }

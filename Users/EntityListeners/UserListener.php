@@ -17,8 +17,6 @@
 
 namespace BaksDev\Users\Groups\Users\EntityListeners;
 
-
-
 use BaksDev\Users\Groups\Users\Repository\RoleByUser\RoleByUserInterface;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -28,60 +26,62 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 final class UserListener
 {
-    //private UserRole $role;
-    private KernelInterface $kernel;
-    private RoleByUserInterface $roleByUser;
-    
-    public function __construct(
-      //UserRole $role,
-      RoleByUserInterface $roleByUser,
-      KernelInterface $kernel,
-    )
-    {
-        $this->kernel = $kernel;
-        $this->roleByUser = $roleByUser;
-    }
-    
-    public function postLoad(UserInterface $data, LifecycleEventArgs $event) : void
-    {
-        $cache = new FilesystemAdapter();
-        //$cache = new ApcuAdapter();
-        
-        
-        /* Кешируем результат запроса */
-        $role = $cache->get('group-'.$data->getId()->getValue(), function (ItemInterface $item) use ($data)
-        {
-            $item->expiresAfter(86400); // 3600 = 1 час / 86400 - сутки
-    
-            /* По умолчанию Все авторизованные пользователи имеют роль ROLE_USER */
-            $roles[] = 'ROLE_USER';
-            
-            /* Получаем роли согласно группе пользователя */
-            $userRoles = $this->roleByUser->get($data->getId());
-            
-            foreach($userRoles as $userRole)
-            {
-                if($userRole === null) { continue; }
-                $roles[] = $userRole->getUserRole()->getValue();
-            }
-
-            return $roles;
-        });
-        
-        
-//        /* Сбрасываем кеш если DEV */
-//        if($this->kernel->getEnvironment() === 'dev')
-//        {
-//            /* Сбрасываем кеш */
-//           $cache->delete('group-'.$data->getId()->getValue());
-//        }
-        
-        //dd($role);
-        
-        
-        /* Присваиваем пользователю роли */
-        $data->setRole($role);
-        
-    }
-    
+	//private UserRole $role;
+	private KernelInterface $kernel;
+	
+	private RoleByUserInterface $roleByUser;
+	
+	
+	public function __construct(
+		//UserRole $role,
+		RoleByUserInterface $roleByUser,
+		KernelInterface $kernel,
+	)
+	{
+		$this->kernel = $kernel;
+		$this->roleByUser = $roleByUser;
+	}
+	
+	
+	public function postLoad(UserInterface $data, LifecycleEventArgs $event) : void
+	{
+		$cache = new FilesystemAdapter();
+		//$cache = new ApcuAdapter();
+		
+		/* Кешируем результат запроса */
+		$role = $cache->get('group-'.$data->getId()->getValue(), function(ItemInterface $item) use ($data) {
+			$item->expiresAfter(86400); // 3600 = 1 час / 86400 - сутки
+			
+			/* По умолчанию Все авторизованные пользователи имеют роль ROLE_USER */
+			$roles[] = 'ROLE_USER';
+			
+			/* Получаем роли согласно группе пользователя */
+			$userRoles = $this->roleByUser->get($data->getId());
+			
+			foreach($userRoles as $userRole)
+			{
+				if($userRole === null)
+				{
+					continue;
+				}
+				$roles[] = $userRole->getUserRole()->getValue();
+			}
+			
+			return $roles;
+		});
+		
+		//        /* Сбрасываем кеш если DEV */
+		//        if($this->kernel->getEnvironment() === 'dev')
+		//        {
+		//            /* Сбрасываем кеш */
+		//           $cache->delete('group-'.$data->getId()->getValue());
+		//        }
+		
+		//dd($role);
+		
+		/* Присваиваем пользователю роли */
+		$data->setRole($role);
+		
+	}
+	
 }

@@ -26,48 +26,50 @@ use BaksDev\Core\Entity\EntityEvent;
 
 /* Role */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_role')]
 class Role
 {
-    public const TABLE = 'users_role';
-    
-    /** ID */
-    #[ORM\Id]
-    #[ORM\Column(type: RolePrefix::TYPE)]
-    protected RolePrefix $id;
-    
-    /** ID События */
-    #[ORM\Column(type: RoleEventUid::TYPE, unique: true)]
-    protected RoleEventUid $event;
-    
-    public function __construct(RolePrefix $id)
-    {
-        $this->id = $id;
-    }
-    
-    /**
-     * @return RolePrefix
-     */
-    public function getId() : RolePrefix
-    {
-        return $this->id;
-    }
-    
-    
-    /**
-     * @return RoleEventUid
-     */
-    public function getEvent() : RoleEventUid
-    {
-        return $this->event;
-    }
-    
-
-    public function setEvent(RoleEventUid|RoleEvent $event) : void
-    {
-        $this->event = $event instanceof RoleEvent ? $event->getId() : $event;
-    }
-    
-
+	public const TABLE = 'users_role';
+	
+	/** ID */
+	#[ORM\Id]
+	#[ORM\Column(type: RolePrefix::TYPE)]
+	protected RolePrefix $id;
+	
+	/** ID События */
+	#[ORM\Column(type: RoleEventUid::TYPE, unique: true)]
+	protected RoleEventUid $event;
+	
+	
+	public function __construct(RolePrefix $id)
+	{
+		$this->id = $id;
+	}
+	
+	
+	/**
+	 * @return RolePrefix
+	 */
+	public function getId() : RolePrefix
+	{
+		return $this->id;
+	}
+	
+	
+	/**
+	 * @return RoleEventUid
+	 */
+	public function getEvent() : RoleEventUid
+	{
+		return $this->event;
+	}
+	
+	
+	public function setEvent(RoleEventUid|RoleEvent $event) : void
+	{
+		$this->event = $event instanceof RoleEvent ? $event->getId() : $event;
+	}
+	
 }

@@ -16,7 +16,6 @@
  */
 
 
-
 document.querySelectorAll('.group-role-checked').forEach(function (check) {
 
     check.addEventListener('change', function () {
@@ -27,14 +26,12 @@ document.querySelectorAll('.group-role-checked').forEach(function (check) {
         // console.log(this.id);
 
 
-        let change = document.getElementById('voter_'+role.id)
+        let change = document.getElementById('voter_' + role.id)
 
-        if(role.checked === true) {
+        if (role.checked === true) {
             change.classList.remove('d-none');
             change.classList.add('d-block');
-        }
-        else
-        {
+        } else {
             change.classList.add('d-none');
             change.classList.remove('d-block');
         }

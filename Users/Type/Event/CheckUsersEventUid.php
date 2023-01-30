@@ -24,41 +24,45 @@ use Symfony\Component\Uid\UuidV7;
 
 final class CheckUsersEventUid
 {
-    public const TYPE = 'check_users_event_id';
-    
-    private Uuid $value;
-    
-    private ?string $name;
-    
-    public function __construct(AbstractUid|string|null $value = null, $name = null)
-    {
-        if($value === null)
-        {
-            $value = Uuid::v7();
-        }
-        
-        else if(is_string($value))
-        {
-            $value = new UuidV7($value);
-        }
-        
-        $this->value = $value;
-        $this->name = $name;
-    }
-    
-    public function __toString() : string
-    {
-        return $this->value;
-    }
-    
-    public function getValue() : AbstractUid
-    {
-        return $this->value;
-    }
-    
-    public function getName() : ?string
-    {
-        return $this->name;
-    }
-    
+	public const TYPE = 'check_users_event_id';
+	
+	private Uuid $value;
+	
+	private ?string $name;
+	
+	
+	public function __construct(AbstractUid|string|null $value = null, $name = null)
+	{
+		if($value === null)
+		{
+			$value = Uuid::v7();
+		}
+		
+		else if(is_string($value))
+		{
+			$value = new UuidV7($value);
+		}
+		
+		$this->value = $value;
+		$this->name = $name;
+	}
+	
+	
+	public function __toString() : string
+	{
+		return $this->value;
+	}
+	
+	
+	public function getValue() : AbstractUid
+	{
+		return $this->value;
+	}
+	
+	
+	public function getName() : ?string
+	{
+		return $this->name;
+	}
+	
 }

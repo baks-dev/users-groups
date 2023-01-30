@@ -25,63 +25,67 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class CheckUsersDTO implements CheckUsersEventInterface
 {
-    /** ID */
-    private readonly CheckUsersEventUid $id;
-    
-    /** ID пользователя */
-    #[Assert\Uuid]
-    #[Assert\NotBlank]
-    private readonly UserUid $user;
-    
-    /** Префикс Группы */
-    #[Assert\NotBlank]
-    private GroupPrefix $group;
-    
-    public function getEvent() : ?CheckUsersEventUid
-    {
-        return $this->id;
-    }
-    
-    public function setId(CheckUsersEventUid $id) : void
-    {
-        $this->id = $id;
-    }
-    
-    /* USER */
-    
-    /**
-     * @param UserUid $user
-     */
-    public function setUser(UserUid $user) : void
-    {
-        $this->user = $user;
-    }
-    
-    /**
-     * @return UserUid
-     */
-    public function getUser() : UserUid
-    {
-        return $this->user;
-    }
-    
-    /* GROUP */
-    
-    /**
-     * @param GroupPrefix $group
-     */
-    public function setGroup(GroupPrefix $group) : void
-    {
-        $this->group = $group;
-    }
-    
-    /**
-     * @return GroupPrefix
-     */
-    public function getGroup() : GroupPrefix
-    {
-        return $this->group;
-    }
-
+	/** ID */
+	private readonly CheckUsersEventUid $id;
+	
+	/** ID пользователя */
+	#[Assert\Uuid]
+	#[Assert\NotBlank]
+	private readonly UserUid $user;
+	
+	/** Префикс Группы */
+	#[Assert\NotBlank]
+	private GroupPrefix $group;
+	
+	
+	public function getEvent() : ?CheckUsersEventUid
+	{
+		return $this->id;
+	}
+	
+	
+	public function setId(CheckUsersEventUid $id) : void
+	{
+		$this->id = $id;
+	}
+	
+	/* USER */
+	
+	/**
+	 * @param UserUid $user
+	 */
+	public function setUser(UserUid $user) : void
+	{
+		$this->user = $user;
+	}
+	
+	
+	/**
+	 * @return UserUid
+	 */
+	public function getUser() : UserUid
+	{
+		return $this->user;
+	}
+	
+	/* GROUP */
+	
+	/**
+	 * @param GroupPrefix $group
+	 */
+	public function setGroup(GroupPrefix $group) : void
+	{
+		$this->group = $group;
+	}
+	
+	
+	/**
+	 * @return GroupPrefix
+	 */
+	public function getGroup() : GroupPrefix
+	{
+		return $this->group;
+	}
+	
 }
 

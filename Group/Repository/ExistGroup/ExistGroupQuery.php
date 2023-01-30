@@ -25,27 +25,29 @@ use Doctrine\DBAL\Connection;
 
 final class ExistGroupQuery implements ExistGroupInterface
 {
-    
-    private Connection $connection;
-
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
-    
-    public function get(GroupPrefix $prefix) : bool
-    {
-        $qb = $this->connection->createQueryBuilder();
-        
-        $qb->select('users_group.id');
-        $qb->from(Group::TABLE, 'users_group');
-        $qb->where('users_group.id = :prefix');
-        
-        $exist = $this->connection->createQueryBuilder();
-        $exist->select('EXISTS ('.$qb->getSQL().') ');
-        $exist->setParameter('prefix', $prefix);
-
-        return (bool) $exist->fetchOne();
-    }
-    
+	
+	private Connection $connection;
+	
+	
+	public function __construct(Connection $connection)
+	{
+		$this->connection = $connection;
+	}
+	
+	
+	public function get(GroupPrefix $prefix) : bool
+	{
+		$qb = $this->connection->createQueryBuilder();
+		
+		$qb->select('users_group.id');
+		$qb->from(Group::TABLE, 'users_group');
+		$qb->where('users_group.id = :prefix');
+		
+		$exist = $this->connection->createQueryBuilder();
+		$exist->select('EXISTS ('.$qb->getSQL().') ');
+		$exist->setParameter('prefix', $prefix);
+		
+		return (bool) $exist->fetchOne();
+	}
+	
 }

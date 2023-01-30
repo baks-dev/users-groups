@@ -34,94 +34,104 @@ use InvalidArgumentException;
 
 /* CheckUsersEvent */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_group_check_user_event')]
 // #[ORM\Index(columns: ['column'])]
 class CheckUsersEvent extends EntityEvent
 {
-    public const TABLE = 'users_group_check_user_event';
-    
-    /** ID */
-    #[ORM\Id]
-    #[ORM\Column(type: CheckUsersEventUid::TYPE)]
-    protected CheckUsersEventUid $id;
-    
-    /** ID События */
-    #[ORM\Column(name: 'user_id', type: UserUid::TYPE)]
-    protected UserUid $user;
-    
-    /** Префикс Группы */
-    #[ORM\Column(name: 'group_id', type: GroupPrefix::TYPE)]
-    protected GroupPrefix $group;
-    
-    /** Модификатор */
-    #[ORM\OneToOne(mappedBy: 'event', targetEntity: CheckUserModify::class, cascade: ['all'])]
-    protected CheckUserModify $modify;
-    
-    public function __construct()
-    {
-        $this->id = new CheckUsersEventUid();
-        $this->modify = new CheckUserModify($this, new ModifyAction(ModifyActionEnum::NEW));
-    }
-    
-    public function __clone()
-    {
-        $this->id = new CheckUsersEventUid();
-    }
-    
-    /**
-     * @return CheckUsersEventUid
-     */
-    public function getId() : CheckUsersEventUid
-    {
-        return $this->id;
-    }
-    
-
-    public function setUser(UserUid|CheckUsers $user) : void
-    {
-        $this->user = $user instanceof CheckUsers ? $user->getId() : $user;
-    }
-    
-    /**
-     * @return UserUid
-     */
-    public function getUser() : UserUid
-    {
-        return $this->user;
-    }
-    
-    public function isModifyActionEquals(ModifyActionEnum $action) : bool
-    {
-        return $this->modify->equals($action);
-    }
-    
-    /**
-     * Метод заполняет объект DTO свойствами сущности и возвращает
-     * @throws Exception
-     */
-    public function getDto($dto) : mixed
-    {
-        if($dto instanceof CheckUsersEventInterface)
-        {
-            return parent::getDto($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    /**
-     * Метод присваивает свойствам значения из объекта DTO
-     * @throws Exception
-     */
-    public function setEntity($dto) : mixed
-    {
-        if($dto instanceof CheckUsersEventInterface)
-        {
-            return parent::setEntity($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
+	public const TABLE = 'users_group_check_user_event';
+	
+	/** ID */
+	#[ORM\Id]
+	#[ORM\Column(type: CheckUsersEventUid::TYPE)]
+	protected CheckUsersEventUid $id;
+	
+	/** ID События */
+	#[ORM\Column(name: 'user_id', type: UserUid::TYPE)]
+	protected UserUid $user;
+	
+	/** Префикс Группы */
+	#[ORM\Column(name: 'group_id', type: GroupPrefix::TYPE)]
+	protected GroupPrefix $group;
+	
+	/** Модификатор */
+	#[ORM\OneToOne(mappedBy: 'event', targetEntity: CheckUserModify::class, cascade: ['all'])]
+	protected CheckUserModify $modify;
+	
+	
+	public function __construct()
+	{
+		$this->id = new CheckUsersEventUid();
+		$this->modify = new CheckUserModify($this, new ModifyAction(ModifyActionEnum::NEW));
+	}
+	
+	
+	public function __clone()
+	{
+		$this->id = new CheckUsersEventUid();
+	}
+	
+	
+	/**
+	 * @return CheckUsersEventUid
+	 */
+	public function getId() : CheckUsersEventUid
+	{
+		return $this->id;
+	}
+	
+	
+	public function setUser(UserUid|CheckUsers $user) : void
+	{
+		$this->user = $user instanceof CheckUsers ? $user->getId() : $user;
+	}
+	
+	
+	/**
+	 * @return UserUid
+	 */
+	public function getUser() : UserUid
+	{
+		return $this->user;
+	}
+	
+	
+	public function isModifyActionEquals(ModifyActionEnum $action) : bool
+	{
+		return $this->modify->equals($action);
+	}
+	
+	
+	/**
+	 * Метод заполняет объект DTO свойствами сущности и возвращает
+	 *
+	 * @throws Exception
+	 */
+	public function getDto($dto) : mixed
+	{
+		if($dto instanceof CheckUsersEventInterface)
+		{
+			return parent::getDto($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	/**
+	 * Метод присваивает свойствам значения из объекта DTO
+	 *
+	 * @throws Exception
+	 */
+	public function setEntity($dto) : mixed
+	{
+		if($dto instanceof CheckUsersEventInterface)
+		{
+			return parent::setEntity($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
 }

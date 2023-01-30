@@ -13,7 +13,7 @@ use BaksDev\Users\Groups\Group\Type\Settings\GroupSettingsType;
 
 use Symfony\Config\DoctrineConfig;
 
-return static function(DoctrineConfig $doctrine){
+return static function(DoctrineConfig $doctrine) {
 	
 	$doctrine->dbal()->type(GroupPrefix::TYPE)->class(GroupPrefixType::class);
 	$doctrine->dbal()->type(GroupEventUid::TYPE)->class(GroupEventUidType::class);

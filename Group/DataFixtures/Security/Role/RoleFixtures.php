@@ -31,46 +31,52 @@ use Doctrine\Persistence\ObjectManager;
 /** Добавляем роль с доступом к 'Группы пользователей' */
 final class RoleFixtures extends Fixture implements DependentFixtureInterface
 {
-
-    private RoleHandler $roleAggregate;
-    private CheckRoleHandler $checkRoleAggregate;
-    
-    public function __construct(
-      RoleHandler $roleAggregate,
-      CheckRoleHandler $checkRoleAggregate
-    ) {
-        $this->roleAggregate = $roleAggregate;
-        $this->checkRoleAggregate = $checkRoleAggregate;
-    }
-    
-    public function load(ObjectManager $manager) : void
-    {
-        # php bin/console doctrine:fixtures:load --append
-    
-        $RoleDTO = new RoleDTO();
-        $RoleEvent = $manager->getRepository(Role::class)->find($RoleDTO->getRole());
-    
-        if(empty($RoleEvent))
-        {
-            //if($RoleEvent) { $RoleDTO->setId($RoleEvent->getEvent()); }
-            $this->roleAggregate->handle($RoleDTO);
-        }
-    
-    
-        /* CheckRole */
-        /** @var GroupEvent $GroupEvent */
-        $GroupEvent = $this->getReference(GroupFixtures::class);
-    
-        $CheckRoleDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Check\CheckRoleDTO($GroupEvent, $RoleDTO);
-        $this->checkRoleAggregate->handle($CheckRoleDTO);
-
-    }
-    
-    public function getDependencies() : array
-    {
-        return [
-          GroupFixtures::class,
-        ];
-    }
-    
+	
+	private RoleHandler $roleAggregate;
+	
+	private CheckRoleHandler $checkRoleAggregate;
+	
+	
+	public function __construct(
+		RoleHandler $roleAggregate,
+		CheckRoleHandler $checkRoleAggregate,
+	)
+	{
+		$this->roleAggregate = $roleAggregate;
+		$this->checkRoleAggregate = $checkRoleAggregate;
+	}
+	
+	
+	public function load(ObjectManager $manager) : void
+	{
+		# php bin/console doctrine:fixtures:load --append
+		
+		$RoleDTO = new RoleDTO();
+		$RoleEvent = $manager->getRepository(Role::class)->find($RoleDTO->getRole());
+		
+		if(empty($RoleEvent))
+		{
+			//if($RoleEvent) { $RoleDTO->setId($RoleEvent->getEvent()); }
+			$this->roleAggregate->handle($RoleDTO);
+		}
+		
+		/* CheckRole */
+		/** @var GroupEvent $GroupEvent */
+		$GroupEvent = $this->getReference(GroupFixtures::class);
+		
+		$CheckRoleDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Check\CheckRoleDTO($GroupEvent,
+			$RoleDTO
+		);
+		$this->checkRoleAggregate->handle($CheckRoleDTO);
+		
+	}
+	
+	
+	public function getDependencies() : array
+	{
+		return [
+			GroupFixtures::class,
+		];
+	}
+	
 }

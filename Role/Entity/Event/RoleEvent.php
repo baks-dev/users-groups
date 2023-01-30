@@ -37,109 +37,115 @@ use InvalidArgumentException;
 
 /* GroupRoleEvent */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_role_event')]
 // #[ORM\Index(columns: ['column'])]
 class RoleEvent extends EntityEvent
 {
-    public const TABLE = 'users_role_event';
-    
-    /** ID */
-    #[ORM\Id]
-    #[ORM\Column(type: RoleEventUid::TYPE)]
-    protected RoleEventUid $id;
-    
-    /** ID Роли */
-    #[ORM\Column(type: RolePrefix::TYPE)]
-    protected RolePrefix $role;
-    
-    /** Настройки локали */
-    #[ORM\OneToMany(mappedBy: 'event', targetEntity: RoleTrans::class, cascade: ['all'])]
-    protected Collection $translate;
-    
-    /** Правила роли */
-    #[ORM\OneToMany(mappedBy: 'event', targetEntity: RoleVoter::class, cascade: ['all'], fetch: 'EXTRA_LAZY')]
-    protected Collection $voter;
-    
-    /** Модификатор */
-    #[ORM\OneToOne(mappedBy: 'event', targetEntity: RoleModify::class, cascade: ['all'])]
-    protected RoleModify $modify;
-    
-    /** Сортировка */
-    #[ORM\Column(type: Types::SMALLINT, length: 3, options: ['default' => 500])]
-    protected int $sort = 500;
-    
-    /** column */
-    //    #[ORM\Column(type: Types::TEXT)]
-    //    private ?string $string;
-    
-    public function __construct()
-    {
-        $this->id = new RoleEventUid();
-        $this->modify = new RoleModify($this, new ModifyAction(ModifyActionEnum::NEW));
-    }
-    
-    public function __clone()
-    {
-        $this->id = new RoleEventUid();
-    }
-    
-    /**
-     * @return RoleEventUid
-     */
-    public function getId() : RoleEventUid
-    {
-        return $this->id;
-    }
-    
-    /**
-     * @return RolePrefix
-     */
-    public function getRole() : RolePrefix
-    {
-        return $this->role;
-    }
-    
-
-    public function setRole(RolePrefix|Role $role) : void
-    {
-        $this->role = $role instanceof Role ? $role->getId() : $role;
-    }
-    
-
-    /**
-     * Метод заполняет объект DTO свойствами сущности и возвращает
-     * @throws Exception
-     */
-    public function getDto($dto) : mixed
-    {
-        if($dto instanceof RoleEventInterface)
-        {
-            return parent::getDto($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    /**
-     * Метод присваивает свойствам значения из объекта DTO
-     * @throws Exception
-     */
-    public function setEntity($dto) : mixed
-    {
-        if($dto instanceof RoleEventInterface)
-        {
-            return parent::setEntity($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    public function isModifyActionEquals(ModifyActionEnum $action) : bool
-    {
-        return $this->modify->equals($action);
-    }
-    
-    
-    
+	public const TABLE = 'users_role_event';
+	
+	/** ID */
+	#[ORM\Id]
+	#[ORM\Column(type: RoleEventUid::TYPE)]
+	protected RoleEventUid $id;
+	
+	/** ID Роли */
+	#[ORM\Column(type: RolePrefix::TYPE)]
+	protected RolePrefix $role;
+	
+	/** Настройки локали */
+	#[ORM\OneToMany(mappedBy: 'event', targetEntity: RoleTrans::class, cascade: ['all'])]
+	protected Collection $translate;
+	
+	/** Правила роли */
+	#[ORM\OneToMany(mappedBy: 'event', targetEntity: RoleVoter::class, cascade: ['all'], fetch: 'EXTRA_LAZY')]
+	protected Collection $voter;
+	
+	/** Модификатор */
+	#[ORM\OneToOne(mappedBy: 'event', targetEntity: RoleModify::class, cascade: ['all'])]
+	protected RoleModify $modify;
+	
+	/** Сортировка */
+	#[ORM\Column(type: Types::SMALLINT, length: 3, options: ['default' => 500])]
+	protected int $sort = 500;
+	
+	/** column */
+	//    #[ORM\Column(type: Types::TEXT)]
+	//    private ?string $string;
+	
+	public function __construct()
+	{
+		$this->id = new RoleEventUid();
+		$this->modify = new RoleModify($this, new ModifyAction(ModifyActionEnum::NEW));
+	}
+	
+	
+	public function __clone()
+	{
+		$this->id = new RoleEventUid();
+	}
+	
+	
+	/**
+	 * @return RoleEventUid
+	 */
+	public function getId() : RoleEventUid
+	{
+		return $this->id;
+	}
+	
+	
+	/**
+	 * @return RolePrefix
+	 */
+	public function getRole() : RolePrefix
+	{
+		return $this->role;
+	}
+	
+	
+	public function setRole(RolePrefix|Role $role) : void
+	{
+		$this->role = $role instanceof Role ? $role->getId() : $role;
+	}
+	
+	
+	/**
+	 * Метод заполняет объект DTO свойствами сущности и возвращает
+	 *
+	 * @throws Exception
+	 */
+	public function getDto($dto) : mixed
+	{
+		if($dto instanceof RoleEventInterface)
+		{
+			return parent::getDto($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	/**
+	 * Метод присваивает свойствам значения из объекта DTO
+	 *
+	 * @throws Exception
+	 */
+	public function setEntity($dto) : mixed
+	{
+		if($dto instanceof RoleEventInterface)
+		{
+			return parent::setEntity($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	public function isModifyActionEquals(ModifyActionEnum $action) : bool
+	{
+		return $this->modify->equals($action);
+	}
+	
 }

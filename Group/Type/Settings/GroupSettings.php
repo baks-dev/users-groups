@@ -20,24 +20,27 @@ namespace BaksDev\Users\Groups\Group\Type\Settings;
 
 final class GroupSettings
 {
-    
-    public const TYPE = 'group_settings';
-    
-    private string $value;
-    
-    public function __construct()
-    {
-        $this->value = self::TYPE;
-    }
-    
-    public function __toString() : string
-    {
-        return $this->value;
-    }
-    
-    public function getValue() : string
-    {
-        return $this->value;
-    }
-    
+	
+	public const TYPE = 'group_settings';
+	
+	private string $value;
+	
+	
+	public function __construct()
+	{
+		$this->value = self::TYPE;
+	}
+	
+	
+	public function __toString() : string
+	{
+		return $this->value;
+	}
+	
+	
+	public function getValue() : string
+	{
+		return $this->value;
+	}
+	
 }

@@ -27,67 +27,71 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class CheckRoleDTO implements CheckRoleInterface
 {
-
-    /** Связь на событие группы */
-    #[Assert\NotBlank]
-    private GroupEvent $event;
-    
-    /** Префикс роли */
-    #[Assert\NotBlank]
-    private RolePrefix $role;
-    
-    /** Правила роли */
-    #[Assert\Valid]
-    private ArrayCollection $voter;
-    
-    public function __construct(GroupEvent $event, RoleEventInterface $roleDTO) {
-        $this->event = $event;
-        $this->voter = new ArrayCollection();
-    
-        $this->role = $roleDTO->getRole();
-    
-        foreach($roleDTO->getVoter() as $voter)
-        {
-            $CheckVoterDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Check\Voter\CheckVoterDTO();
-            $CheckVoterDTO->setVoter($voter->getVoter());
-            $this->addVoter($CheckVoterDTO);
-        }
-    }
-    
-    /**
-     * @return GroupEvent
-     */
-    public function getEvent() : GroupEvent
-    {
-        return $this->event;
-    }
-    
-    /* role */
-    
-    /**
-     * @return RolePrefix
-     */
-    public function getRole() : RolePrefix
-    {
-        return $this->role;
-    }
-    
-    
-    /* VOTER */
-    
-    /**
-     * @return ArrayCollection
-     */
-    public function getVoter() : ArrayCollection
-    {
-        return $this->voter;
-    }
-    
-
-    public function addVoter(\BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Check\Voter\CheckVoterDTO $voter) : void
-    {
-        $this->voter->add($voter);
-    }
-
+	
+	/** Связь на событие группы */
+	#[Assert\NotBlank]
+	private GroupEvent $event;
+	
+	/** Префикс роли */
+	#[Assert\NotBlank]
+	private RolePrefix $role;
+	
+	/** Правила роли */
+	#[Assert\Valid]
+	private ArrayCollection $voter;
+	
+	
+	public function __construct(GroupEvent $event, RoleEventInterface $roleDTO)
+	{
+		$this->event = $event;
+		$this->voter = new ArrayCollection();
+		
+		$this->role = $roleDTO->getRole();
+		
+		foreach($roleDTO->getVoter() as $voter)
+		{
+			$CheckVoterDTO = new \BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Check\Voter\CheckVoterDTO();
+			$CheckVoterDTO->setVoter($voter->getVoter());
+			$this->addVoter($CheckVoterDTO);
+		}
+	}
+	
+	
+	/**
+	 * @return GroupEvent
+	 */
+	public function getEvent() : GroupEvent
+	{
+		return $this->event;
+	}
+	
+	/* role */
+	
+	/**
+	 * @return RolePrefix
+	 */
+	public function getRole() : RolePrefix
+	{
+		return $this->role;
+	}
+	
+	
+	/* VOTER */
+	
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getVoter() : ArrayCollection
+	{
+		return $this->voter;
+	}
+	
+	
+	public function addVoter(\BaksDev\Users\Groups\Group\DataFixtures\Security\Role\Check\Voter\CheckVoterDTO $voter,
+	) : void
+	{
+		$this->voter->add($voter);
+	}
+	
 }
 

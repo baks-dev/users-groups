@@ -25,52 +25,57 @@ use InvalidArgumentException;
 
 /* Ограничения Group */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_group_quota')]
-class GroupQuota  extends EntityEvent
+class GroupQuota extends EntityEvent
 {
-    public const TABLE = 'users_group_quota';
-
-    /** ID события */
-    #[ORM\Id]
-    #[ORM\OneToOne(inversedBy: 'quota', targetEntity: GroupEvent::class)]
-    #[ORM\JoinColumn(name: 'event', referencedColumnName: 'id')]
-    protected GroupEvent $event;
-    
-    /** Лимит дискового пространства (Mb) */
-    #[ORM\Column(name: 'size', type: Types::SMALLINT, length: 5, nullable: true)]
-    protected ?int $size = null;
-    
-    /** Лимит макс. размера одного файла (Mb) */
-    #[ORM\Column(name: 'filesize', type: Types::SMALLINT, length: 5, nullable: true)]
-    protected ?int $filesize = null;
-    
-    /** Лимит макс. числа файлов */
-    #[ORM\Column(name: 'files', type: Types::SMALLINT, length: 5, nullable: true)]
-    protected ?int $files = null;
-    
-    public function __construct(GroupEvent $event)
-    {
-        $this->event = $event;
-    }
-    
-    public function getDto($dto) : mixed
-    {
-        if($dto instanceof GroupQuotaInterface)
-        {
-            return parent::getDto($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
-    
-    public function setEntity($dto) : mixed
-    {
-        if($dto instanceof GroupQuotaInterface)
-        {
-            return parent::setEntity($dto);
-        }
-        
-        throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
-    }
+	public const TABLE = 'users_group_quota';
+	
+	/** ID события */
+	#[ORM\Id]
+	#[ORM\OneToOne(inversedBy: 'quota', targetEntity: GroupEvent::class)]
+	#[ORM\JoinColumn(name: 'event', referencedColumnName: 'id')]
+	protected GroupEvent $event;
+	
+	/** Лимит дискового пространства (Mb) */
+	#[ORM\Column(name: 'size', type: Types::SMALLINT, length: 5, nullable: true)]
+	protected ?int $size = null;
+	
+	/** Лимит макс. размера одного файла (Mb) */
+	#[ORM\Column(name: 'filesize', type: Types::SMALLINT, length: 5, nullable: true)]
+	protected ?int $filesize = null;
+	
+	/** Лимит макс. числа файлов */
+	#[ORM\Column(name: 'files', type: Types::SMALLINT, length: 5, nullable: true)]
+	protected ?int $files = null;
+	
+	
+	public function __construct(GroupEvent $event)
+	{
+		$this->event = $event;
+	}
+	
+	
+	public function getDto($dto) : mixed
+	{
+		if($dto instanceof GroupQuotaInterface)
+		{
+			return parent::getDto($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
+	
+	public function setEntity($dto) : mixed
+	{
+		if($dto instanceof GroupQuotaInterface)
+		{
+			return parent::setEntity($dto);
+		}
+		
+		throw new InvalidArgumentException(sprintf('Class %s interface error', $dto::class));
+	}
+	
 }

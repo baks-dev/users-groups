@@ -21,36 +21,48 @@ use BaksDev\Users\Groups\Group\Entity as EntityGroup;
 use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 use BaksDev\Users\Groups\Group\Repository\ChoiceGroups\ChoiceGroupsInterface;
 use BaksDev\Core\Type\Locale\Locale;
+
 //use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+
 //use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ChoiceGroupsRepository implements ChoiceGroupsInterface
 {
-    
-    private EntityManagerInterface $entityManager;
-    
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
-    {
-        $this->entityManager = $entityManager;
-        $this->local = new Locale($translator->getLocale());
-    }
-    
-    public function get() : mixed
-    {
-        $qb = $this->entityManager->createQueryBuilder();
-        
-        $select = sprintf('new %s(groups.id, trans.name)', GroupPrefix::class);
-        
-        $qb->select($select);
-        $qb->from(\BaksDev\Users\Groups\Group\Entity\Group::class, 'groups');
-        $qb->join(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class, 'event', 'WITH', 'event.id = groups.event');
-        $qb->join(\BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::class, 'trans', 'WITH', 'trans.event = groups.event AND trans.local = :local');
-        
-        $qb->setParameter('local', $this->local, Locale::TYPE);
-        
-        return $qb->getQuery()->getResult();
-    }
-    
+	
+	private EntityManagerInterface $entityManager;
+	
+	
+	public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
+	{
+		$this->entityManager = $entityManager;
+		$this->local = new Locale($translator->getLocale());
+	}
+	
+	
+	public function get() : mixed
+	{
+		$qb = $this->entityManager->createQueryBuilder();
+		
+		$select = sprintf('new %s(groups.id, trans.name)', GroupPrefix::class);
+		
+		$qb->select($select);
+		$qb->from(\BaksDev\Users\Groups\Group\Entity\Group::class, 'groups');
+		$qb->join(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class,
+			'event',
+			'WITH',
+			'event.id = groups.event'
+		);
+		$qb->join(\BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::class,
+			'trans',
+			'WITH',
+			'trans.event = groups.event AND trans.local = :local'
+		);
+		
+		$qb->setParameter('local', $this->local, Locale::TYPE);
+		
+		return $qb->getQuery()->getResult();
+	}
+	
 }

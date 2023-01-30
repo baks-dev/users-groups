@@ -18,13 +18,13 @@
 
 namespace BaksDev\Users\Groups\Role\Entity;
 
-
-
 use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 
 interface RoleInterface
 {
-    public function getEvent() : ?RolePrefix;
-    
-    public function setId(RolePrefix $id) : void;
+	public function getEvent() : ?RolePrefix;
+	
+	
+	public function setId(RolePrefix $id) : void;
+	
 }

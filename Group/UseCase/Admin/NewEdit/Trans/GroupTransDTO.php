@@ -18,76 +18,79 @@
 
 namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\Trans;
 
-
 use BaksDev\Users\Groups\Group\Entity\Trans\GroupTransInterface;
 use BaksDev\Core\Type\Locale\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class GroupTransDTO implements GroupTransInterface
 {
-    /**
-     * @var Locale
-     */
-    private Locale $local;
-
-    /** Название группы */
-    #[Assert\NotBlank]
-    #[Assert\Regex(pattern: '/^[\w \.\_\-\(\)\%]+$/iu')]
-    private ?string $name;
-    
-    /** Краткое описание */
-    //#[Assert\Regex(pattern: '/^[\w \.\_\-\(\)\%]+$/iu')]
-    private ?string $description = null;
-    
-    
-    /**
-     * @return Locale
-     */
-    public function getLocal() : Locale
-    {
-        return $this->local;
-    }
-    
-    /**
-     * @param string|Locale $local
-     */
-    public function setLocal(string $local) : void
-    {
-        $this->local = new Locale($local) ;
-    }
-    
-    /**
-     * @return string|null
-     */
-    public function getName() : ?string
-    {
-        return $this->name;
-    }
-    
-    /**
-     * @param string|null $name
-     */
-    public function setName(?string $name) : void
-    {
-        $this->name = $name;
-    }
-    
-    /**
-     * @return string|null
-     */
-    public function getDescription() : ?string
-    {
-        return $this->description;
-    }
-    
-    /**
-     * @param string|null $description
-     */
-    public function setDescription(?string $description) : void
-    {
-        $this->description = $description;
-    }
-    
-
+	/**
+	 * @var Locale
+	 */
+	private Locale $local;
+	
+	/** Название группы */
+	#[Assert\NotBlank]
+	#[Assert\Regex(pattern: '/^[\w \.\_\-\(\)\%]+$/iu')]
+	private ?string $name;
+	
+	/** Краткое описание */
+	//#[Assert\Regex(pattern: '/^[\w \.\_\-\(\)\%]+$/iu')]
+	private ?string $description = null;
+	
+	
+	/**
+	 * @return Locale
+	 */
+	public function getLocal() : Locale
+	{
+		return $this->local;
+	}
+	
+	
+	/**
+	 * @param string|Locale $local
+	 */
+	public function setLocal(string $local) : void
+	{
+		$this->local = new Locale($local);
+	}
+	
+	
+	/**
+	 * @return string|null
+	 */
+	public function getName() : ?string
+	{
+		return $this->name;
+	}
+	
+	
+	/**
+	 * @param string|null $name
+	 */
+	public function setName(?string $name) : void
+	{
+		$this->name = $name;
+	}
+	
+	
+	/**
+	 * @return string|null
+	 */
+	public function getDescription() : ?string
+	{
+		return $this->description;
+	}
+	
+	
+	/**
+	 * @param string|null $description
+	 */
+	public function setDescription(?string $description) : void
+	{
+		$this->description = $description;
+	}
+	
 }
 

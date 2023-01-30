@@ -27,66 +27,70 @@ use Doctrine\ORM\Mapping as ORM;
 
 /* Group */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_group')]
 class Group
 {
-    
-    public const TABLE = 'users_group';
-    
-    /** Префикс */
-    #[ORM\Id]
-    #[ORM\Column(type: GroupPrefix::TYPE, nullable: false)]
-    private GroupPrefix $id;
-    
-    /** ID События */
-    #[ORM\Column(type: GroupEventUid::TYPE, unique: true)]
-    private GroupEventUid $event;
-    
-
-    public function __construct(GroupPrefix $id)
-    {
-        $this->id = $id;
-    }
-    
-    /**
-     * @return GroupPrefix
-     */
-    public function getId() : GroupPrefix
-    {
-        return $this->id;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getUserRole() : string
-    {
-        return $this->id;
-    }
-    
-//    /**
-//     * @param GroupPrefix $id
-//     */
-//    public function setId(GroupPrefix $id) : void
-//    {
-//        $this->id = $id;
-//    }
-    
-    /**
-     * @return GroupEventUid
-     */
-    public function getEvent() : GroupEventUid
-    {
-        return $this->event;
-    }
-    
-    /**
-     * @param GroupEventUid|GroupEvent $event
-     */
-    public function setEvent(GroupEventUid|GroupEvent $event) : void
-    {
-        $this->event = $event instanceof GroupEvent ? $event->getId() : $event;
-    }
-    
+	
+	public const TABLE = 'users_group';
+	
+	/** Префикс */
+	#[ORM\Id]
+	#[ORM\Column(type: GroupPrefix::TYPE, nullable: false)]
+	private GroupPrefix $id;
+	
+	/** ID События */
+	#[ORM\Column(type: GroupEventUid::TYPE, unique: true)]
+	private GroupEventUid $event;
+	
+	
+	public function __construct(GroupPrefix $id)
+	{
+		$this->id = $id;
+	}
+	
+	
+	/**
+	 * @return GroupPrefix
+	 */
+	public function getId() : GroupPrefix
+	{
+		return $this->id;
+	}
+	
+	
+	/**
+	 * @return string
+	 */
+	public function getUserRole() : string
+	{
+		return $this->id;
+	}
+	
+	//    /**
+	//     * @param GroupPrefix $id
+	//     */
+	//    public function setId(GroupPrefix $id) : void
+	//    {
+	//        $this->id = $id;
+	//    }
+	
+	/**
+	 * @return GroupEventUid
+	 */
+	public function getEvent() : GroupEventUid
+	{
+		return $this->event;
+	}
+	
+	
+	/**
+	 * @param GroupEventUid|GroupEvent $event
+	 */
+	public function setEvent(GroupEventUid|GroupEvent $event) : void
+	{
+		$this->event = $event instanceof GroupEvent ? $event->getId() : $event;
+	}
+	
 }

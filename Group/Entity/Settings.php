@@ -24,29 +24,32 @@ use Doctrine\ORM\Mapping as ORM;
 
 /* Настройки сущности Group */
 
+
 #[ORM\Entity]
 #[ORM\Table(name: 'users_group_settings')]
 class Settings
 {
-    public const TABLE = 'users_group_settings';
-
-    /** ID */
-    #[ORM\Id]
-    #[ORM\Column(type: GroupSettings::TYPE)]
-    private GroupSettings $id;
-
-    /** Очищать корзину старше n дней */
-    #[ORM\Column(name: 'settings_truncate', type: Types::SMALLINT, length: 3, nullable: false)]
-    private int $settingsTruncate = 31;
-    
-    
-    /** Очищать события старше n дней */
-    #[ORM\Column(name: 'settings_history', type: Types::SMALLINT, length: 3, nullable: false)]
-    private int $settingsHistory = 31;
-
-    public function __construct(int $settingsTruncate, int $settingsHistory) {
-        $this->id = new GroupSettings();
-        $this->settingsTruncate = $settingsTruncate;
-        $this->settingsHistory = $settingsHistory;
-    }
+	public const TABLE = 'users_group_settings';
+	
+	/** ID */
+	#[ORM\Id]
+	#[ORM\Column(type: GroupSettings::TYPE)]
+	private GroupSettings $id;
+	
+	/** Очищать корзину старше n дней */
+	#[ORM\Column(name: 'settings_truncate', type: Types::SMALLINT, length: 3, nullable: false)]
+	private int $settingsTruncate = 31;
+	
+	/** Очищать события старше n дней */
+	#[ORM\Column(name: 'settings_history', type: Types::SMALLINT, length: 3, nullable: false)]
+	private int $settingsHistory = 31;
+	
+	
+	public function __construct(int $settingsTruncate, int $settingsHistory)
+	{
+		$this->id = new GroupSettings();
+		$this->settingsTruncate = $settingsTruncate;
+		$this->settingsHistory = $settingsHistory;
+	}
+	
 }

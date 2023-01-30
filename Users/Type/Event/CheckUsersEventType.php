@@ -23,15 +23,16 @@ use BaksDev\Core\Type\UidType\UidType;
 
 final class CheckUsersEventType extends UidType
 {
-    
-    public function getClassType() : string
-    {
-        return CheckUsersEventUid::class;
-    }
-    
-    public function getName() : string
-    {
-        return CheckUsersEventUid::TYPE;
-    }
-    
+	
+	public function getClassType() : string
+	{
+		return CheckUsersEventUid::class;
+	}
+	
+	
+	public function getName() : string
+	{
+		return CheckUsersEventUid::TYPE;
+	}
+	
 }

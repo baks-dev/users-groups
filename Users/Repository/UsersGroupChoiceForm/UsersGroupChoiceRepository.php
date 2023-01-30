@@ -28,54 +28,54 @@ use BaksDev\Auth\EmailAccount\Entity;
 
 final class UsersGroupChoiceRepository implements UsersGroupChoiceInterface
 {
-    
-    private EntityManagerInterface $entityManager;
-    
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-    
-    public function get() : mixed
-    {
-        $qb = $this->entityManager->createQueryBuilder();
-        
-        $select = sprintf('new %s(users.id, account_event.email)', UserUid::class);
-        
-        $qb->select($select);
-        //$qb->addSelect('users.id');
-        
-        $qb->from(User::class, 'users', 'users.id');
-        
-        $qb->join(Entity\Account::class, 'account', 'WITH', 'account.id = users.id');
-        
-        $qb->join(Entity\Event\Event::class, 'account_event', 'WITH', 'account_event.id = account.event');
-        
-        $qb->join(
-          Entity\Status\Status::class,
-          'account_status',
-          'WITH',
-          'account_status.event = account_event.id AND account_status.status = :status');
-        
-        /* Только активные пользователи */
-        $status = new AccountStatus(AccountStatusEnum::ACTIVE);
-        $qb->setParameter('status', $status, AccountStatus::TYPE);
-    
-        
-        /* NOT EXIST */
-        $qbExistGroup = $this->entityManager->createQueryBuilder();
-        $qbExistGroup->select('1')
-          ->from(CheckUsers::class, 'checker')
-          ->where('checker.id = users.id');
-        
-        $qb->andWhere($qb->expr()->not($qb->expr()->exists($qbExistGroup->getDQL())));
-     
-        //dd($qb->getQuery()->getResult());
-    
-    
-  
-        
-        return $qb->getQuery()->getResult();
-    }
-    
+	
+	private EntityManagerInterface $entityManager;
+	
+	
+	public function __construct(EntityManagerInterface $entityManager)
+	{
+		$this->entityManager = $entityManager;
+	}
+	
+	
+	public function get() : mixed
+	{
+		$qb = $this->entityManager->createQueryBuilder();
+		
+		$select = sprintf('new %s(users.id, account_event.email)', UserUid::class);
+		
+		$qb->select($select);
+		//$qb->addSelect('users.id');
+		
+		$qb->from(User::class, 'users', 'users.id');
+		
+		$qb->join(Entity\Account::class, 'account', 'WITH', 'account.id = users.id');
+		
+		$qb->join(Entity\Event\Event::class, 'account_event', 'WITH', 'account_event.id = account.event');
+		
+		$qb->join(
+			Entity\Status\Status::class,
+			'account_status',
+			'WITH',
+			'account_status.event = account_event.id AND account_status.status = :status'
+		);
+		
+		/* Только активные пользователи */
+		$status = new AccountStatus(AccountStatusEnum::ACTIVE);
+		$qb->setParameter('status', $status, AccountStatus::TYPE);
+		
+		/* NOT EXIST */
+		$qbExistGroup = $this->entityManager->createQueryBuilder();
+		$qbExistGroup->select('1')
+			->from(CheckUsers::class, 'checker')
+			->where('checker.id = users.id')
+		;
+		
+		$qb->andWhere($qb->expr()->not($qb->expr()->exists($qbExistGroup->getDQL())));
+		
+		//dd($qb->getQuery()->getResult());
+		
+		return $qb->getQuery()->getResult();
+	}
+	
 }

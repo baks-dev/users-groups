@@ -24,26 +24,30 @@ use Doctrine\DBAL\Types\StringType;
 
 final class VoterPrefixType extends StringType
 {
-    public const NAME = 'voter_prefix';
-    
-    public function convertToDatabaseValue($value, AbstractPlatform $platform) : mixed
-    {
-        return $value instanceof VoterPrefix ? $value->getValue() : $value;
-    }
-    
-    public function convertToPHPValue($value, AbstractPlatform $platform) : mixed
-    {
-        return !empty($value) ? new VoterPrefix($value) : null;
-    }
-    
-    public function getName() : string
-    {
-        return self::NAME;
-    }
-    
-    public function requiresSQLCommentHint(AbstractPlatform $platform) : bool
-    {
-        return true;
-    }
-    
+	public const NAME = 'voter_prefix';
+	
+	
+	public function convertToDatabaseValue($value, AbstractPlatform $platform) : mixed
+	{
+		return $value instanceof VoterPrefix ? $value->getValue() : $value;
+	}
+	
+	
+	public function convertToPHPValue($value, AbstractPlatform $platform) : mixed
+	{
+		return !empty($value) ? new VoterPrefix($value) : null;
+	}
+	
+	
+	public function getName() : string
+	{
+		return self::NAME;
+	}
+	
+	
+	public function requiresSQLCommentHint(AbstractPlatform $platform) : bool
+	{
+		return true;
+	}
+	
 }

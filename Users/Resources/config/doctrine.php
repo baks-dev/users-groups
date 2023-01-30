@@ -6,7 +6,7 @@ use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventType;
 use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
 use Symfony\Config\DoctrineConfig;
 
-return static function(DoctrineConfig $doctrine){
+return static function(DoctrineConfig $doctrine) {
 	
 	$doctrine->dbal()->type(CheckUsersEventUid::TYPE)->class(CheckUsersEventType::class);
 	

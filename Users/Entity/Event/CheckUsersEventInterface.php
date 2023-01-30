@@ -22,7 +22,9 @@ use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
 
 interface CheckUsersEventInterface
 {
-    public function getEvent() : ?CheckUsersEventUid;
-    
-    public function setId(CheckUsersEventUid $id) : void;
+	public function getEvent() : ?CheckUsersEventUid;
+	
+	
+	public function setId(CheckUsersEventUid $id) : void;
+	
 }

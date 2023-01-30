@@ -33,36 +33,38 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_CHECK_USERS_NEW" in role_names'))]
 final class NewController extends AbstractController
 {
-    #[Route('/admin/user/check/new', name: 'admin.new', methods: ['GET', 'POST'])]
-    public function new(
-      Request $request,
-      CheckUserAggregate $aggregate
-    ) : Response
-    {
-        $CheckUsersDTO = new CheckUsersDTO();
-        
-        /* Форма добавления */
-        $form = $this->createForm(CheckUsersForm::class, $CheckUsersDTO, [
-          'action' => $this->generateUrl('GroupCheckUser:admin.new'),
-        ]);
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $handle = $aggregate->handle($CheckUsersDTO);
-            
-            if($handle)
-            {
-                $this->addFlash('success', 'admin.new.success', 'groups.users');
-                return $this->redirectToRoute('GroupCheckUser:admin.index');
-            }
-    
-            $this->addFlash('danger', 'admin.new.danger', 'groups.users');
-            return $this->redirectToRoute('GroupCheckUser:admin.index');
-        }
-        
-        return $this->render(['form' => $form->createView()]);
-        
-    }
-
+	#[Route('/admin/user/check/new', name: 'admin.new', methods: ['GET', 'POST'])]
+	public function new(
+		Request $request,
+		CheckUserAggregate $aggregate,
+	) : Response
+	{
+		$CheckUsersDTO = new CheckUsersDTO();
+		
+		/* Форма добавления */
+		$form = $this->createForm(CheckUsersForm::class, $CheckUsersDTO, [
+			'action' => $this->generateUrl('GroupCheckUser:admin.new'),
+		]);
+		$form->handleRequest($request);
+		
+		if($form->isSubmitted() && $form->isValid())
+		{
+			$handle = $aggregate->handle($CheckUsersDTO);
+			
+			if($handle)
+			{
+				$this->addFlash('success', 'admin.new.success', 'groups.users');
+				
+				return $this->redirectToRoute('GroupCheckUser:admin.index');
+			}
+			
+			$this->addFlash('danger', 'admin.new.danger', 'groups.users');
+			
+			return $this->redirectToRoute('GroupCheckUser:admin.index');
+		}
+		
+		return $this->render(['form' => $form->createView()]);
+		
+	}
+	
 }

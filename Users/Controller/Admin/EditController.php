@@ -41,7 +41,7 @@ final class EditController extends AbstractController
 		Request $request,
 		CheckUserAggregate $aggregate,
 		UserAccountByIdInterface $account,
-		#[MapEntity] CheckUsersEvent $Event
+		#[MapEntity] CheckUsersEvent $Event,
 	) : Response
 	{
 		
@@ -54,7 +54,6 @@ final class EditController extends AbstractController
 		]);
 		$form->handleRequest($request);
 		
-		
 		if($form->isSubmitted() && $form->isValid())
 		{
 			$handle = $aggregate->handle($CheckUsersDTO);
@@ -62,14 +61,17 @@ final class EditController extends AbstractController
 			if($handle)
 			{
 				$this->addFlash('success', 'admin.update.success', 'groups.users');
+				
 				return $this->redirectToRoute('GroupCheckUser:admin.index');
 			}
 			
 			$this->addFlash('danger', 'admin.update.danger', 'groups.users');
+			
 			return $this->redirectToRoute('GroupCheckUser:admin.index');
 		}
 		
 		$userAccount = $account->get($Event->getUser());
+		
 		return $this->render(
 			[
 				'form' => $form->createView(),
@@ -78,5 +80,6 @@ final class EditController extends AbstractController
 		);
 		
 	}
+	
 }
 
