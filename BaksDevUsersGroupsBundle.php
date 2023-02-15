@@ -67,5 +67,4 @@ class BaksDevUsersGroupsBundle extends AbstractBundle
 		}
 		
 	}
-	
 }

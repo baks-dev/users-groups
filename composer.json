@@ -1,7 +1,7 @@
 {
   "name": "baks-dev/users-group",
   "description": "Модуль групп и ролей пользователя",
-  "homepage": "https://github.com/baks-dev/users-group",
+  "homepage": "https://github.com/baks-dev/users-groups",
   "keywords": [
     "symfony",
     "bundle",
