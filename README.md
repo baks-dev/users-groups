@@ -7,7 +7,7 @@
 ## Установка
 
 ``` bash
-$ composer require baks-dev/users-group
+$ composer require baks-dev/users-groups
 ```
 
 ## Дополнительно
