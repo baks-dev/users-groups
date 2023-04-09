@@ -18,44 +18,36 @@
 namespace BaksDev\Users\Groups\Users\UseCase;
 
 use BaksDev\Users\Groups\Users\Entity;
-use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
-use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use BaksDev\Users\Groups\Users\Entity\CheckUserInterface;
 use BaksDev\Core\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Users\Messenger\GroupCheckUserMessage;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Cache\Adapter\ApcuAdapter;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\Cache\ItemInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class CheckUserAggregate
 {
 	private EntityManagerInterface $entityManager;
 	
-	//private RequestStack $request;
-	//private TranslatorInterface $translator;
 	private ValidatorInterface $validator;
+	
+	private MessageBusInterface $bus;
 	
 	
 	public function __construct(
 		EntityManagerInterface $entityManager,
-		//RequestStack $request,
-		//TranslatorInterface $translator,
 		ValidatorInterface $validator,
+		MessageBusInterface $bus,
 	)
 	{
 		$this->entityManager = $entityManager;
-		//$this->request = $request;
-		//$this->translator = $translator;
 		$this->validator = $validator;
+		$this->bus = $bus;
 	}
 	
 	
 	public function handle(
-		\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEventInterface $command,
+		Entity\Event\CheckUsersEventInterface $command,
 	) : mixed
 	{
 		
@@ -72,7 +64,7 @@ final class CheckUserAggregate
 		
 		if($command->getEvent())
 		{
-			$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::class
+			$EventRepo = $this->entityManager->getRepository(Entity\Event\CheckUsersEvent::class
 			)
 				->find($command->getEvent())
 			;
@@ -80,7 +72,7 @@ final class CheckUserAggregate
 		}
 		else
 		{
-			$Event = new \BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent();
+			$Event = new Entity\Event\CheckUsersEvent();
 		}
 		
 		$Event->setEntity($command);
@@ -89,13 +81,13 @@ final class CheckUserAggregate
 		
 		if($Event->getUser())
 		{
-			$CheckUsers = $this->entityManager->getRepository(\BaksDev\Users\Groups\Users\Entity\CheckUsers::class)
+			$CheckUsers = $this->entityManager->getRepository(Entity\CheckUsers::class)
 				->find($Event->getUser())
 			;
 			
 			if(empty($CheckUsers))
 			{
-				$CheckUsers = new \BaksDev\Users\Groups\Users\Entity\CheckUsers($Event->getUser());
+				$CheckUsers = new Entity\CheckUsers($Event->getUser());
 				$this->entityManager->persist($CheckUsers);
 			}
 			
@@ -103,7 +95,7 @@ final class CheckUserAggregate
 			if($Event->isModifyActionEquals(ModifyActionEnum::RESTORE))
 			{
 				$remove = $this->entityManager->getRepository(
-					\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::class
+					Entity\Event\CheckUsersEvent::class
 				)
 					->find($command->getEvent())
 				;
@@ -121,9 +113,16 @@ final class CheckUserAggregate
 			
 			$this->entityManager->flush();
 			
-			/* Сбрасываем кеш группы пользователя */
-			$cache = new FilesystemAdapter();
-			$cache->delete('group-'.$Event->getUser()->getValue());
+			//			/* Сбрасываем кеш группы пользователя */
+			//			$cache = new FilesystemAdapter();
+			//			$cache->delete('group-'.$Event->getUser()->getValue());
+			
+			/* Отправляем собыие в шину  */
+			$this->bus->dispatch(new GroupCheckUserMessage($CheckUsers->getId(),
+				$CheckUsers->getEvent(),
+				$command->getEvent()
+			)
+			);
 			
 			return $CheckUsers;
 		}

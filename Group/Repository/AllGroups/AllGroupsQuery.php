@@ -31,18 +31,13 @@ use function BaksDev\Users\Groups\Group\Repository\AllGroups\mb_strtolower;
 
 final class AllGroupsQuery implements AllGroupsInterface
 {
-	
 	private Connection $connection;
 	
 	private Switcher $switcher;
 	
-	//    public function __construct(Connection $connection, TranslatorInterface $translator, Switcher $switcher)
-	//    {
-	//        $this->connection = $connection;
-	//        $this->local = new Locale($translator->getLocale());
-	//        $this->switcher = $switcher;
-	//    }
 	private PaginatorInterface $paginator;
+	
+	private TranslatorInterface $translator;
 	
 	
 	public function __construct(
@@ -53,9 +48,9 @@ final class AllGroupsQuery implements AllGroupsInterface
 	)
 	{
 		$this->connection = $connection;
-		$this->local = new Locale($translator->getLocale());
 		$this->switcher = $switcher;
 		$this->paginator = $paginator;
+		$this->translator = $translator;
 	}
 	
 	
@@ -82,7 +77,7 @@ final class AllGroupsQuery implements AllGroupsInterface
 			'trans',
 			'trans.event = event.id AND trans.local = :local'
 		);
-		$qb->setParameter('local', $this->local, Locale::TYPE);
+		$qb->setParameter('local', new Locale($this->translator->getLocale()), Locale::TYPE);
 		
 		/* Поиск */
 		if($search->query)

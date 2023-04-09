@@ -31,12 +31,15 @@ final class RoleChoiceRepository implements RoleChoiceInterface
 	
 	private EntityManagerInterface $entityManager;
 	
+	private TranslatorInterface $translator;
+	
 	
 	public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
 	{
 		
 		$this->entityManager = $entityManager;
-		$this->local = new Locale($translator->getLocale());
+		
+		$this->translator = $translator;
 	}
 	
 	
@@ -54,7 +57,7 @@ final class RoleChoiceRepository implements RoleChoiceInterface
 			'WITH',
 			'trans.event = event.id AND trans.local = :local'
 		);
-		$qb->setParameter('local', $this->local, Locale::TYPE);
+		$qb->setParameter('local', new Locale($this->translator->getLocale()), Locale::TYPE);
 		
 		return $qb->getQuery()->getResult();
 	}

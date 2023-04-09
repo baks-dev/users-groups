@@ -19,13 +19,11 @@ namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit;
 
 use BaksDev\Users\Groups\Group\Entity;
 use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use BaksDev\Users\Groups\Users\Entity\CheckUsers;
-use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
-use BaksDev\Core\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Group\Messenger\UserGroupMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Exception\ValidatorException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -41,6 +39,8 @@ final class GroupHandler
 	
 	private LoggerInterface $logger;
 	
+	private MessageBusInterface $bus;
+	
 	
 	public function __construct(
 		EntityManagerInterface $entityManager,
@@ -48,6 +48,7 @@ final class GroupHandler
 		TranslatorInterface $translator,
 		ValidatorInterface $validator,
 		LoggerInterface $logger,
+		MessageBusInterface $bus
 	)
 	{
 		$this->entityManager = $entityManager;
@@ -55,12 +56,13 @@ final class GroupHandler
 		$this->translator = $translator;
 		$this->validator = $validator;
 		$this->logger = $logger;
+		$this->bus = $bus;
 	}
 	
 	
 	public function handle(
 		GroupEventInterface $command,
-	) : string|\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent
+	) : string|Entity\Event\GroupEvent
 	{
 		
 		/* Валидация */
@@ -75,19 +77,20 @@ final class GroupHandler
 			return $uniqid;
 		}
 		
+		
 		if($command->getEvent())
 		{
-			$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class)
-				->find($command->getEvent()
-				)
-			;
+			$EventRepo = $this->entityManager->getRepository(Entity\Event\GroupEvent::class)
+				->find($command->getEvent());
+			
+			
 			
 			if($EventRepo === null)
 			{
 				$uniqid = uniqid('', false);
 				$errorsString = sprintf(
 					'Ошибка при получении сущности %s с id: %s',
-					\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class,
+					Entity\Event\GroupEvent::class,
 					$command->getEvent()
 				);
 				$this->logger->error($uniqid.': '.$errorsString);
@@ -99,7 +102,7 @@ final class GroupHandler
 		}
 		else
 		{
-			$Event = new \BaksDev\Users\Groups\Group\Entity\Event\GroupEvent();
+			$Event = new Entity\Event\GroupEvent();
 		}
 		
 		$this->entityManager->clear();
@@ -122,7 +125,7 @@ final class GroupHandler
 		/* Делаем проверку, что префикс свободен */
 		if($command->getEvent() === null)
 		{
-			$GroupExist = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Group::class)
+			$GroupExist = $this->entityManager->getRepository(Entity\Group::class)
 				->find($Event->getGroup())
 			;
 			
@@ -146,18 +149,41 @@ final class GroupHandler
 			}
 		}
 		
-		$Group = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Group::class)->findOneBy(
-			['event' => $command->getEvent()]
-		);
 		
-		if(empty($Group))
+		if($command->getEvent())
 		{
-			$Group = new \BaksDev\Users\Groups\Group\Entity\Group($Event->getGroup());
+			$Group = $this->entityManager->getRepository(Entity\Group::class)->findOneBy(
+				['event' => $command->getEvent()]
+			);
+			
+			if(empty($Group))
+			{
+				$uniqid = uniqid('', false);
+				$errorsString = sprintf(
+					'Not found %s by event: %s',
+					Entity\Group::class,
+					$command->getEvent()
+				);
+				
+				$this->logger->error($uniqid.': '.$errorsString);
+				
+				return $uniqid;
+			}
+			
+		}
+		else
+		{
+			$Group = new Entity\Group($Event->getGroup());
 			$this->entityManager->persist($Group);
 		}
 		
 		$Group->setEvent($Event); /* Обновляем событие */
 		$this->entityManager->flush();
+		
+		
+		/* Отправляем собыие в шину  */
+		$this->bus->dispatch(new UserGroupMessage($Group->getId(), $Group->getEvent(), $command->getEvent()));
+		
 		
 		return $Event;
 		

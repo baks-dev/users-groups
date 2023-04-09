@@ -41,13 +41,13 @@ return static function(ContainerConfigurator $configurator) {
 		)
 	;
 	
-	$services->set(EntityListeners\GroupListener::class)
-		->class(EntityListeners\GroupListener::class)
-		->tag(
-			'doctrine.orm.entity_listener',
-			['event' => 'preUpdate', 'lazy' => true, 'entity' => Group::class]
-		)
-	;
+//	$services->set(EntityListeners\GroupListener::class)
+//		->class(EntityListeners\GroupListener::class)
+//		->tag(
+//			'doctrine.orm.entity_listener',
+//			['event' => 'preUpdate', 'lazy' => true, 'entity' => Group::class]
+//		)
+//	;
 	
 	$services->set(EntityListeners\UserListener::class)
 		->class(EntityListeners\UserListener::class)

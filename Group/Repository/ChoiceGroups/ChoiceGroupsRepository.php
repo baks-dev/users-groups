@@ -33,11 +33,13 @@ final class ChoiceGroupsRepository implements ChoiceGroupsInterface
 	
 	private EntityManagerInterface $entityManager;
 	
+	private TranslatorInterface $translator;
+	
 	
 	public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
 	{
 		$this->entityManager = $entityManager;
-		$this->local = new Locale($translator->getLocale());
+		$this->translator = $translator;
 	}
 	
 	
@@ -48,19 +50,19 @@ final class ChoiceGroupsRepository implements ChoiceGroupsInterface
 		$select = sprintf('new %s(groups.id, trans.name)', GroupPrefix::class);
 		
 		$qb->select($select);
-		$qb->from(\BaksDev\Users\Groups\Group\Entity\Group::class, 'groups');
-		$qb->join(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class,
+		$qb->from(EntityGroup\Group::class, 'groups');
+		$qb->join(EntityGroup\Event\GroupEvent::class,
 			'event',
 			'WITH',
 			'event.id = groups.event'
 		);
-		$qb->join(\BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::class,
+		$qb->join(EntityGroup\Trans\GroupTrans::class,
 			'trans',
 			'WITH',
 			'trans.event = groups.event AND trans.local = :local'
 		);
 		
-		$qb->setParameter('local', $this->local, Locale::TYPE);
+		$qb->setParameter('local', new Locale($this->translator->getLocale()), Locale::TYPE);
 		
 		return $qb->getQuery()->getResult();
 	}

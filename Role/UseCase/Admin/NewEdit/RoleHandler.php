@@ -19,8 +19,10 @@ namespace BaksDev\Users\Groups\Role\UseCase\Admin\NewEdit;
 
 use BaksDev\Users\Groups\Role\Entity;
 use BaksDev\Core\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Role\Messenger\UserRoleMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -28,30 +30,31 @@ final class RoleHandler
 {
 	private EntityManagerInterface $entityManager;
 	
-	//private ImageUploadInterface $imageUpload;
 	private ValidatorInterface $validator;
 	
 	private LoggerInterface $logger;
+	
+	private MessageBusInterface $bus;
 	
 	
 	public function __construct(
 		EntityManagerInterface $entityManager,
 		ValidatorInterface $validator,
 		LoggerInterface $logger,
-		//ImageUploadInterface $imageUpload,
+		MessageBusInterface $bus,
 	
 	)
 	{
 		$this->entityManager = $entityManager;
-		//$this->imageUpload = $imageUpload;
 		$this->validator = $validator;
 		$this->logger = $logger;
+		$this->bus = $bus;
 	}
 	
 	
 	public function handle(
-		\BaksDev\Users\Groups\Role\Entity\Event\RoleEventInterface $command,
-	) : string|\BaksDev\Users\Groups\Role\Entity\Role
+		Entity\Event\RoleEventInterface $command,
+	) : string|Entity\Role
 	{
 		
 		/* Валидация */
@@ -68,7 +71,7 @@ final class RoleHandler
 		
 		if($command->getEvent())
 		{
-			$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class)
+			$EventRepo = $this->entityManager->getRepository(Entity\Event\RoleEvent::class)
 				->find($command->getEvent())
 			;
 			
@@ -77,7 +80,7 @@ final class RoleHandler
 				$uniqid = uniqid('', false);
 				$errorsString = sprintf(
 					'Ошибка при получении сущности %s с id: %s',
-					\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class,
+					Entity\Event\RoleEvent::class,
 					$command->getEvent()
 				);
 				$this->logger->error($uniqid.': '.$errorsString);
@@ -89,7 +92,7 @@ final class RoleHandler
 		}
 		else
 		{
-			$Event = new \BaksDev\Users\Groups\Role\Entity\Event\RoleEvent();
+			$Event = new Entity\Event\RoleEvent();
 		}
 		
 		$Event->setEntity($command);
@@ -107,35 +110,23 @@ final class RoleHandler
 		
 		$this->entityManager->persist($Event);
 		
-		$Role = $this->entityManager->getRepository(\BaksDev\Users\Groups\Role\Entity\Role::class)
+		$Role = $this->entityManager->getRepository(Entity\Role::class)
 			->find($Event->getRole())
 		;
 		
 		if(empty($Role))
 		{
-			$Role = new \BaksDev\Users\Groups\Role\Entity\Role($Event->getRole());
+			$Role = new Entity\Role($Event->getRole());
 			$this->entityManager->persist($Role);
 		}
-		
-		//			/* Восстанавливаем из корзины */
-		//			if($Event->isModifyActionEquals(ModifyActionEnum::RESTORE))
-		//			{
-		//				$remove = $this->entityManager->getRepository(Entity\Event\RoleEvent::class)
-		//					->find($command->getEvent())
-		//				;
-		//				$this->entityManager->remove($remove);
-		//			}
 		
 		$Event->setRole($Role);
 		$Role->setEvent($Event);
 		
-		//			/* Удаляем категорию */
-		//			if($Event->isModifyActionEquals(ModifyActionEnum::DELETE))
-		//			{
-		//				$this->entityManager->remove($Role);
-		//			}
-		
 		$this->entityManager->flush();
+		
+		/* Отправляем собыие в шину  */
+		$this->bus->dispatch(new UserRoleMessage($Role->getId(), $Role->getEvent(), $command->getEvent()));
 		
 		return $Role;
 		

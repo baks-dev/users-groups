@@ -120,6 +120,7 @@ final class GroupForm extends AbstractType
 			'allow_delete' => true,
 			'allow_add' => true,
 			'prototype_name' => '__role__',
+			
 		]);
 		
 		/* Сохранить ******************************************************/

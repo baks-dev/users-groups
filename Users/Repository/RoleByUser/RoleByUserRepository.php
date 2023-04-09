@@ -22,6 +22,7 @@ use BaksDev\Users\Groups\Users\Entity;
 use BaksDev\Users\User\Type\Id\UserUid;
 use BaksDev\Users\Groups\Users\Repository\RoleByUser\RoleByUserInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Cache\Adapter\ApcuAdapter;
 
 final class RoleByUserRepository implements RoleByUserInterface
 {
@@ -42,35 +43,49 @@ final class RoleByUserRepository implements RoleByUserInterface
 		
 		$qb->select(['groups_event', 'check_role', 'check_voter']);
 		
-		$qb->from(\BaksDev\Users\Groups\Users\Entity\CheckUsers::class, 'check');
-		$qb->join(\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::class,
+		$qb->from(Entity\CheckUsers::class, 'check');
+		$qb->join(Entity\Event\CheckUsersEvent::class,
 			'check_event',
 			'WITH',
 			'check_event.id = check.event'
 		);
 		
-		$qb->join(\BaksDev\Users\Groups\Group\Entity\Group::class, 'groups', 'WITH', 'groups.id = check_event.group');
-		$qb->join(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class,
+		$qb->join(EntityGroup\Group::class, 'groups', 'WITH', 'groups.id = check_event.group');
+		$qb->join(EntityGroup\Event\GroupEvent::class,
 			'groups_event',
 			'WITH',
 			'groups_event.id = groups.event'
 		);
 		
-		$qb->leftJoin(\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class,
+		$qb->leftJoin(EntityGroup\CheckRole\CheckRole::class,
 			'check_role',
 			'WITH',
 			'check_role.event = groups.event'
 		);
-		$qb->leftJoin(\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckVoter\CheckVoter::class,
+		$qb->leftJoin(EntityGroup\CheckRole\CheckVoter\CheckVoter::class,
 			'check_voter',
 			'WITH',
 			'check_voter.check = check_role.id'
 		);
 		
 		$qb->where('check.id = :user_id');
-		$qb->setParameter('user_id', $userUid, UserUid::TYPE);
 		
-		return $qb->getQuery()->getResult();
+		
+		/* Кешируем результат ORM */
+		$cacheQueries = new ApcuAdapter((string) $userUid->getValue());
+		
+		$query = $this->entityManager->createQuery($qb->getDQL());
+		$query->setQueryCache($cacheQueries);
+		$query->setResultCache($cacheQueries);
+		$query->enableResultCache();
+		$query->setLifetime(60 * 60 * 24);
+		
+		
+		$query->setParameter('user_id', $userUid, UserUid::TYPE);
+		
+		
+		return $query->getResult();
+
 	}
 	
 }

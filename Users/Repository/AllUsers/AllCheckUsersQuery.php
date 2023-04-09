@@ -17,9 +17,10 @@
 
 namespace BaksDev\Users\Groups\Users\Repository\AllUsers;
 
-use BaksDev\Users\Groups\Group\Entity as EntityGroup;
-use BaksDev\Users\Groups\Users\Entity;
-use BaksDev\Users\Groups\Users\Repository\AllUsers\EntityAccount;
+use BaksDev\Auth\Email\Entity as AccountEntity;
+use BaksDev\Users\Groups\Group\Entity as GroupEntity;
+use BaksDev\Users\Groups\Users\Entity as GroupCheckUserEntity;
+
 use BaksDev\Users\Groups\Users\Repository\AllUsers\AllCheckUsersInterface;
 use BaksDev\Core\Form\Search\SearchDTO;
 use BaksDev\Core\Services\Paginator\PaginatorInterface;
@@ -28,7 +29,7 @@ use BaksDev\Core\Type\Locale\Locale;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-use function BaksDev\Users\Groups\Users\Repository\AllUsers\mb_strtolower;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class AllCheckUsersQuery implements AllCheckUsersInterface
 {
@@ -39,16 +40,20 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 	
 	private PaginatorInterface $paginator;
 	
+	private TranslatorInterface $translator;
+	
 	
 	public function __construct(
 		Connection $connection,
 		Switcher $switcher,
 		PaginatorInterface $paginator,
+		TranslatorInterface $translator,
 	)
 	{
 		$this->connection = $connection;
 		$this->switcher = $switcher;
 		$this->paginator = $paginator;
+		$this->translator = $translator;
 	}
 	
 	
@@ -56,12 +61,11 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 	{
 		$qb = $this->connection->createQueryBuilder();
 		
-		//$qb->select('checker.user_id as id');
 		$qb->addSelect('checker.event');
-		$qb->from(\BaksDev\Users\Groups\Users\Entity\CheckUsers::TABLE, 'checker');
+		$qb->from(GroupCheckUserEntity\CheckUsers::TABLE, 'checker');
 		
 		$qb->join('checker',
-			\BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent::TABLE,
+			GroupCheckUserEntity\Event\CheckUsersEvent::TABLE,
 			'event',
 			'event.id = checker.event'
 		);
@@ -70,7 +74,7 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 		$qb->addSelect('checker_modify.mod_date as update');
 		$qb->join(
 			'checker',
-			\BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModify::TABLE,
+			GroupCheckUserEntity\Modify\CheckUserModify::TABLE,
 			'checker_modify',
 			'checker_modify.event = checker.event'
 		);
@@ -78,29 +82,41 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 		/* АККАУНТ */
 		
 		$qb->addSelect('account.id');
-		$qb->join('checker', EntityAccount\Account::TABLE, 'account', 'account.id = checker.user_id');
+		$qb->join('checker',
+			AccountEntity\Account::TABLE,
+			'account',
+			'account.id = checker.user_id'
+		);
 		
 		/* Событие */
 		$qb->addSelect('account_event.id as account_event');
 		$qb->addSelect('account_event.email');
-		$qb->join('account', EntityAccount\Event\Event::TABLE, 'account_event', 'account_event.id = account.event');
+		$qb->join('account',
+			AccountEntity\Event\AccountEvent::TABLE,
+			'account_event',
+			'account_event.id = account.event'
+		);
 		
 		/* Статус */
 		$qb->addSelect('account_status.status');
 		$qb->join(
 			'account',
-			EntityAccount\Status\Status::TABLE,
+			AccountEntity\Status\AccountStatus::TABLE,
 			'account_status',
 			'account_status.event = account.event'
 		);
 		
 		/* ГРУППА */
 		
-		$qb->join('event', \BaksDev\Users\Groups\Group\Entity\Group::TABLE, 'groups', 'groups.id = event.group_id');
+		$qb->join('event',
+			GroupEntity\Group::TABLE,
+			'groups',
+			'groups.id = event.group_id'
+		);
 		
 		$qb->addSelect('group_event.sort');
 		$qb->join('groups',
-			\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::TABLE,
+			GroupEntity\Event\GroupEvent::TABLE,
 			'group_event',
 			'group_event.id = groups.event'
 		);
@@ -109,16 +125,16 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
 		$qb->addSelect('trans.description');
 		$qb->join(
 			'group_event',
-			\BaksDev\Users\Groups\Group\Entity\Trans\GroupTrans::TABLE,
+			GroupEntity\Trans\GroupTrans::TABLE,
 			'trans',
 			'trans.event = group_event.id AND trans.local = :local'
 		);
-		$qb->setParameter('local', $this->local, Locale::TYPE);
+		$qb->setParameter('local', new Locale($this->translator->getLocale()), Locale::TYPE);
 		
 		/* Поиск */
 		if($search->query)
 		{
-			$search->query = mb_strtolower($search->query);
+			$search->query = \mb_strtolower($search->query);
 			
 			$qb->andWhere('LOWER(trans.id) LIKE :query');
 			$qb->orWhere('LOWER(trans.id) LIKE :query');

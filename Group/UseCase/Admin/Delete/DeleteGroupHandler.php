@@ -19,15 +19,13 @@ namespace BaksDev\Users\Groups\Group\UseCase\Admin\Delete;
 
 use BaksDev\Users\Groups\Group\Entity;
 use BaksDev\Users\Groups\Group\Entity\Event\GroupEventInterface;
-use BaksDev\Users\Groups\Users\Entity\CheckUsers;
-use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
+use BaksDev\Users\Groups\Group\Messenger\UserGroupMessage;
 use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Exception\ValidatorException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 final class DeleteGroupHandler
 {
@@ -37,22 +35,26 @@ final class DeleteGroupHandler
 	
 	private LoggerInterface $logger;
 	
+	private MessageBusInterface $bus;
+	
 	
 	public function __construct(
 		EntityManagerInterface $entityManager,
 		ValidatorInterface $validator,
 		LoggerInterface $logger,
+		MessageBusInterface $bus
 	)
 	{
 		$this->entityManager = $entityManager;
 		$this->validator = $validator;
 		$this->logger = $logger;
+		$this->bus = $bus;
 	}
 	
 	
 	public function handle(
 		GroupEventInterface $command,
-	) : string|\BaksDev\Users\Groups\Group\Entity\Group
+	) : string|Entity\Group
 	{
 		
 		/* Валидация */
@@ -67,7 +69,7 @@ final class DeleteGroupHandler
 			return $uniqid;
 		}
 		
-		$EventRepo = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\Event\GroupEvent::class)
+		$EventRepo = $this->entityManager->getRepository(Entity\Event\GroupEvent::class)
 			->find($command->getEvent())
 		;
 		
@@ -103,7 +105,7 @@ final class DeleteGroupHandler
 		
 		$this->entityManager->clear();
 		$Group = $this->entityManager->getRepository(
-			\BaksDev\Users\Groups\Group\Entity\Group::class
+			Entity\Group::class
 		)->findOneBy(['event' => $command->getEvent()]);
 		
 		if(empty($Group))
@@ -123,6 +125,10 @@ final class DeleteGroupHandler
 		$this->entityManager->remove($Group);
 		$this->entityManager->persist($Event);
 		$this->entityManager->flush();
+		
+		/* Отправляем собыие в шину  */
+		$this->bus->dispatch(new UserGroupMessage($Group->getId(), $Group->getEvent(), $command->getEvent()));
+		
 		
 		return $Group;
 	}
