@@ -18,12 +18,11 @@
 
 namespace BaksDev\Users\Groups\Users\Controller\Admin;
 
-use BaksDev\Users\Groups\Users\Repository\AllUsers\AllCheckUsersInterface;
 use BaksDev\Core\Controller\AbstractController;
 use BaksDev\Core\Form\Search\SearchDTO;
 use BaksDev\Core\Form\Search\SearchForm;
 use BaksDev\Core\Services\Paginator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use BaksDev\Users\Groups\Users\Repository\AllUsers\AllCheckUsersInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,36 +32,33 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_CHECK_USERS" in role_names'))]
 final class IndexController extends AbstractController
 {
-	
-	#[Route('/admin/user/checks/{page<\d+>}', name: 'admin.index', methods: [
-		'GET',
-		'POST',
-	])]
-	public function index(
-		Request $request,
-		
-		AllCheckUsersInterface $allCheckUsers,
-		//AllGroup $getAllGroup,
-		int $page = 0,
-	) : Response
-	{
-		
-		/* Поиск */
-		$search = new SearchDTO();
-		$searchForm = $this->createForm(SearchForm::class, $search);
-		$searchForm->handleRequest($request);
-		
-		/* Получаем список */
-		$query = $allCheckUsers->get($search);
-		
-		//$query = new Paginator($page, $stmt, $request);
-		
-		return $this->render(
-			[
-				'query' => $query,
-				'search' => $searchForm->createView(),
-			]
-		);
-	}
-	
+    #[Route('/admin/user/checks/{page<\d+>}', name: 'admin.index', methods: [
+        'GET',
+        'POST',
+    ])]
+    public function index(
+        Request $request,
+        AllCheckUsersInterface $allCheckUsers,
+        // AllGroup $getAllGroup,
+        int $page = 0,
+    ): Response {
+
+
+        // Поиск
+        $search = new SearchDTO();
+        $searchForm = $this->createForm(SearchForm::class, $search);
+        $searchForm->handleRequest($request);
+
+        // Получаем список
+        $query = $allCheckUsers->fetchAllUsersOnGroupAssociative($search);
+
+        // $query = new Paginator($page, $stmt, $request);
+
+        return $this->render(
+            [
+                'query' => $query,
+                'search' => $searchForm->createView(),
+            ]
+        );
+    }
 }

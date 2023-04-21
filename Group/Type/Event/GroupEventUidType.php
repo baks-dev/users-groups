@@ -20,6 +20,7 @@ namespace BaksDev\Users\Groups\Group\Type\Event;
 
 use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
 use BaksDev\Core\Type\UidType\UidType;
+use Doctrine\DBAL\Types\Types;
 
 final class GroupEventUidType extends UidType
 {
@@ -31,7 +32,7 @@ final class GroupEventUidType extends UidType
 	
 	public function getName() : string
 	{
-		return GroupEventUid::TYPE;
+        return GroupEventUid::TYPE;
 	}
 	
 }

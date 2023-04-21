@@ -20,6 +20,7 @@ namespace BaksDev\Users\Groups\Role\Type\Voter;
 
 use BaksDev\Users\Groups\Role\Type\Voter\RoleVoterUid;
 use BaksDev\Core\Type\UidType\UidType;
+use Doctrine\DBAL\Types\Types;
 
 final class RoleVoterType extends UidType
 {
@@ -32,7 +33,7 @@ final class RoleVoterType extends UidType
 	
 	public function getName() : string
 	{
-		return RoleVoterUid::TYPE;
+        return RoleVoterUid::TYPE;
 	}
 	
 }

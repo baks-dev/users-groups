@@ -20,6 +20,7 @@ namespace BaksDev\Users\Groups\Group\Type\Check;
 
 use BaksDev\Users\Groups\Group\Type\Check\GroupCheckUid;
 use BaksDev\Core\Type\UidType\UidType;
+use Doctrine\DBAL\Types\Types;
 
 final class GroupCheckType extends UidType
 {
@@ -32,7 +33,7 @@ final class GroupCheckType extends UidType
 	
 	public function getName() : string
 	{
-		return GroupCheckUid::TYPE;
+        return GroupCheckUid::TYPE;
 	}
 	
 }

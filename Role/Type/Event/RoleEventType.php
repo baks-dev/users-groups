@@ -21,6 +21,8 @@ namespace BaksDev\Users\Groups\Role\Type\Event;
 use BaksDev\Users\Groups\Role\Type\Event\RoleEventUid;
 use BaksDev\Core\Type\UidType\UidType;
 
+use Doctrine\DBAL\Types\Types;
+
 final class RoleEventType extends UidType
 {
 	
@@ -32,7 +34,7 @@ final class RoleEventType extends UidType
 	
 	public function getName() : string
 	{
-		return RoleEventUid::TYPE;
+        return RoleEventUid::TYPE;
 	}
 	
 }

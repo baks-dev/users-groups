@@ -1,0 +1,32 @@
+{% trans_default_domain('groups.users') %}
+
+{% set ROLE = 'ROLE_CHECK_USERS' %}
+
+{# ---- ШАБЛОН ------------------------------------------------------------ #}
+{% extends Template('/admin/base.html.twig') %}
+
+ {% block title %}{{ 'admin.page.index'|trans }}{% endblock %}
+
+{# ---- CSS ------------------------------------------------------------ #}
+ {% block stylesheets %}
+
+ {% endblock %}
+
+
+{# ---- КОНТЕНТ-БЛОК ------------------------------------------------------------ #}
+{% block content %}
+    {{ include(_self|replace({ "template.html.twig": baks_settings.device~"/content.html.twig" })) }}
+{% endblock %}
+
+
+{# ---- FOOTER-БЛОК ------------------------------------------------------------ #}
+{# {% block footer %}
+    {{ include(_self|replace({ "template.html.twig": "footer.html.twig" })) }}
+{% endblock %} #}
+
+
+ {% block javascript %}
+
+ {% endblock %}
+
+

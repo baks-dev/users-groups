@@ -18,13 +18,12 @@
 
 namespace BaksDev\Users\Groups\Group\Controller\Admin;
 
+use BaksDev\Core\Controller\AbstractController;
 use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
 use BaksDev\Users\Groups\Group\Entity\Group;
-use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupForm;
 use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupDTO;
+use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupForm;
 use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupHandler;
-use BaksDev\Core\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,49 +33,46 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_PRODUCT_DELETE" in role_names'))]
 final class DeleteController extends AbstractController
 {
-	#[Route('/admin/group/delete/{id}', name: 'admin.delete', methods: ['POST', 'GET'],
-		condition: "request.headers.get('X-Requested-With') === 'XMLHttpRequest'",
-	)]
-	public function delete(
-		Request $request,
-		DeleteGroupHandler $handler,
-		GroupEvent $Event,
-	) : Response
-	{
-		
-		$GroupDTO = new DeleteGroupDTO();
-		$Event->getDto($GroupDTO);
-		
-		$form = $this->createForm(DeleteGroupForm::class, $GroupDTO, [
-			'action' => $this->generateUrl('UserGroup:admin.delete', ['id' => $GroupDTO->getEvent()]),
-		]);
-		
-		$form->handleRequest($request);
-		
-		if($form->isSubmitted() && $form->isValid() && $form->has('delete'))
-		{
-			$GroupEvent = $handler->handle($GroupDTO);
-			
-			if($GroupEvent instanceof Group)
-			{
-				$this->addFlash('success', 'admin.success.delete', 'groups.group');
-				
-				return $this->redirectToRoute('UserGroup:admin.index');
-			}
-			
-			$this->addFlash('danger', 'admin.danger.delete', 'groups.group', $GroupEvent);
-			
-			return $this->redirectToRoute('UserGroup:admin.index', status: 400);
-		}
-		
-		return $this->render
-		(
-			[
-				'form' => $form->createView(),
-				'name' => $Event->getNameByLocale($this->getLocale()), /*  название согласно локали  */
-			],
-			'content.html.twig'
-		);
-	}
-	
+    #[Route(
+        '/admin/group/delete/{id}',
+        name: 'admin.delete',
+        methods: ['POST', 'GET'],
+        condition: "request.headers.get('X-Requested-With') === 'XMLHttpRequest'",
+    )]
+    public function delete(
+        Request $request,
+        DeleteGroupHandler $handler,
+        GroupEvent $Event,
+    ): Response {
+        $GroupDTO = new DeleteGroupDTO();
+        $Event->getDto($GroupDTO);
+
+        $form = $this->createForm(DeleteGroupForm::class, $GroupDTO, [
+            'action' => $this->generateUrl('UserGroup:admin.delete', ['id' => $GroupDTO->getEvent()]),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid() && $form->has('delete')) {
+            $GroupEvent = $handler->handle($GroupDTO);
+
+            if ($GroupEvent instanceof Group) {
+                $this->addFlash('success', 'admin.success.delete', 'groups.group');
+
+                return $this->redirectToRoute('UserGroup:admin.index');
+            }
+
+            $this->addFlash('danger', 'admin.danger.delete', 'groups.group', $GroupEvent);
+
+            return $this->redirectToRoute('UserGroup:admin.index', status: 400);
+        }
+
+        return $this->render(
+            [
+                'form' => $form->createView(),
+                'name' => $Event->getNameByLocale($this->getLocale()), // название согласно локали
+            ],
+            'content.html.twig'
+        );
+    }
 }

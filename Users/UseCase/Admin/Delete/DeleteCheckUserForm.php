@@ -18,38 +18,31 @@
 
 namespace BaksDev\Users\Groups\Users\UseCase\Admin\Delete;
 
-use BaksDev\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class DeleteCheckUserForm extends AbstractType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options) : void
-	{
-		/* Удалить ******************************************************/
-		$builder->add
-		(
-			'delete',
-			SubmitType::class,
-			['attr' => ['class' => 'btn-danger']]
-		);
-	}
-	
-	
-	public function configureOptions(OptionsResolver $resolver) : void
-	{
-		$resolver->setDefaults
-		(
-			[
-				'data_class' => DeleteCheckUserDTO::class,
-				'method' => 'POST',
-				'attr' => ['class' => 'w-100'],
-			]
-		);
-	}
-	
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        // Сохранить
+        $builder->add(
+            'delete',
+            SubmitType::class,
+            ['label' => 'Save', 'label_html' => true, 'attr' => ['class' => 'btn-danger']]
+        );
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(
+            [
+                'data_class' => DeleteCheckUserDTO::class,
+                'method' => 'POST',
+                'attr' => ['class' => 'w-100'],
+            ]
+        );
+    }
 }

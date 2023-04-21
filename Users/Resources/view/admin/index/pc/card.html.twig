@@ -1,0 +1,54 @@
+<tr class="vertical-middle">
+	
+	<td>
+
+
+
+		{# Пользовательское меню #}
+		{{ include(_self|replace({ "card.html.twig": "_usecase.html.twig" })) }}
+	</td>
+
+
+
+	<td class="ps-5">
+		{{ account_status(item.account_status) }}
+	</td>
+
+	<td class="ps-5">
+		{{ item.account_email }}
+	</td>
+
+	<td class="ps-5 text-nowrap">
+		{{ item.date_update|date('d.m.Y H:i') }}
+	</td>
+
+	<td class="ps-5">
+
+
+
+
+				{# Название #}
+
+				<a href="{{ path('UserGroup:admin.newedit.edit', { id: item.event }) }}"
+				   class="fw-bolder mb-1 text-decoration-none text-muted"
+				>
+					{{ item.group_name }}
+				</a>
+
+				{# Описание #}
+				<div class="text-muted small">
+					{{ string_width(item.group_desc, 150)|raw }}
+				</div>
+
+
+	</td>
+
+	{% if is_granted('ROLE_ADMIN') and app.user.id != item.account_id %}
+		<th class="ps-5" tabindex="0" aria-controls="kt_ecommerce_category_table"
+			rowspan="1" colspan="1">
+			{# Прейти в режим пользователя #}
+			<a href='{{ path('Pages:user.homepage', {'_switch_user' : item.account_id }) }}' class="badge badge-light">Авторизоваться</a>
+		</th>
+	{% endif %}
+
+</tr>

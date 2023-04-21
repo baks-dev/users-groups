@@ -22,6 +22,5 @@ use BaksDev\Core\Form\Search\SearchDTO;
 
 interface AllCheckUsersInterface
 {
-	public function get(SearchDTO $search);
-	
+    public function fetchAllUsersOnGroupAssociative(SearchDTO $search);
 }

@@ -20,6 +20,7 @@ namespace BaksDev\Users\Groups\Users\Type\Event;
 
 use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
 use BaksDev\Core\Type\UidType\UidType;
+use Doctrine\DBAL\Types\Types;
 
 final class CheckUsersEventType extends UidType
 {
@@ -32,7 +33,7 @@ final class CheckUsersEventType extends UidType
 	
 	public function getName() : string
 	{
-		return CheckUsersEventUid::TYPE;
+        return CheckUsersEventUid::TYPE;
 	}
 	
 }
