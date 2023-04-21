@@ -8,8 +8,8 @@ return static function(ContainerConfigurator $configurator) {
 		->autowire()
 		->autoconfigure()
 	;
-	
-	$namespace = 'BaksDev\Users\Groups\Users';
+
+    $namespace = 'BaksDev\Users\Groups\Users';
 	
 	$services->load($namespace.'\Controller\\', __DIR__.'/../../Controller')
 		->tag('controller.service_arguments')
