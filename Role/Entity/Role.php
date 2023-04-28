@@ -23,9 +23,9 @@ use BaksDev\Users\Groups\Role\Type\Event\RoleEventUid;
 use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 use Doctrine\ORM\Mapping as ORM;
 use BaksDev\Core\Entity\EntityEvent;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /* Role */
-
 
 #[ORM\Entity]
 #[ORM\Table(name: 'users_role')]
@@ -34,13 +34,17 @@ class Role
 	public const TABLE = 'users_role';
 	
 	/** ID */
+    #[Assert\NotBlank]
+    #[Assert\Regex('/^ROLE_[\w]+$/i')]
 	#[ORM\Id]
 	#[ORM\Column(type: RolePrefix::TYPE)]
-	protected RolePrefix $id;
+	private RolePrefix $id;
 	
 	/** ID События */
+    #[Assert\NotBlank]
+    #[Assert\Uuid]
 	#[ORM\Column(type: RoleEventUid::TYPE, unique: true)]
-	protected RoleEventUid $event;
+	private RoleEventUid $event;
 	
 	
 	public function __construct(RolePrefix $id)

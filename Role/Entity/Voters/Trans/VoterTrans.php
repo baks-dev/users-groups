@@ -27,6 +27,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /* Перевод Voter */
 
@@ -38,19 +39,22 @@ class VoterTrans extends EntityEvent
 	public const TABLE = 'users_voter_trans';
 	
 	/** Связь на правило */
+    #[Assert\NotBlank]
 	#[ORM\Id]
 	#[ORM\ManyToOne(targetEntity: RoleVoter::class, inversedBy: "translate")]
 	#[ORM\JoinColumn(name: 'voter_id', referencedColumnName: "id")]
-	protected RoleVoter $voter;
+	private RoleVoter $voter;
 	
 	/** Локаль */
+    #[Assert\NotBlank]
 	#[ORM\Id]
 	#[ORM\Column(type: Locale::TYPE, length: 2)]
-	protected Locale $local;
+	private Locale $local;
 	
 	/** Название */
+    #[Assert\NotBlank]
 	#[ORM\Column(type: Types::STRING, length: 100)]
-	protected string $name;
+	private string $name;
 	
 	
 	public function __construct(RoleVoter $voter) { $this->voter = $voter; }

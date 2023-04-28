@@ -20,31 +20,33 @@ namespace BaksDev\Users\Groups\Users\EntityListeners;
 use BaksDev\Users\Groups\Users\Repository\RoleByUser\RoleByUserInterface;
 use BaksDev\Users\User\Entity\User;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 
 final class UserListener
 {
-	private RoleByUserInterface $roleByUser;
-	
-	public function __construct(RoleByUserInterface $roleByUser)
-	{
-		$this->roleByUser = $roleByUser;
-	}
+    private RoleByUserInterface $roleByUser;
 
-	public function postLoad(User $data, LifecycleEventArgs $event) : void
-	{
-		/* По умолчанию Все авторизованные пользователи имеют роль ROLE_USER */
-		$roles[] = 'ROLE_USER';
+    public function __construct(RoleByUserInterface $roleByUser)
+    {
+        $this->roleByUser = $roleByUser;
+    }
 
-		$userRoles = $this->roleByUser->fetchAllRoleUser($data->getId());
+    public function postLoad(User $data, LifecycleEventArgs $event): void
+    {
+        // По умолчанию Все авторизованные пользователи имеют роль ROLE_USER
+        $roles[] = 'ROLE_USER';
 
-        array_walk_recursive( $userRoles, static function($value) use (&$roles) {
-            if ($value) { $roles[] = $value; }
+        $userRoles = $this->roleByUser->fetchAllRoleUser($data->getId());
+
+        if ($userRoles) {
+            $roles[] = 'ROLE_ADMINISTRATION';
+        }
+
+        array_walk_recursive($userRoles, static function ($value) use (&$roles) {
+            if ($value) {
+                $roles[] = $value;
+            }
         }, $roles);
 
-		$data->setRole(array_unique($roles));
-	}
+        $data->setRole(array_unique($roles));
+    }
 }

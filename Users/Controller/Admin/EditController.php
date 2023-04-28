@@ -19,6 +19,7 @@ namespace BaksDev\Users\Groups\Users\Controller\Admin;
 
 use BaksDev\Auth\Email\Repository\UserAccountEvent\UserAccountEventInterface;
 use BaksDev\Core\Controller\AbstractController;
+use BaksDev\Core\Services\Security\RoleSecurity;
 use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Edit\CheckUsersDTO;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Edit\CheckUsersForm;
@@ -30,7 +31,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_CHECK_USERS_EDIT" in role_names'))]
+#[RoleSecurity('ROLE_CHECK_USERS_EDIT')]
 final class EditController extends AbstractController
 {
     #[Route('/admin/user/check/edit/{id}', name: 'admin.edit', methods: ['GET', 'POST'])]

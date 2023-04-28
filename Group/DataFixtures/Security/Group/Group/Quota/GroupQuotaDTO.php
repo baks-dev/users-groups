@@ -26,40 +26,27 @@ use BaksDev\Users\Groups\Group\Entity\Quota\GroupQuotaInterface;
  */
 class GroupQuotaDTO implements GroupQuotaInterface
 {
-	/** Лимит дискового пространства (Mb) */
-	private ?int $size = null;
-	
-	/** Лимит макс. размера одного файла (Mb) */
-	private ?int $filesize = null;
-	
-	/** Лимит макс. числа файлов */
-	private ?int $files = null;
-	
-	
-	/**
-	 * @return int|null
-	 */
-	public function getSize() : ?int
-	{
-		return $this->size;
-	}
-	
-	
-	/**
-	 * @return int|null
-	 */
-	public function getFilesize() : ?int
-	{
-		return $this->filesize;
-	}
-	
-	
-	/**
-	 * @return int|null
-	 */
-	public function getFiles() : ?int
-	{
-		return $this->files;
-	}
-	
+    /** Лимит дискового пространства (Mb) */
+    private ?int $size = null;
+
+    /** Лимит макс. размера одного файла (Mb) */
+    private ?int $filesize = null;
+
+    /** Лимит макс. числа файлов */
+    private ?int $files = null;
+
+    public function getSize(): ?int
+    {
+        return $this->size;
+    }
+
+    public function getFilesize(): ?int
+    {
+        return $this->filesize;
+    }
+
+    public function getFiles(): ?int
+    {
+        return $this->files;
+    }
 }

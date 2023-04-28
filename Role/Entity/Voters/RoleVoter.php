@@ -20,6 +20,7 @@
 namespace BaksDev\Users\Groups\Role\Entity\Voters;
 
 use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
+use BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans;
 use BaksDev\Users\Groups\Role\Type\Voter\RoleVoterUid;
 use BaksDev\Users\Groups\Role\Entity\Voters\RoleVoterInterface;
 use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
@@ -30,6 +31,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /* Voter */
 
@@ -42,22 +44,26 @@ class RoleVoter extends EntityEvent
 	public const TABLE = 'users_voter';
 	
 	/** ID */
+    #[Assert\NotBlank]
 	#[ORM\Id]
 	#[ORM\Column(type: RoleVoterUid::TYPE)]
-	protected RoleVoterUid $id;
+	private RoleVoterUid $id;
 	
 	/** Связь на событие */
+    #[Assert\NotBlank]
 	#[ORM\ManyToOne(targetEntity: RoleEvent::class, inversedBy: "voter")]
 	#[ORM\JoinColumn(name: 'event', referencedColumnName: "id")]
-	protected RoleEvent $event;
+	private RoleEvent $event;
 	
 	/** Префикс правила */
+    #[Assert\NotBlank]
 	#[ORM\Column(type: VoterPrefix::TYPE)]
-	protected VoterPrefix $voter;
+	private VoterPrefix $voter;
 	
 	/** Настройки локали */
-	#[ORM\OneToMany(mappedBy: 'voter', targetEntity: \BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans::class, cascade: ['all'])]
-	protected Collection $translate;
+    #[Assert\Valid]
+	#[ORM\OneToMany(mappedBy: 'voter', targetEntity: VoterTrans::class, cascade: ['all'])]
+	private Collection $translate;
 	
 	
 	/**
@@ -89,7 +95,7 @@ class RoleVoter extends EntityEvent
 	
 	//    /** Отмеченные правила роли группы */
 	//    #[ORM\OneToMany(mappedBy: 'voter', targetEntity: CheckVoter::class, cascade: ['all'])]
-	//    protected Collection $checkVoter;
+	//    private Collection $checkVoter;
 	
 	//    /**
 	//     * @param RoleVoter|VoterPrefix $voter
@@ -142,7 +148,7 @@ class RoleVoter extends EntityEvent
 	{
 		$name = null;
 		
-		/** @var \BaksDev\Users\Groups\Role\Entity\Voters\Trans\VoterTrans $trans */
+		/** @var VoterTrans $trans */
 		foreach($this->translate as $trans)
 		{
 			if($name = $trans->name($locale))

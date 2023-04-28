@@ -1,0 +1,13 @@
+ROLE_GROUPS:
+  name: 'User groups'
+  desc: 'User groups'
+
+
+ROLE_GROUPS_NEW:
+  name: 'Add'
+
+ROLE_GROUPS_EDIT:
+  name: 'Edit'
+
+ROLE_GROUPS_DELETE:
+  name: 'Delete'

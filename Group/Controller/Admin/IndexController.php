@@ -18,41 +18,35 @@
 
 namespace BaksDev\Users\Groups\Group\Controller\Admin;
 
-use BaksDev\Users\Groups\Group\Repository\AllGroups\AllGroupsInterface;
 use BaksDev\Core\Controller\AbstractController;
 use BaksDev\Core\Form\Search\SearchDTO;
 use BaksDev\Core\Form\Search\SearchForm;
-use BaksDev\Core\Services\Paginator;
-use BaksDev\Core\Services\Paginator\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\ExpressionLanguage\Expression;
+use BaksDev\Core\Services\Security\RoleSecurity;
+use BaksDev\Users\Groups\Group\Repository\AllGroups\AllGroupsInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_GROUPS" in role_names'))]
+#[RoleSecurity('ROLE_GROUPS')]
 final class IndexController extends AbstractController
 {
-	#[Route('/admin/groups/{page<\d+>}', name: 'admin.index', methods: ['GET', 'POST'])]
-	public function index(
-		Request $request,
-		AllGroupsInterface $allGroups,
-		int $page = 0,
-	) : Response
-	{
-		/* Поиск */
-		$search = new SearchDTO();
-		$searchForm = $this->createForm(SearchForm::class, $search);
-		$searchForm->handleRequest($request);
-		
-		/* Получаем список */
-		$query = $allGroups->get($search);
-		
-		return $this->render([
-			'query' => $query,
-			'search' => $searchForm->createView(),
-		]);
-	}
-	
+    #[Route('/admin/groups/{page<\d+>}', name: 'admin.index', methods: ['GET', 'POST'])]
+    public function index(
+        Request $request,
+        AllGroupsInterface $allGroups,
+        int $page = 0,
+    ): Response {
+        // Поиск
+        $search = new SearchDTO();
+        $searchForm = $this->createForm(SearchForm::class, $search);
+        $searchForm->handleRequest($request);
+
+        // Получаем список
+        $query = $allGroups->get($search);
+
+        return $this->render([
+            'query' => $query,
+            'search' => $searchForm->createView(),
+        ]);
+    }
 }

@@ -18,76 +18,56 @@
 
 namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\Trans;
 
-use BaksDev\Users\Groups\Group\Entity\Trans\GroupTransInterface;
 use BaksDev\Core\Type\Locale\Locale;
+use BaksDev\Users\Groups\Group\Entity\Trans\GroupTransInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class GroupTransDTO implements GroupTransInterface
 {
-	
-	private const GROUP_NAME = [
-		'ru' => 'Администратор',
-		'en' => 'Administrator',
-	];
-	
-	private const GROUP_DESC = [
-		'ru' => 'Системный администратор, имеющий полный доступ',
-		'en' => 'System administrator with full access',
-	];
-	
-	/**
-	 * @var Locale
-	 */
-	private Locale $local;
-	
-	/** Название группы */
-	#[Assert\NotBlank]
-	#[Assert\Regex(pattern: '/^[\w \.\_\-\(\)\%]+$/iu')]
-	private ?string $name;
-	
-	/** Краткое описание */
-	//#[Assert\Regex(pattern: '/^[\w \.\_\-\(\)\%]+$/iu')]
-	private ?string $description = null;
-	
-	
-	/**
-	 * @return Locale
-	 */
-	public function getLocal() : Locale
-	{
-		return $this->local;
-	}
-	
-	
-	/**
-	 * @param string|Locale $local
-	 */
-	public function setLocal(string $local) : void
-	{
-		$this->local = new Locale($local);
-		
-		$this->name = self::GROUP_NAME[$local];
-		$this->description = self::GROUP_DESC[$local];
-		
-	}
-	
-	
-	/**
-	 * @return string|null
-	 */
-	public function getName() : ?string
-	{
-		return $this->name;
-	}
-	
-	
-	/**
-	 * @return string|null
-	 */
-	public function getDescription() : ?string
-	{
-		return $this->description;
-	}
-	
-}
+    private const GROUP_NAME = [
+        'ru' => 'Администратор',
+        'en' => 'Administrator',
+    ];
 
+    private const GROUP_DESC = [
+        'ru' => 'Системный администратор, имеющий полный доступ',
+        'en' => 'System administrator with full access',
+    ];
+
+    private Locale $local;
+
+    /** Название группы */
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/^[\w \.\_\-\(\)\%]+$/iu')]
+    private ?string $name;
+
+    /** Краткое описание */
+    // #[Assert\Regex(pattern: '/^[\w \.\_\-\(\)\%]+$/iu')]
+    private ?string $description = null;
+
+    public function getLocal(): Locale
+    {
+        return $this->local;
+    }
+
+    /**
+     * @param Locale|string $local
+     */
+    public function setLocal(string $local): void
+    {
+        $this->local = new Locale($local);
+
+        $this->name = self::GROUP_NAME[$local];
+        $this->description = self::GROUP_DESC[$local];
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+}

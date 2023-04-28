@@ -1,0 +1,18 @@
+
+# Роль
+ROLE_GROUPS:
+  name: 'Группы пользователей'
+  desc: 'Группы пользователей'
+
+# Правила
+
+ROLE_GROUPS_NEW:
+  name: 'Добавить'
+
+ROLE_GROUPS_EDIT:
+  name: 'Редактировать'
+
+ROLE_GROUPS_DELETE:
+  name: 'Удалить'
+
+

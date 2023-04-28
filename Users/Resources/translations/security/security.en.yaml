@@ -1,0 +1,12 @@
+ROLE_CHECK_USERS:
+  name: 'Users in groups'
+  desc: 'Users who belong to any of the groups'
+
+ROLE_CHECK_USERS_NEW:
+  name: 'Add'
+
+ROLE_CHECK_USERS_EDIT:
+  name: 'Edit'
+
+ROLE_CHECK_USERS_DELETE:
+  name: 'Delete'

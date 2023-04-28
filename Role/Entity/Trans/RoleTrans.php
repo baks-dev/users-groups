@@ -26,6 +26,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /* Перевод Role */
 
@@ -37,23 +38,26 @@ class RoleTrans extends EntityEvent
 	public const TABLE = 'users_role_trans';
 	
 	/** Связь на событие */
+    #[Assert\NotBlank]
 	#[ORM\Id]
 	#[ORM\ManyToOne(targetEntity: RoleEvent::class, inversedBy: "translate")]
 	#[ORM\JoinColumn(name: 'event', referencedColumnName: "id")]
-	protected RoleEvent $event;
+	private RoleEvent $event;
 	
 	/** Локаль */
+    #[Assert\NotBlank]
 	#[ORM\Id]
 	#[ORM\Column(name: 'local', type: Locale::TYPE, length: 2)]
-	protected Locale $local;
+	private Locale $local;
 	
 	/** Название */
+    #[Assert\NotBlank]
 	#[ORM\Column(name: 'name', type: Types::STRING, length: 100)]
-	protected string $name;
+	private string $name;
 	
 	/** Описание */
 	#[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
-	protected ?string $description;
+	private ?string $description;
 	
 	
 	public function __construct(RoleEvent $event)

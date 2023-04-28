@@ -29,6 +29,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /* Модификаторы событий Group */
 
@@ -41,30 +42,35 @@ class RoleModify extends EntityEvent
 	public const TABLE = 'users_role_modify';
 	
 	/** ID события */
+    #[Assert\NotBlank]
 	#[ORM\Id]
 	#[ORM\OneToOne(inversedBy: 'modify', targetEntity: RoleEvent::class)]
 	#[ORM\JoinColumn(name: 'event', referencedColumnName: 'id')]
-	protected RoleEvent $event;
+	private RoleEvent $event;
 	
 	/** Модификатор */
+    #[Assert\NotBlank]
 	#[ORM\Column(type: ModifyAction::TYPE, nullable: false)]
-	protected ModifyAction $action;
+	private ModifyAction $action;
 	
 	/** Дата */
+    #[Assert\NotBlank]
 	#[ORM\Column(name: 'mod_date', type: Types::DATETIME_IMMUTABLE, nullable: false)]
 	private DateTimeImmutable $modDate;
 	
 	/** ID пользователя  */
 	#[ORM\Column(name: 'user_id', type: UserUid::TYPE, nullable: true)]
-	protected ?UserUid $user = null;
+	private ?UserUid $user = null;
 	
 	/** Ip адресс */
+    #[Assert\NotBlank]
 	#[ORM\Column(name: 'user_ip', type: IpAddress::TYPE, nullable: false)]
-	protected IpAddress $ipAddress;
+	private IpAddress $ipAddress;
 	
 	/** User-agent */
+    #[Assert\NotBlank]
 	#[ORM\Column(name: 'user_agent', type: Types::TEXT, nullable: false)]
-	protected string $userAgent;
+	private string $userAgent;
 	
 	
 	public function __construct(RoleEvent $event, ModifyAction $modifyAction)

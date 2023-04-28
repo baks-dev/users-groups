@@ -56,19 +56,7 @@ final class RoleHandler
 		Entity\Event\RoleEventInterface $command,
 	) : string|Entity\Role
 	{
-		
-		/* Валидация */
-		$errors = $this->validator->validate($command);
-		
-		if(count($errors) > 0)
-		{
-			$uniqid = uniqid('', false);
-			$errorsString = (string) $errors;
-			$this->logger->error($uniqid.': '.$errorsString);
-			
-			return $uniqid;
-		}
-		
+
 		if($command->getEvent())
 		{
 			$EventRepo = $this->entityManager->getRepository(Entity\Event\RoleEvent::class)
@@ -122,6 +110,34 @@ final class RoleHandler
 		
 		$Event->setRole($Role);
 		$Role->setEvent($Event);
+
+
+
+        /* Валидация события */
+        $errors = $this->validator->validate($Event);
+
+        if(count($errors) > 0)
+        {
+            $uniqid = uniqid('', false);
+            $errorsString = (string) $errors;
+            $this->logger->error($uniqid.': '.$errorsString);
+
+            return $uniqid;
+        }
+
+        /* Валидация Main */
+        $errors = $this->validator->validate($Role);
+
+        if(count($errors) > 0)
+        {
+            $uniqid = uniqid('', false);
+            $errorsString = (string) $errors;
+            $this->logger->error($uniqid.': '.$errorsString);
+
+            return $uniqid;
+        }
+
+
 		
 		$this->entityManager->flush();
 		

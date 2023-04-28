@@ -19,6 +19,7 @@
 namespace BaksDev\Users\Groups\Group\Controller\Admin;
 
 use BaksDev\Core\Controller\AbstractController;
+use BaksDev\Core\Services\Security\RoleSecurity;
 use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
 use BaksDev\Users\Groups\Group\Entity\Group;
 use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupDTO;
@@ -30,14 +31,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted(new Expression('"ROLE_ADMIN" in role_names or "ROLE_PRODUCT_DELETE" in role_names'))]
+
+#[RoleSecurity('ROLE_GROUPS_DELETE')]
 final class DeleteController extends AbstractController
 {
     #[Route(
         '/admin/group/delete/{id}',
         name: 'admin.delete',
-        methods: ['POST', 'GET'],
-        condition: "request.headers.get('X-Requested-With') === 'XMLHttpRequest'",
+        methods: ['POST', 'GET']
     )]
     public function delete(
         Request $request,
@@ -71,8 +72,7 @@ final class DeleteController extends AbstractController
             [
                 'form' => $form->createView(),
                 'name' => $Event->getNameByLocale($this->getLocale()), // название согласно локали
-            ],
-            'content.html.twig'
+            ]
         );
     }
 }

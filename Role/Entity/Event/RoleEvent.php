@@ -34,6 +34,7 @@ use Doctrine\DBAL\Types\Types;
 use BaksDev\Core\Entity\EntityEvent;
 use Exception;
 use InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /* GroupRoleEvent */
 
@@ -46,29 +47,34 @@ class RoleEvent extends EntityEvent
 	public const TABLE = 'users_role_event';
 	
 	/** ID */
+    #[Assert\NotBlank]
 	#[ORM\Id]
 	#[ORM\Column(type: RoleEventUid::TYPE)]
-	protected RoleEventUid $id;
+	private RoleEventUid $id;
 	
 	/** ID Роли */
+    #[Assert\NotBlank]
 	#[ORM\Column(type: RolePrefix::TYPE)]
-	protected RolePrefix $role;
+	private RolePrefix $role;
 	
 	/** Настройки локали */
+    #[Assert\Valid]
 	#[ORM\OneToMany(mappedBy: 'event', targetEntity: RoleTrans::class, cascade: ['all'])]
-	protected Collection $translate;
+	private Collection $translate;
 	
 	/** Правила роли */
+    #[Assert\Valid]
 	#[ORM\OneToMany(mappedBy: 'event', targetEntity: RoleVoter::class, cascade: ['all'], fetch: 'EXTRA_LAZY')]
-	protected Collection $voter;
+	private Collection $voter;
 	
 	/** Модификатор */
+    #[Assert\Valid]
 	#[ORM\OneToOne(mappedBy: 'event', targetEntity: RoleModify::class, cascade: ['all'])]
-	protected RoleModify $modify;
+	private RoleModify $modify;
 	
 	/** Сортировка */
 	#[ORM\Column(type: Types::SMALLINT, length: 3, options: ['default' => 500])]
-	protected int $sort = 500;
+	private int $sort = 500;
 	
 	/** column */
 	//    #[ORM\Column(type: Types::TEXT)]

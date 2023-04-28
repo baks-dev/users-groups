@@ -1,0 +1,14 @@
+{% trans_default_domain('groups.group') %}
+
+{% set ROLE = 'ROLE_GROUP' %}
+
+{# ---- ШАБЛОН ------------------------------------------------------------ #}
+{% extends Template('/admin/base.html.twig') %}
+
+{% block title %}{{ 'admin.page.delete'|trans }}{% endblock %}
+
+
+{# ---- КОНТЕНТ-БЛОК ------------------------------------------------------------ #}
+{% block content %}
+    {{ include(_self|replace({ "template.html.twig": baks_settings.device~"/content.html.twig" })) }}
+{% endblock %}

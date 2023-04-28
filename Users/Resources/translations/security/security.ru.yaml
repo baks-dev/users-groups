@@ -1,0 +1,18 @@
+# Роль
+
+ROLE_CHECK_USERS:
+  name: 'Пользователи в группах'
+  desc: 'Пользователи, которые состоят в какой либо из групп'
+
+# Правила
+
+ROLE_CHECK_USERS_NEW:
+  name: 'Добавить'
+
+ROLE_CHECK_USERS_EDIT:
+  name: 'Редактировать'
+
+ROLE_CHECK_USERS_DELETE:
+  name: 'Удалить'
+
+
