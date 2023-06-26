@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace BaksDev\Users\Groups\Users\Messenger;
 
-
 use Symfony\Component\Cache\Adapter\ApcuAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -33,27 +32,25 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class GroupCheckUserCacheClear
 {
+    public function __invoke(GroupCheckUserMessage $message): void
+    {
+        // Чистим кеш модуля
+        $cache = new FilesystemAdapter('GroupCheckUser');
+        $cache->clear();
 
-	public function __invoke(GroupCheckUserMessage $message) : void
-	{
-		/* Чистим кеш модуля */
-		$cache = new FilesystemAdapter('CacheGroupCheckUser');
-		$cache->clear();
-		
-		/* Сбрасываем индивидуальный кеш */
-		$cache = new ApcuAdapter('GroupCheckUser');
-		$cache->clear();
-		
-		$cache = new ApcuAdapter((string) $message->getId());
-		$cache->clear();
-		
-		$cache = new ApcuAdapter((string) $message->getEvent()->getValue());
-		$cache->clear();
-		
-		if($message->getLast())
-		{
-			$cache = new ApcuAdapter((string) $message->getLast()->getValue());
-			$cache->clear();
-		}
-	}
+        // Сбрасываем индивидуальный кеш
+        $cache = new ApcuAdapter('GroupCheckUser');
+        $cache->clear();
+
+        $cache = new ApcuAdapter((string) $message->getId());
+        $cache->clear();
+
+        $cache = new ApcuAdapter((string) $message->getEvent()->getValue());
+        $cache->clear();
+
+        if ($message->getLast()) {
+            $cache = new ApcuAdapter((string) $message->getLast()->getValue());
+            $cache->clear();
+        }
+    }
 }

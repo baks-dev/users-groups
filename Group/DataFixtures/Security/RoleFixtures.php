@@ -33,6 +33,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
+use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class RoleFixtures extends Fixture implements DependentFixtureInterface
@@ -45,8 +46,8 @@ final class RoleFixtures extends Fixture implements DependentFixtureInterface
     private TranslatorInterface $translator;
 
     public function __construct(
-        iterable $roles,
-        iterable $voters,
+        #[TaggedIterator('baks.security.role')] iterable $roles,
+        #[TaggedIterator('baks.security.voter')] iterable $voters,
         RoleHandler $roleAggregate,
         CheckRoleHandler $checkRoleAggregate,
         TranslatorInterface $translator
@@ -85,6 +86,9 @@ final class RoleFixtures extends Fixture implements DependentFixtureInterface
                 // Название роли
                 $RoleName = $this->translator->trans(id: $RoleDTO->getRole().'.name', domain: 'security', locale: $local);
                 $RoleTransDTO->setName($RoleName);
+
+                dump('***************');
+                dump($RoleName.' ('.$RoleDTO->getRole().')');
 
                 if ($RoleName === $RoleDTO->getRole().'.name') {
                     throw new InvalidArgumentException(
@@ -126,6 +130,9 @@ final class RoleFixtures extends Fixture implements DependentFixtureInterface
 
                         // Название правила
                         $VoterName = $this->translator->trans(id: $VoterDTO->getVoter().'.name', domain: 'security', locale: $local);
+
+                        dump($voter::class);
+                        dump($VoterName.' ('.$VoterDTO->getVoter().')');
 
                         if ($VoterName === $VoterDTO->getVoter().'.name') {
                             throw new InvalidArgumentException(

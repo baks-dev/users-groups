@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace BaksDev\Users\Groups\Group\DataFixtures\Security\RoleFixtures\Voter;
 
-
 use BaksDev\Users\Groups\Group\DataFixtures\Security\VoterFixturesInterface;
 use BaksDev\Users\Groups\Role\Entity\Voters\RoleVoterInterface;
 use BaksDev\Users\Groups\Role\Type\VoterPrefix\VoterPrefix;
@@ -34,7 +33,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class VoterDTO implements RoleVoterInterface
 {
-
     /** Префикс правила */
     #[Assert\NotBlank]
     private readonly VoterPrefix $voter;
@@ -43,33 +41,26 @@ final class VoterDTO implements RoleVoterInterface
     #[Assert\Valid]
     private ArrayCollection $translate;
 
-
     public function __construct(VoterFixturesInterface $voter)
     {
-        $this->voter = new VoterPrefix($voter->getVoter());
+        $this->voter = new VoterPrefix($voter::getVoter());
         $this->translate = new ArrayCollection();
     }
 
-
     /** Префикс правила */
-
     public function getVoter(): VoterPrefix
     {
         return $this->voter;
     }
 
-
     /** Настройки локали */
-
     public function getTranslate(): ArrayCollection
     {
         return $this->translate;
     }
 
-
     public function addTranslate(VoterTransDTO $translate): void
     {
         $this->translate->add($translate);
     }
-
 }

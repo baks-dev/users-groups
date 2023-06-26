@@ -19,7 +19,7 @@ namespace BaksDev\Users\Groups\Users\Controller\Admin;
 
 use BaksDev\Auth\Email\Repository\UserAccountEvent\UserAccountEventInterface;
 use BaksDev\Core\Controller\AbstractController;
-use BaksDev\Core\Services\Security\RoleSecurity;
+use BaksDev\Core\Listeners\Event\Security\RoleSecurity;
 use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserDTO;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserForm;

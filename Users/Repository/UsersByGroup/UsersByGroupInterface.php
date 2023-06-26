@@ -22,6 +22,5 @@ use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 
 interface UsersByGroupInterface
 {
-	public function get(GroupPrefix $prefix) : array;
-	
+    public function get(GroupPrefix $prefix): array;
 }

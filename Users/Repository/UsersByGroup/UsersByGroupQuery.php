@@ -23,30 +23,26 @@ use Doctrine\DBAL\Connection;
 
 final class UsersByGroupQuery implements UsersByGroupInterface
 {
-	
-	private Connection $connection;
-	
-	
-	public function __construct(Connection $connection)
-	{
-		$this->connection = $connection;
-	}
-	
-	
-	public function get(GroupPrefix $prefix) : array
-	{
-		$qb = $this->connection->createQueryBuilder();
-		$qb->select('check_users.user_id');
-		$qb->from(Entity\CheckUsers::TABLE, 'check_users');
-		$qb->join(
-			'check_users',
-			Entity\Event\CheckUsersEvent::TABLE,
-			'check_event',
-			'check_event.id = check_users.event AND check_event.group_id = :prefix'
-		);
-		$qb->setParameter('prefix', $prefix, GroupPrefix::TYPE);
-		
-		return $qb->executeQuery()->fetchAllAssociative();
-	}
-	
+    private Connection $connection;
+
+    public function __construct(Connection $connection)
+    {
+        $this->connection = $connection;
+    }
+
+    public function get(GroupPrefix $prefix): array
+    {
+        $qb = $this->connection->createQueryBuilder();
+        $qb->select('check_users.user_id');
+        $qb->from(Entity\CheckUsers::TABLE, 'check_users');
+        $qb->join(
+            'check_users',
+            Entity\Event\CheckUsersEvent::TABLE,
+            'check_event',
+            'check_event.id = check_users.event AND check_event.group_id = :prefix'
+        );
+        $qb->setParameter('prefix', $prefix, GroupPrefix::TYPE);
+
+        return $qb->executeQuery()->fetchAllAssociative();
+    }
 }

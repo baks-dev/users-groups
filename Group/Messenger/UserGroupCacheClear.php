@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace BaksDev\Users\Groups\Group\Messenger;
 
-
 use BaksDev\Users\Groups\Users\Repository\UsersByGroup\UsersByGroupInterface;
 use Symfony\Component\Cache\Adapter\ApcuAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -34,50 +33,45 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class UserGroupCacheClear
 {
-	
-	private UsersByGroupInterface $usersByGroup;
-	
-	
-	public function __construct(UsersByGroupInterface $usersByGroup) {
-		$this->usersByGroup = $usersByGroup;
-	}
-	
-	
-	public function __invoke(UserGroupMessage $message) : void
-	{
-		/* Чистим кеш модуля */
-		$cache = new FilesystemAdapter('CacheUserGroup');
-		$cache->clear();
-		
-		/* Сбрасываем индивидуальный кеш */
-		$cache = new ApcuAdapter('UserGroup');
-		$cache->clear();
-		
-		$cache = new ApcuAdapter((string) $message->getId());
-		$cache->clear();
-		
-		$cache = new ApcuAdapter((string) $message->getEvent()->getValue());
-		$cache->clear();
-		
-		if($message->getLast())
-		{
-			$cache = new ApcuAdapter((string) $message->getLast()->getValue());
-			$cache->clear();
-		}
-		
-		
-		/* Получаем всех пользователей группы и чистим им кеш */
-		$users =  $this->usersByGroup->get($message->getId());
-		
-		foreach($users as $user)
-		{
-			$cache = new ApcuAdapter($user['user_id']);
-			$cache->clear();
-		}
-		
-		/* Чистим кеш меню администратора */
-		
-		$cache = new FilesystemAdapter('CacheMenuAdmin');
-		$cache->clear();
-	}
+    private UsersByGroupInterface $usersByGroup;
+
+    public function __construct(UsersByGroupInterface $usersByGroup)
+    {
+        $this->usersByGroup = $usersByGroup;
+    }
+
+    public function __invoke(UserGroupMessage $message): void
+    {
+        // Чистим кеш модуля
+        $cache = new FilesystemAdapter('UserGroup');
+        $cache->clear();
+
+        // Сбрасываем индивидуальный кеш
+        $cache = new ApcuAdapter('UserGroup');
+        $cache->clear();
+
+        $cache = new ApcuAdapter((string) $message->getId());
+        $cache->clear();
+
+        $cache = new ApcuAdapter((string) $message->getEvent()->getValue());
+        $cache->clear();
+
+        if ($message->getLast()) {
+            $cache = new ApcuAdapter((string) $message->getLast()->getValue());
+            $cache->clear();
+        }
+
+        // Получаем всех пользователей группы и чистим им кеш
+        $users = $this->usersByGroup->get($message->getId());
+
+        foreach ($users as $user) {
+            $cache = new FilesystemAdapter((string) $user['user_id']);
+            $cache->clear();
+        }
+
+        // Чистим кеш меню администратора
+
+        $cache = new FilesystemAdapter('MenuAdmin');
+        $cache->clear();
+    }
 }

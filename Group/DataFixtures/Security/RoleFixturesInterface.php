@@ -23,12 +23,13 @@
 
 namespace BaksDev\Users\Groups\Group\DataFixtures\Security;
 
-use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 #[AutoconfigureTag('baks.security.role')]
 interface RoleFixturesInterface
 {
-    /** Метод возвращает префикс роли */
+    /**
+     * Метод возвращает префикс роли.
+     */
     public function getRole(): string;
 }

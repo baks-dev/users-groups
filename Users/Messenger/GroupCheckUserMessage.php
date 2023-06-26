@@ -30,44 +30,37 @@ use BaksDev\Users\User\Type\Id\UserUid;
 
 final class GroupCheckUserMessage
 {
-	/** Идентификатор */
-	private UserUid $id;
-	
-	/** Идентификатор события */
-	private CheckUsersEventUid $event;
-	
-	/** Идентификатор предыдущего события */
-	private ?CheckUsersEventUid $last;
-	
-	public function __construct(UserUid $id, CheckUsersEventUid $event, ?CheckUsersEventUid $last = null)
-	{
-		$this->last = $last;
-		$this->id = $id;
-		$this->event = $event;
-	}
-	
-	
-	/** Идентификатор */
-	
-	public function getId() : UserUid
-	{
-		return $this->id;
-	}
-	
-	
-	/** Идентификатор события */
-	
-	public function getEvent() : CheckUsersEventUid
-	{
-		return $this->event;
-	}
-	
-	
-	/** Идентификатор предыдущего события */
-	
-	public function getLast() : ?CheckUsersEventUid
-	{
-		return $this->last;
-	}
-	
+    /** Идентификатор */
+    private UserUid $id;
+
+    /** Идентификатор события */
+    private CheckUsersEventUid $event;
+
+    /** Идентификатор предыдущего события */
+    private ?CheckUsersEventUid $last;
+
+    public function __construct(UserUid $id, CheckUsersEventUid $event, ?CheckUsersEventUid $last = null)
+    {
+        $this->last = $last;
+        $this->id = $id;
+        $this->event = $event;
+    }
+
+    /** Идентификатор */
+    public function getId(): UserUid
+    {
+        return $this->id;
+    }
+
+    /** Идентификатор события */
+    public function getEvent(): CheckUsersEventUid
+    {
+        return $this->event;
+    }
+
+    /** Идентификатор предыдущего события */
+    public function getLast(): ?CheckUsersEventUid
+    {
+        return $this->last;
+    }
 }

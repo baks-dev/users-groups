@@ -24,6 +24,8 @@ use Symfony\Component\Uid\UuidV7;
 
 final class RoleVoterUid
 {
+    public const TEST = '0188a9a6-e0aa-7206-9397-9b5530807293';
+    
 	public const TYPE = 'role_voter_id';
 	
 	private Uuid $value;

@@ -28,11 +28,9 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 #[AutoconfigureTag('baks.security.voter')]
 interface VoterFixturesInterface
 {
-    /** Метод возврашает полное действие с префиксом роли */
-    public function getVoter() : string;
+    /** Метод возвращает полное правило с префиксом роли */
+    public static function getVoter(): string;
 
-    /** Метод проверяет, пренадлежит ли дейстиве данной роли */
-    public function equals(RoleFixturesInterface $role) : bool;
-
-
+    /** Метод проверяет, принадлежит ли действие данной роли */
+    public function equals(RoleFixturesInterface $role): bool;
 }

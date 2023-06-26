@@ -24,6 +24,8 @@ use Symfony\Component\Uid\UuidV7;
 
 final class CheckUsersEventUid
 {
+    public const TEST = '0188a9a7-11e1-78d8-b323-3c081795a8f5';
+    
 	public const TYPE = 'check_users_event_id';
 	
 	private Uuid $value;

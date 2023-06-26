@@ -24,6 +24,8 @@ use Symfony\Component\Uid\UuidV7;
 
 final class GroupCheckUid
 {
+    public const TEST = '0188a9a5-e79a-7e75-8b77-0d81f34e9f1a';
+    
 	public const TYPE = 'group_check_id';
 	
 	private Uuid $value;

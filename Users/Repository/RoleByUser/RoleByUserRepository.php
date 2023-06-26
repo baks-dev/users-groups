@@ -24,16 +24,20 @@ use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\ApcuAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\CacheInterface;
 
 final class RoleByUserRepository implements RoleByUserInterface
 {
     private EntityManagerInterface $entityManager;
     private Connection $connection;
+    private CacheInterface $cache;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, CacheInterface $cache)
     {
         $this->entityManager = $entityManager;
         $this->connection = $entityManager->getConnection();
+        $this->cache = $cache;
     }
 
     public function get(UserUid $userUid): array
@@ -137,7 +141,8 @@ final class RoleByUserRepository implements RoleByUserInterface
         $qb->where('check_user.user_id = :users');
         $qb->setParameter('users', $userUid, UserUid::TYPE);
 
-        $cacheFilesystem = new ApcuAdapter((string) $userUid->getValue());
+        // $cacheFilesystem = new ApcuAdapter((string) $userUid->getValue());
+        $cacheFilesystem = new FilesystemAdapter((string) $userUid->getValue());
 
         $config = $this->connection->getConfiguration();
         $config?->setResultCache($cacheFilesystem);

@@ -17,11 +17,11 @@
 
 namespace BaksDev\Users\Groups\Users\UseCase;
 
+use BaksDev\Core\Services\Messenger\MessageDispatchInterface;
 use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use BaksDev\Users\Groups\Users\Entity;
 use BaksDev\Users\Groups\Users\Messenger\GroupCheckUserMessage;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -31,16 +31,16 @@ final class CheckUserAggregate
 
     private ValidatorInterface $validator;
 
-    private MessageBusInterface $bus;
+    private MessageDispatchInterface $messageDispatch;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         ValidatorInterface $validator,
-        MessageBusInterface $bus,
+        MessageDispatchInterface $messageDispatch
     ) {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
-        $this->bus = $bus;
+        $this->messageDispatch = $messageDispatch;
     }
 
     public function handle(
@@ -49,7 +49,8 @@ final class CheckUserAggregate
         // ВАЛИДАЦИЯ
         $errors = $this->validator->validate($command);
 
-        if (count($errors) > 0) {
+        if (count($errors) > 0)
+        {
             $errorsString = (string) $errors;
 
             throw new ValidatorException($errorsString);
@@ -57,14 +58,15 @@ final class CheckUserAggregate
 
         // HANDLE
 
-        if ($command->getEvent()) {
+        if ($command->getEvent())
+        {
             $EventRepo = $this->entityManager->getRepository(
                 Entity\Event\CheckUsersEvent::class
             )
-                ->find($command->getEvent())
-            ;
+                ->find($command->getEvent());
             $Event = $EventRepo->cloneEntity();
-        } else {
+        } else
+        {
             $Event = new Entity\Event\CheckUsersEvent();
         }
 
@@ -72,23 +74,24 @@ final class CheckUserAggregate
         $this->entityManager->clear();
         $this->entityManager->persist($Event);
 
-        if ($Event->getUser()) {
+        if ($Event->getUser())
+        {
             $CheckUsers = $this->entityManager->getRepository(Entity\CheckUsers::class)
-                ->find($Event->getUser())
-            ;
+                ->find($Event->getUser());
 
-            if (empty($CheckUsers)) {
+            if (empty($CheckUsers))
+            {
                 $CheckUsers = new Entity\CheckUsers($Event->getUser());
                 $this->entityManager->persist($CheckUsers);
             }
 
             // Восстанавливаем из корзины
-            if ($Event->isModifyActionEquals(ModifyActionEnum::RESTORE)) {
+            if ($Event->isModifyActionEquals(ModifyActionEnum::RESTORE))
+            {
                 $remove = $this->entityManager->getRepository(
                     Entity\Event\CheckUsersEvent::class
                 )
-                    ->find($command->getEvent())
-                ;
+                    ->find($command->getEvent());
                 $this->entityManager->remove($remove);
             }
 
@@ -96,24 +99,32 @@ final class CheckUserAggregate
             $CheckUsers->setEvent($Event);
 
             // Удаляем пользователя из группы
-            if ($Event->isModifyActionEquals(ModifyActionEnum::DELETE)) {
+            if ($Event->isModifyActionEquals(ModifyActionEnum::DELETE))
+            {
                 $this->entityManager->remove($CheckUsers);
             }
 
             $this->entityManager->flush();
 
+            //dd($CheckUsers);
+
             //			/* Сбрасываем кеш группы пользователя */
             //			$cache = new FilesystemAdapter();
             //			$cache->delete('group-'.$Event->getUser()->getValue());
 
-            // Отправляем собыие в шину
-            $this->bus->dispatch(
-                new GroupCheckUserMessage(
-                $CheckUsers->getId(),
-                $CheckUsers->getEvent(),
-                $command->getEvent()
-            )
+
+
+
+            /* Отправляем событие в шину  */
+            $this->messageDispatch->dispatch(
+                message: new GroupCheckUserMessage(
+                    $CheckUsers->getId(),
+                    $CheckUsers->getEvent(),
+                    $command->getEvent()
+                ),
+                transport: 'users_groups'
             );
+
 
             return $CheckUsers;
         }

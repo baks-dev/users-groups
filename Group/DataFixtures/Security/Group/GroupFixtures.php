@@ -19,8 +19,10 @@ namespace BaksDev\Users\Groups\Group\DataFixtures\Security\Group;
 
 use BaksDev\Auth\Email\DataFixtures\Account\AccountFixtures;
 use BaksDev\Auth\Email\Entity\Event\AccountEvent;
+use BaksDev\Core\Services\Messenger\MessageDispatchInterface;
 use BaksDev\Users\Groups\Group\DataFixtures\Security\Group\CheckUser\CheckUsersDTO;
 use BaksDev\Users\Groups\Group\DataFixtures\Security\Group\Group\GroupDTO;
+use BaksDev\Users\Groups\Group\Messenger\UserGroupMessage;
 use BaksDev\Users\Groups\Group\Repository\GroupByPrefix\GroupByPrefixInterface;
 use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupHandler;
 use BaksDev\Users\Groups\Role\Repository\TruncateRole\TruncateRoleInterface;
@@ -29,7 +31,6 @@ use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /** Создаем группу Администратор */
 final class GroupFixtures extends Fixture implements DependentFixtureInterface
@@ -42,16 +43,20 @@ final class GroupFixtures extends Fixture implements DependentFixtureInterface
 
     private TruncateRoleInterface $truncateRole;
 
+    private MessageDispatchInterface $messageDispatch;
+
     public function __construct(
         GroupByPrefixInterface $groupByPrefix,
         GroupHandler $aggregate,
         CheckUserAggregate $checkUserAggregate,
         TruncateRoleInterface $truncateRole,
+        MessageDispatchInterface $messageDispatch
     ) {
         $this->aggregate = $aggregate;
         $this->groupByPrefix = $groupByPrefix;
         $this->checkUserAggregate = $checkUserAggregate;
         $this->truncateRole = $truncateRole;
+        $this->messageDispatch = $messageDispatch;
     }
 
     public function load(ObjectManager $manager): void
@@ -59,13 +64,23 @@ final class GroupFixtures extends Fixture implements DependentFixtureInterface
         // php bin/console doctrine:fixtures:load --append
 
         // Группа Администраторов
-
         $GroupDTO = new GroupDTO();
 
         $GroupEvent = $this->groupByPrefix->get($GroupDTO->getGroup());
 
-        if (null === $GroupEvent) {
+        if ($GroupEvent === null)
+        {
             $GroupEvent = $this->aggregate->handle($GroupDTO);
+        } else
+        {
+            // Чистим кеш ролей пользователя
+
+            /* Отправляем сообщение в шину */
+            $this->messageDispatch->dispatch(
+                message: new UserGroupMessage($GroupEvent->getGroup(), $GroupEvent->getId()),
+                transport: 'users_groups'
+            );
+
         }
 
         $this->addReference(self::class, $GroupEvent);
@@ -79,17 +94,15 @@ final class GroupFixtures extends Fixture implements DependentFixtureInterface
         /** @var AccountEvent $AccountEvent */
         $AccountEvent = $this->getReference(AccountFixtures::class);
 
-        // Сбрасываем кеш ролей пользователя
-        $cache = new FilesystemAdapter();
-        $cache->delete('group-'.$AccountEvent->getAccount());
-
         $CheckUsersDTO = new CheckUsersDTO(
             $AccountEvent->getAccount(),
             $GroupEvent->getGroup()
         );
+
         $CheckUsers = $manager->getRepository(CheckUsers::class)->find($CheckUsersDTO->getUser());
 
-        if (empty($CheckUsers)) {
+        if (empty($CheckUsers))
+        {
             $this->checkUserAggregate->handle($CheckUsersDTO);
         }
     }

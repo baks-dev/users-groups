@@ -67,4 +67,19 @@ class Role implements RoleFixturesInterface, MenuAdminFixturesInterface
     {
         return 300;
     }
+
+    /** Метод возвращает флаг "Показать в выпадающем меню"  */
+    public function getDropdownMenu(): bool
+    {
+        return true;
+    }
+
+
+    /**
+     * Метод возвращает флаг "Модальное окно".
+     */
+    public function getModal(): bool
+    {
+        return false;
+    }
 }

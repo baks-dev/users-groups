@@ -17,7 +17,7 @@
 
 namespace BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit;
 
-use BaksDev\Users\Groups\Group\Entity;
+use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole;
 use BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -25,74 +25,66 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class CheckRoleHandler
 {
-	private EntityManagerInterface $entityManager;
-	
-	//private RequestStack $request;
-	//private TranslatorInterface $translator;
-	private ValidatorInterface $validator;
-	
-	private LoggerInterface $logger;
-	
-	
-	public function __construct(
-		EntityManagerInterface $entityManager,
-		ValidatorInterface $validator,
-		LoggerInterface $logger,
-	)
-	{
-		$this->entityManager = $entityManager;
-		$this->validator = $validator;
-		$this->logger = $logger;
-	}
-	
-	
-	public function handle(
-		CheckRoleInterface $command,
-	) : string|\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole
-	{
-		/* Валидация */
-		$errors = $this->validator->validate($command);
-		
-		if(count($errors) > 0)
-		{
-			$uniqid = uniqid('', false);
-			$errorsString = (string) $errors;
-			$this->logger->error($uniqid.': '.$errorsString);
-			
-			return $uniqid;
-		}
-		
-		if(empty($command->getEvent()) || empty($command->getRole()))
-		{
-			$uniqid = uniqid('', false);
-			$errorsString = sprintf('Не указана роль или событие %s',
-				\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class
-			);
-			$this->logger->error($uniqid.': '.$errorsString);
-			
-			return $uniqid;
-		}
-		
-		if($command->getEvent())
-		{
-			$Event = $this->entityManager->getRepository(\BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole::class)
-				->findOneBy(
-					['event' => $command->getEvent(), 'role' => $command->getRole()]
-				)
-			;
-			
-			if(empty($Event))
-			{
-				$Event = new \BaksDev\Users\Groups\Group\Entity\CheckRole\CheckRole($command->getEvent());
-				$this->entityManager->persist($Event);
-				$Event->setEntity($command);
-				$this->entityManager->flush();
-			}
-			
-			return $Event;
-		}
-		
-		return false;
-	}
-	
+    private EntityManagerInterface $entityManager;
+
+    // private RequestStack $request;
+    // private TranslatorInterface $translator;
+    private ValidatorInterface $validator;
+
+    private LoggerInterface $logger;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ValidatorInterface $validator,
+        LoggerInterface $logger,
+    ) {
+        $this->entityManager = $entityManager;
+        $this->validator = $validator;
+        $this->logger = $logger;
+    }
+
+    public function handle(
+        CheckRoleInterface $command,
+    ): string|CheckRole {
+        // Валидация
+        $errors = $this->validator->validate($command);
+
+        if (count($errors) > 0) {
+            $uniqid = uniqid('', false);
+            $errorsString = (string) $errors;
+            $this->logger->error($uniqid.': '.$errorsString);
+
+            return $uniqid;
+        }
+
+        if (empty($command->getEvent()) || empty($command->getRole())) {
+            $uniqid = uniqid('', false);
+            $errorsString = sprintf(
+                'Не указана роль или событие %s',
+                CheckRole::class
+            );
+            $this->logger->error($uniqid.': '.$errorsString);
+
+            return $uniqid;
+        }
+
+        if ($command->getEvent()) {
+            $Event = $this->entityManager->getRepository(CheckRole::class)
+                ->findOneBy(
+                    ['event' => $command->getEvent(), 'role' => $command->getRole()]
+                )
+            ;
+
+            if (empty($Event)) {
+                $Event = new CheckRole($command->getEvent());
+                $this->entityManager->persist($Event);
+                $Event->setEntity($command);
+                $this->entityManager->flush();
+            }
+
+            return $Event;
+        }
+
+        return false;
+    }
 }

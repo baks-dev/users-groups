@@ -19,7 +19,7 @@
 namespace BaksDev\Users\Groups\Group\Controller\Admin;
 
 use BaksDev\Core\Controller\AbstractController;
-use BaksDev\Core\Services\Security\RoleSecurity;
+use BaksDev\Core\Listeners\Event\Security\RoleSecurity;
 use BaksDev\Users\Groups\Group\Entity\Event\GroupEvent;
 use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupDTO;
 use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupForm;

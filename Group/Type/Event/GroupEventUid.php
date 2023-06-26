@@ -24,6 +24,8 @@ use Symfony\Component\Uid\UuidV7;
 
 final class GroupEventUid
 {
+    public const TEST = '0188a9a6-3ad9-746f-89f6-89cee9c6b014';
+    
 	public const TYPE = 'group_event';
 	
 	private Uuid $value;

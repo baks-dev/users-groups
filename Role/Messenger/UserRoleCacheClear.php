@@ -37,7 +37,7 @@ final class UserRoleCacheClear
 	public function __invoke(UserRoleMessage $message)
 	{
 		/* Чистим кеш модуля */
-		$cache = new FilesystemAdapter('CacheUserGroupRole');
+		$cache = new FilesystemAdapter('UserGroupRole');
 		$cache->clear();
 		
 		/* Сбрасываем индивидуальный кеш */

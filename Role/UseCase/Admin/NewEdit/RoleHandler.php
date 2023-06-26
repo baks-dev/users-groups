@@ -17,106 +17,93 @@
 
 namespace BaksDev\Users\Groups\Role\UseCase\Admin\NewEdit;
 
+use BaksDev\Core\Services\Messenger\MessageDispatchInterface;
 use BaksDev\Users\Groups\Role\Entity;
-use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use BaksDev\Users\Groups\Role\Messenger\UserRoleMessage;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class RoleHandler
 {
-	private EntityManagerInterface $entityManager;
-	
-	private ValidatorInterface $validator;
-	
-	private LoggerInterface $logger;
-	
-	private MessageBusInterface $bus;
-	
-	
-	public function __construct(
-		EntityManagerInterface $entityManager,
-		ValidatorInterface $validator,
-		LoggerInterface $logger,
-		MessageBusInterface $bus,
-	
-	)
-	{
-		$this->entityManager = $entityManager;
-		$this->validator = $validator;
-		$this->logger = $logger;
-		$this->bus = $bus;
-	}
-	
-	
-	public function handle(
-		Entity\Event\RoleEventInterface $command,
-	) : string|Entity\Role
-	{
+    private EntityManagerInterface $entityManager;
 
-		if($command->getEvent())
-		{
-			$EventRepo = $this->entityManager->getRepository(Entity\Event\RoleEvent::class)
-				->find($command->getEvent())
-			;
-			
-			if($EventRepo === null)
-			{
-				$uniqid = uniqid('', false);
-				$errorsString = sprintf(
-					'Ошибка при получении сущности %s с id: %s',
-					Entity\Event\RoleEvent::class,
-					$command->getEvent()
-				);
-				$this->logger->error($uniqid.': '.$errorsString);
-				
-				return $uniqid;
-			}
-			
-			$Event = $EventRepo->cloneEntity();
-		}
-		else
-		{
-			$Event = new Entity\Event\RoleEvent();
-		}
-		
-		$Event->setEntity($command);
-		$this->entityManager->clear();
-		$this->entityManager->persist($Event);
-		
-		if(empty($Event->getRole()))
-		{
-			$uniqid = uniqid('', false);
-			$errorsString = sprintf('Необходимо указать роль группы');
-			$this->logger->error($uniqid.': '.$errorsString);
-			
-			return $uniqid;
-		}
-		
-		$this->entityManager->persist($Event);
-		
-		$Role = $this->entityManager->getRepository(Entity\Role::class)
-			->find($Event->getRole())
-		;
-		
-		if(empty($Role))
-		{
-			$Role = new Entity\Role($Event->getRole());
-			$this->entityManager->persist($Role);
-		}
-		
-		$Event->setRole($Role);
-		$Role->setEvent($Event);
+    private ValidatorInterface $validator;
 
+    private LoggerInterface $logger;
 
+    private MessageDispatchInterface $messageDispatch;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ValidatorInterface $validator,
+        LoggerInterface $logger,
+        MessageDispatchInterface $messageDispatch
+    ) {
+        $this->entityManager = $entityManager;
+        $this->validator = $validator;
+        $this->logger = $logger;
+        $this->messageDispatch = $messageDispatch;
+    }
+
+    public function handle(
+        Entity\Event\RoleEventInterface $command,
+    ): string|Entity\Role {
+        if ($command->getEvent())
+        {
+            $EventRepo = $this->entityManager->getRepository(Entity\Event\RoleEvent::class)
+                ->find($command->getEvent());
+
+            if ($EventRepo === null)
+            {
+                $uniqid = uniqid('', false);
+                $errorsString = sprintf(
+                    'Ошибка при получении сущности %s с id: %s',
+                    Entity\Event\RoleEvent::class,
+                    $command->getEvent()
+                );
+                $this->logger->error($uniqid.': '.$errorsString);
+
+                return $uniqid;
+            }
+
+            $Event = $EventRepo->cloneEntity();
+        } else
+        {
+            $Event = new Entity\Event\RoleEvent();
+        }
+
+        $Event->setEntity($command);
+        $this->entityManager->clear();
+        $this->entityManager->persist($Event);
+
+        if (empty($Event->getRole()))
+        {
+            $uniqid = uniqid('', false);
+            $errorsString = sprintf('Необходимо указать роль группы');
+            $this->logger->error($uniqid.': '.$errorsString);
+
+            return $uniqid;
+        }
+
+        $this->entityManager->persist($Event);
+
+        $Role = $this->entityManager->getRepository(Entity\Role::class)
+            ->find($Event->getRole());
+
+        if (empty($Role))
+        {
+            $Role = new Entity\Role($Event->getRole());
+            $this->entityManager->persist($Role);
+        }
+
+        $Event->setRole($Role);
+        $Role->setEvent($Event);
 
         /* Валидация события */
         $errors = $this->validator->validate($Event);
 
-        if(count($errors) > 0)
+        if (count($errors) > 0)
         {
             $uniqid = uniqid('', false);
             $errorsString = (string) $errors;
@@ -128,7 +115,7 @@ final class RoleHandler
         /* Валидация Main */
         $errors = $this->validator->validate($Role);
 
-        if(count($errors) > 0)
+        if (count($errors) > 0)
         {
             $uniqid = uniqid('', false);
             $errorsString = (string) $errors;
@@ -137,15 +124,18 @@ final class RoleHandler
             return $uniqid;
         }
 
+        $this->entityManager->flush();
 
-		
-		$this->entityManager->flush();
-		
-		/* Отправляем собыие в шину  */
-		$this->bus->dispatch(new UserRoleMessage($Role->getId(), $Role->getEvent(), $command->getEvent()));
-		
-		return $Role;
-		
-	}
-	
+
+
+        /* Отправляем событие в шину  */
+        $this->messageDispatch->dispatch(
+            message: new UserRoleMessage($Role->getId(), $Role->getEvent(), $command->getEvent()),
+            transport: 'users_groups'
+        );
+
+
+
+        return $Role;
+    }
 }

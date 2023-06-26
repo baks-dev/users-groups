@@ -24,6 +24,8 @@ use Symfony\Component\Uid\UuidV7;
 
 final class RoleEventUid
 {
+    public const TEST = '0188a9a6-931f-7f19-a10f-4901565b8735';
+    
 	public const TYPE = 'role_event_id';
 	
 	private Uuid $value;

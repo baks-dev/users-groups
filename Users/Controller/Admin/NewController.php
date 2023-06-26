@@ -19,7 +19,7 @@
 namespace BaksDev\Users\Groups\Users\Controller\Admin;
 
 use BaksDev\Core\Controller\AbstractController;
-use BaksDev\Core\Services\Security\RoleSecurity;
+use BaksDev\Core\Listeners\Event\Security\RoleSecurity;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Add\CheckUsersDTO;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Add\CheckUsersForm;
 use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;

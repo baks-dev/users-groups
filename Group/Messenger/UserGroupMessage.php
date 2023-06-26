@@ -25,50 +25,42 @@ declare(strict_types=1);
 
 namespace BaksDev\Users\Groups\Group\Messenger;
 
-
 use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
 use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 
 final class UserGroupMessage
 {
-	/** Идентификатор */
-	private GroupPrefix $id;
-	
-	/** Идентификатор события */
-	private GroupEventUid $event;
-	
-	/** Идентификатор предыдущего события */
-	private ?GroupEventUid $last;
-	
-	public function __construct(GroupPrefix $id, GroupEventUid $event, ?GroupEventUid $last = null)
-	{
-		$this->last = $last;
-		$this->id = $id;
-		$this->event = $event;
-	}
-	
-	
-	/** Идентификатор */
-	
-	public function getId() : GroupPrefix
-	{
-		return $this->id;
-	}
-	
-	
-	/** Идентификатор события */
-	
-	public function getEvent() : GroupEventUid
-	{
-		return $this->event;
-	}
-	
-	
-	/** Идентификатор предыдущего события */
-	
-	public function getLast() : ?GroupEventUid
-	{
-		return $this->last;
-	}
-	
+    /** Идентификатор */
+    private GroupPrefix $id;
+
+    /** Идентификатор события */
+    private GroupEventUid $event;
+
+    /** Идентификатор предыдущего события */
+    private ?GroupEventUid $last;
+
+    public function __construct(GroupPrefix $id, GroupEventUid $event, ?GroupEventUid $last = null)
+    {
+        $this->last = $last;
+        $this->id = $id;
+        $this->event = $event;
+    }
+
+    /** Идентификатор */
+    public function getId(): GroupPrefix
+    {
+        return $this->id;
+    }
+
+    /** Идентификатор события */
+    public function getEvent(): GroupEventUid
+    {
+        return $this->event;
+    }
+
+    /** Идентификатор предыдущего события */
+    public function getLast(): ?GroupEventUid
+    {
+        return $this->last;
+    }
 }
