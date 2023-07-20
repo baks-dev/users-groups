@@ -17,14 +17,13 @@
 
 namespace BaksDev\Users\Groups\Role\Entity\Modify;
 
-use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
-use BaksDev\Users\User\Entity\User;
-use BaksDev\Users\User\Type\Id\UserUid;
-use BaksDev\Users\Groups\Role\Entity\Modify\RoleModifyInterface;
 use BaksDev\Core\Entity\EntityEvent;
 use BaksDev\Core\Type\Ip\IpAddress;
 use BaksDev\Core\Type\Modify\ModifyAction;
 use BaksDev\Core\Type\Modify\ModifyActionEnum;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
+use BaksDev\Users\User\Entity\User;
+use BaksDev\Users\User\Type\Id\UserUid;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -114,10 +113,10 @@ class RoleModify extends EntityEvent
 	}
 	
 	
-	public function upModifyAgent(IpAddress $ipAddress, string $userAgent) : void
+	public function upModifyAgent(IpAddress $ipAddress, ?string $userAgent) : void
 	{
 		$this->ipAddress = $ipAddress;
-		$this->userAgent = $userAgent;
+		$this->userAgent = $userAgent ?: 'console';
 		$this->modDate = new DateTimeImmutable();
 	}
 	
