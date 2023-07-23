@@ -18,49 +18,22 @@
 
 namespace BaksDev\Users\Groups\Users\Type\Event;
 
+use BaksDev\Core\Type\UidType\Uid;
 use Symfony\Component\Uid\AbstractUid;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Uid\UuidV7;
 
-final class CheckUsersEventUid
+final class CheckUsersEventUid extends Uid
 {
     public const TEST = '0188a9a7-11e1-78d8-b323-3c081795a8f5';
     
 	public const TYPE = 'check_users_event';
-	
-	private Uuid $value;
-	
+
 	private ?string $name;
-	
 	
 	public function __construct(AbstractUid|string|null $value = null, $name = null)
 	{
-		if($value === null)
-		{
-			$value = Uuid::v7();
-		}
-		
-		else if(is_string($value))
-		{
-			$value = new UuidV7($value);
-		}
-		
-		$this->value = $value;
+        parent::__construct($value);
 		$this->name = $name;
 	}
-	
-	
-	public function __toString() : string
-	{
-		return $this->value;
-	}
-	
-	
-	public function getValue() : AbstractUid
-	{
-		return $this->value;
-	}
-	
 	
 	public function getName() : ?string
 	{

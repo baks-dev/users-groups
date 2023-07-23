@@ -18,54 +18,25 @@
 
 namespace BaksDev\Users\Groups\Group\Type\Check;
 
+use BaksDev\Core\Type\UidType\Uid;
 use Symfony\Component\Uid\AbstractUid;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Uid\UuidV7;
 
-final class GroupCheckUid
+final class GroupCheckUid extends Uid
 {
     public const TEST = '0188a9a5-e79a-7e75-8b77-0d81f34e9f1a';
     
 	public const TYPE = 'group_check';
 	
-	private Uuid $value;
-	
+
 	private ?string $name;
 	
 	
 	public function __construct(AbstractUid|string|null $value = null, string $name = null)
 	{
-		if($value === null)
-		{
-			$value = Uuid::v7();
-		}
-		
-		else if(is_string($value))
-		{
-			$value = new UuidV7($value);
-		}
-		
-		$this->value = $value;
-		
+        parent::__construct($value);
 		$this->name = $name;
 	}
-	
-	
-	public function __toString() : string
-	{
-		return $this->value;
-	}
-	
-	
-	public function getValue() : AbstractUid
-	{
-		return $this->value;
-	}
-	
-	
-	/**
-	 * @return string|null
-	 */
+
 	public function getName() : ?string
 	{
 		return $this->name;

@@ -17,13 +17,13 @@
 
 namespace BaksDev\Users\Groups\Role\Repository\RoleChoice;
 
-use BaksDev\Users\Groups\Role\Entity;
-use BaksDev\Users\Groups\Role\Repository\RoleChoice\RoleChoiceInterface;
-use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
+
 use BaksDev\Core\Type\Locale\Locale;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use BaksDev\Users\Groups\Role\Entity\Event\RoleEvent;
+use BaksDev\Users\Groups\Role\Entity\Role;
+use BaksDev\Users\Groups\Role\Entity\Trans\RoleTrans;
+use BaksDev\Users\Groups\Role\Type\RolePrefix\RolePrefix;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class RoleChoiceRepository implements RoleChoiceInterface
@@ -47,12 +47,12 @@ final class RoleChoiceRepository implements RoleChoiceInterface
 	{
 		$qb = $this->entityManager->createQueryBuilder();
 		
-		$select = sprintf('new %s(event.role, trans.name)', RolePrefix::class);
+		$select = sprintf('new %s(event.role, trans.name, trans.description)', RolePrefix::class);
 		
 		$qb->select($select);
-		$qb->from(\BaksDev\Users\Groups\Role\Entity\Role::class, 'role');
-		$qb->join(\BaksDev\Users\Groups\Role\Entity\Event\RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
-		$qb->join(\BaksDev\Users\Groups\Role\Entity\Trans\RoleTrans::class,
+		$qb->from(Role::class, 'role');
+		$qb->join(RoleEvent::class, 'event', 'WITH', 'event.id = role.event');
+		$qb->join(RoleTrans::class,
 			'trans',
 			'WITH',
 			'trans.event = event.id AND trans.local = :local'

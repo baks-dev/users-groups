@@ -18,50 +18,24 @@
 
 namespace BaksDev\Users\Groups\Role\Type\Voter;
 
+use BaksDev\Core\Type\UidType\Uid;
 use Symfony\Component\Uid\AbstractUid;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Uid\UuidV7;
 
-final class RoleVoterUid
+final class RoleVoterUid extends Uid
 {
     public const TEST = '0188a9a6-e0aa-7206-9397-9b5530807293';
     
 	public const TYPE = 'role_voter';
-	
-	private Uuid $value;
-	
+
 	private ?string $name;
 	
 	
 	public function __construct(AbstractUid|string|null $value = null, $name = null)
 	{
-		if($value === null)
-		{
-			$value = Uuid::v7();
-		}
-		
-		else if(is_string($value))
-		{
-			$value = new UuidV7($value);
-		}
-		
-		$this->value = $value;
+        parent::__construct($value);
 		$this->name = $name;
 	}
-	
-	
-	public function __toString() : string
-	{
-		return $this->value;
-	}
-	
-	
-	public function getValue() : AbstractUid
-	{
-		return $this->value;
-	}
-	
-	
+
 	public function getName() : ?string
 	{
 		return $this->name;

@@ -43,12 +43,14 @@
 
 	</td>
 
-	{% if is_granted('ROLE_ADMIN') and app.user.id != item.account_id %}
-		<th class="ps-5" tabindex="0" aria-controls="kt_ecommerce_category_table"
-			rowspan="1" colspan="1">
+
+
+		<td class="ps-5">
+			{% if is_granted('ROLE_ADMIN') and app.user.id != item.account_id %}
 			{# Прейти в режим пользователя #}
-			<a href='{{ path('Pages:user.homepage', {'_switch_user' : item.account_id }) }}' class="badge badge-light">Авторизоваться</a>
-		</th>
-	{% endif %}
+			<a href='{{ path('Pages:user.homepage', {'_switch_user' : item.account_id }) }}' class="badge bg-primary text-decoration-none">Авторизоваться</a>
+			{% endif %}
+		</td>
+
 
 </tr>

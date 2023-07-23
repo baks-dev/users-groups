@@ -19,6 +19,7 @@
 namespace BaksDev\Users\Groups\Role\Type\RolePrefix;
 
 use InvalidArgumentException;
+use function mb_strtoupper;
 
 final class RolePrefix
 {
@@ -27,9 +28,15 @@ final class RolePrefix
 	private $value;
 	
 	private ?string $name;
-	
-	
-	public function __construct(?string $value = null, string $name = null)
+    private ?string $desc;
+
+
+    public function __construct(
+        ?string $value = null,
+        string $name = null,
+        string $desc = null
+
+    )
 	{
 		if(empty($value))
 		{
@@ -41,9 +48,10 @@ final class RolePrefix
 			throw new InvalidArgumentException('Incorrect Role Prefix.');
 		}
 		
-		$this->value = \mb_strtoupper($value);
+		$this->value = mb_strtoupper($value);
 		$this->name = $name;
-	}
+        $this->desc = $desc;
+    }
 	
 	
 	public function __toString() : string
@@ -56,14 +64,16 @@ final class RolePrefix
 	{
 		return $this->value;
 	}
-	
-	
-	/**
-	 * @return string|null
-	 */
+
 	public function getName() : ?string
 	{
 		return $this->name;
 	}
-	
+
+    public function getDesc(): ?string
+    {
+        return $this->desc;
+    }
+
+
 }
