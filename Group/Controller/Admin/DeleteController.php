@@ -25,13 +25,12 @@ use BaksDev\Users\Groups\Group\Entity\Group;
 use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupDTO;
 use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupForm;
 use BaksDev\Users\Groups\Group\UseCase\Admin\Delete\DeleteGroupHandler;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
+#[AsController]
 #[RoleSecurity('ROLE_GROUPS_DELETE')]
 final class DeleteController extends AbstractController
 {

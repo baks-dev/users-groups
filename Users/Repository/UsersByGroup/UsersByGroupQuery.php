@@ -41,6 +41,7 @@ final class UsersByGroupQuery implements UsersByGroupInterface
             'check_event',
             'check_event.id = check_users.event AND check_event.group_id = :prefix'
         );
+
         $qb->setParameter('prefix', $prefix, GroupPrefix::TYPE);
 
         return $qb->executeQuery()->fetchAllAssociative();

@@ -26,9 +26,9 @@ return static function (FrameworkConfig $framework) {
     $messenger = $framework->messenger();
 
     $messenger
-        ->transport('users_groups')
+        ->transport('users-groups')
         ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
-        ->options(['queue_name' => 'users_groups'])
+        ->options(['queue_name' => 'users-groups'])
         ->retryStrategy()
         ->maxRetries(5)
         ->delay(1000)

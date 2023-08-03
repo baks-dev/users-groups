@@ -20,14 +20,10 @@ namespace BaksDev\Users\Groups\Group\Controller\Admin\Tests;
 
 use BaksDev\Users\User\Tests\TestUserAccount;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DependencyInjection\Attribute\When;
 
-/**
- * @internal
- *
- * @coversNothing
- *
- * @group users-groups
- */
+/** @group users-groups */
+#[When(env: 'test')]
 final class NewControllerTest extends WebTestCase
 {
     private const URL = '/admin/group/new';

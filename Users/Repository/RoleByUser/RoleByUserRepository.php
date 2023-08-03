@@ -17,32 +17,26 @@
 
 namespace BaksDev\Users\Groups\Users\Repository\RoleByUser;
 
+use BaksDev\Core\Doctrine\DBALQueryBuilder;
+use BaksDev\Core\Doctrine\ORMQueryBuilder;
 use BaksDev\Users\Groups\Group\Entity as EntityGroup;
 use BaksDev\Users\Groups\Users\Entity;
 use BaksDev\Users\User\Type\Id\UserUid;
-use Doctrine\DBAL\Cache\QueryCacheProfile;
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Cache\Adapter\ApcuAdapter;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Contracts\Cache\CacheInterface;
 
 final class RoleByUserRepository implements RoleByUserInterface
 {
-    private EntityManagerInterface $entityManager;
-    private Connection $connection;
-    private CacheInterface $cache;
+    private ORMQueryBuilder $ORMQueryBuilder;
+    private DBALQueryBuilder $DBALQueryBuilder;
 
-    public function __construct(EntityManagerInterface $entityManager, CacheInterface $cache)
+    public function __construct(DBALQueryBuilder $DBALQueryBuilder, ORMQueryBuilder $ORMQueryBuilder)
     {
-        $this->entityManager = $entityManager;
-        $this->connection = $entityManager->getConnection();
-        $this->cache = $cache;
+        $this->ORMQueryBuilder = $ORMQueryBuilder;
+        $this->DBALQueryBuilder = $DBALQueryBuilder;
     }
 
     public function get(UserUid $userUid): array
     {
-        $qb = $this->entityManager->createQueryBuilder();
+        $qb = $this->ORMQueryBuilder->createQueryBuilder(self::class);
 
         $qb->select(['groups_event', 'check_role', 'check_voter']);
 
@@ -78,28 +72,23 @@ final class RoleByUserRepository implements RoleByUserInterface
         );
 
         $qb->where('check.id = :user_id');
+        $qb->setParameter('user_id', $userUid, UserUid::TYPE);
 
-        // Кешируем результат ORM
-        $cacheQueries = new ApcuAdapter((string) $userUid->getValue());
-
-        $query = $this->entityManager->createQuery($qb->getDQL());
-        $query->setQueryCache($cacheQueries);
-        $query->setResultCache($cacheQueries);
-        $query->enableResultCache();
-        $query->setLifetime(60 * 60 * 24);
-
-        $query->setParameter('user_id', $userUid, UserUid::TYPE);
-
-        return $query->getResult();
+        /* Кешируем результат ORM */
+        return $qb->enableCache('UserGroup', 86400)->getResult();
     }
 
     public function fetchAllRoleUser(UserUid $userUid)
     {
-        $qb = $this->connection->createQueryBuilder();
+        $qb = $this->DBALQueryBuilder->createQueryBuilder(self::class);
 
-        $qb->addSelect('groups.id');
-        $qb->addSelect('check_role.role');
-        $qb->addSelect('check_voter.voter');
+       $qb->select('
+            DISTINCT UNNEST(
+                ARRAY_AGG(groups.id) || 
+                ARRAY_AGG(check_role.role) || 
+                ARRAY_AGG(check_voter.voter)
+            ) AS roles
+        ');
 
         $qb->from(Entity\CheckUsers::TABLE, 'check_user');
 
@@ -141,17 +130,10 @@ final class RoleByUserRepository implements RoleByUserInterface
         $qb->where('check_user.user_id = :users');
         $qb->setParameter('users', $userUid, UserUid::TYPE);
 
-        // $cacheFilesystem = new ApcuAdapter((string) $userUid->getValue());
-        $cacheFilesystem = new FilesystemAdapter((string) $userUid->getValue());
+        /* Кешируем результат DBAL */
+        return $qb
+            ->enableCache('UserGroup', 3600)
+            ->fetchAllAssociative();
 
-        $config = $this->connection->getConfiguration();
-        $config?->setResultCache($cacheFilesystem);
-
-        return $this->connection->executeCacheQuery(
-            $qb->getSQL(),
-            $qb->getParameters(),
-            $qb->getParameterTypes(),
-            new QueryCacheProfile(60 * 60 * 24)
-        )->fetchAllAssociative();
     }
 }

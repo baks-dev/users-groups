@@ -25,8 +25,10 @@ use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupForm;
 use BaksDev\Users\Groups\Group\UseCase\Admin\NewEdit\GroupHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[AsController]
 #[RoleSecurity('ROLE_GROUPS_NEW')]
 final class NewController extends AbstractController
 {

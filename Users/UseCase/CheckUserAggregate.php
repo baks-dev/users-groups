@@ -105,16 +105,7 @@ final class CheckUserAggregate
             }
 
             $this->entityManager->flush();
-
-            //dd($CheckUsers);
-
-            //			/* Сбрасываем кеш группы пользователя */
-            //			$cache = new FilesystemAdapter();
-            //			$cache->delete('group-'.$Event->getUser()->getValue());
-
-
-
-
+            
             /* Отправляем событие в шину  */
             $this->messageDispatch->dispatch(
                 message: new GroupCheckUserMessage(
@@ -122,7 +113,7 @@ final class CheckUserAggregate
                     $CheckUsers->getEvent(),
                     $command->getEvent()
                 ),
-                transport: 'users_groups'
+                transport: 'users-groups'
             );
 
 

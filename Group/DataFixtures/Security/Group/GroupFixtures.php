@@ -78,7 +78,7 @@ final class GroupFixtures extends Fixture implements DependentFixtureInterface
             /* Отправляем сообщение в шину */
             $this->messageDispatch->dispatch(
                 message: new UserGroupMessage($GroupEvent->getGroup(), $GroupEvent->getId()),
-                transport: 'users_groups'
+                transport: 'users-groups'
             );
 
         }
@@ -87,8 +87,6 @@ final class GroupFixtures extends Fixture implements DependentFixtureInterface
 
         // сбрасываем роли и правила
         $this->truncateRole->clear();
-
-        // dd($Group);
 
         // Присваиваем группу администратору
         /** @var AccountEvent $AccountEvent */

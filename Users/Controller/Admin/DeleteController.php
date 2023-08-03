@@ -24,13 +24,12 @@ use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserDTO;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Delete\DeleteCheckUserForm;
 use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
+#[AsController]
 #[RoleSecurity('ROLE_CHECK_USERS_DELETE')]
 final class DeleteController extends AbstractController
 {

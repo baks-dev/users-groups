@@ -17,18 +17,15 @@
 
 namespace BaksDev\Users\Groups\Users\Entity\Event;
 
+use BaksDev\Core\Entity\EntityEvent;
+use BaksDev\Core\Type\Modify\ModifyAction;
+use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use BaksDev\Users\Groups\Group\Type\Prefix\GroupPrefix;
 use BaksDev\Users\Groups\Users\Entity\CheckUsers;
-use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEventInterface;
 use BaksDev\Users\Groups\Users\Entity\Modify\CheckUserModify;
 use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
 use BaksDev\Users\User\Type\Id\UserUid;
-use BaksDev\Core\Type\Modify\ModifyAction;
-use BaksDev\Core\Type\Modify\ModifyActionEnum;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
-
-use BaksDev\Core\Entity\EntityEvent;
 use Exception;
 use InvalidArgumentException;
 
@@ -95,7 +92,13 @@ class CheckUsersEvent extends EntityEvent
 	{
 		return $this->user;
 	}
-	
+
+
+    public function getGroup(): GroupPrefix
+    {
+        return $this->group;
+    }
+
 	
 	public function isModifyActionEquals(ModifyActionEnum $action) : bool
 	{

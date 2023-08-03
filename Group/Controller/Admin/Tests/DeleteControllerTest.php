@@ -23,10 +23,10 @@ use BaksDev\Users\Groups\Group\Type\Event\GroupEventUid;
 use BaksDev\Users\User\Tests\TestUserAccount;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DependencyInjection\Attribute\When;
 
-/**
- * @group users-groups
- */
+/** @group users-groups */
+#[When(env: 'test')]
 final class DeleteControllerTest extends WebTestCase
 {
     private const URL = '/admin/group/delete/%s';

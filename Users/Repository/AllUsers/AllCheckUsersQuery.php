@@ -18,42 +18,34 @@
 namespace BaksDev\Users\Groups\Users\Repository\AllUsers;
 
 use BaksDev\Auth\Email\Entity as AccountEntity;
+use BaksDev\Core\Doctrine\DBALQueryBuilder;
 use BaksDev\Core\Form\Search\SearchDTO;
 use BaksDev\Core\Services\Paginator\PaginatorInterface;
-use BaksDev\Core\Services\Switcher\Switcher;
-use BaksDev\Core\Type\Locale\Locale;
 use BaksDev\Users\Groups\Group\Entity as GroupEntity;
 use BaksDev\Users\Groups\Users\Entity as GroupCheckUserEntity;
-use Doctrine\DBAL\Connection;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use function mb_strtolower;
 
 final class AllCheckUsersQuery implements AllCheckUsersInterface
 {
-    private Connection $connection;
-
-    private Switcher $switcher;
 
     private PaginatorInterface $paginator;
-
-    private TranslatorInterface $translator;
+    private DBALQueryBuilder $DBALQueryBuilder;
 
     public function __construct(
-        Connection $connection,
-        Switcher $switcher,
+        DBALQueryBuilder $DBALQueryBuilder,
         PaginatorInterface $paginator,
-        TranslatorInterface $translator,
-    ) {
-        $this->connection = $connection;
-        $this->switcher = $switcher;
+    )
+    {
         $this->paginator = $paginator;
-        $this->translator = $translator;
+        $this->DBALQueryBuilder = $DBALQueryBuilder;
     }
 
     /** Метод возвращает список пользователей, принадлежащих какой либо из групп */
     public function fetchAllUsersOnGroupAssociative(SearchDTO $search): PaginatorInterface
     {
-        $qb = $this->connection->createQueryBuilder();
+        $qb = $this->DBALQueryBuilder
+            ->createQueryBuilder(self::class)
+            ->bindLocal()
+        ;
 
         $qb->addSelect('checker.event as event');
         $qb->from(GroupCheckUserEntity\CheckUsers::TABLE, 'checker');
@@ -128,27 +120,23 @@ final class AllCheckUsersQuery implements AllCheckUsersInterface
             'trans',
             'trans.event = group_event.id AND trans.local = :local'
         );
-        $qb->setParameter('local', new Locale($this->translator->getLocale()), Locale::TYPE);
 
         // Поиск
-        if ($search->query) {
-            $search->query = mb_strtolower($search->query);
+        if($search->getQuery())
+        {
+            $qb
+                ->createSearchQueryBuilder($search)
 
-            $qb->andWhere('LOWER(trans.id) LIKE :query');
-            $qb->orWhere('LOWER(trans.id) LIKE :query');
-
-            $qb->andWhere('LOWER(trans.name) LIKE :query');
-            $qb->orWhere('LOWER(trans.name) LIKE :query');
-
-            $qb->andWhere('LOWER(trans.description) LIKE :query');
-            $qb->orWhere('LOWER(trans.description) LIKE :query');
-
-            $qb->setParameter('query', '%'.$search->query.'%');
-            $qb->setParameter('rus', '%'.$this->switcher->toRus($search->query, true).'%');
-            $qb->setParameter('eng', '%'.$this->switcher->toEng($search->query, true).'%');
+                ->addSearchLike('trans.name')
+                ->addSearchLike('trans.description')
+            ;
         }
 
+        $qb->orderBy('checker_modify.mod_date', 'DESC');
+
+
         return $this->paginator->fetchAllAssociative($qb);
+
 
     }
 }

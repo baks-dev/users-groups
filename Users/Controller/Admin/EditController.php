@@ -25,12 +25,12 @@ use BaksDev\Users\Groups\Users\UseCase\Admin\Edit\CheckUsersDTO;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Edit\CheckUsersForm;
 use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[AsController]
 #[RoleSecurity('ROLE_CHECK_USERS_EDIT')]
 final class EditController extends AbstractController
 {

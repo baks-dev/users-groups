@@ -23,12 +23,12 @@ use BaksDev\Core\Listeners\Event\Security\RoleSecurity;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Add\CheckUsersDTO;
 use BaksDev\Users\Groups\Users\UseCase\Admin\Add\CheckUsersForm;
 use BaksDev\Users\Groups\Users\UseCase\CheckUserAggregate;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[AsController]
 #[RoleSecurity('ROLE_CHECK_USERS_NEW')]
 final class NewController extends AbstractController
 {

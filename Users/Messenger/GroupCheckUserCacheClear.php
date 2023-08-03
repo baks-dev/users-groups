@@ -25,6 +25,8 @@ declare(strict_types=1);
 
 namespace BaksDev\Users\Groups\Users\Messenger;
 
+use BaksDev\Users\Groups\Users\Entity\Event\CheckUsersEvent;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\ApcuAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -32,8 +34,25 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler(fromTransport: 'sync')]
 final class GroupCheckUserCacheClear
 {
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager) {
+
+        $this->entityManager = $entityManager;
+    }
+
     public function __invoke(GroupCheckUserMessage $message): void
     {
+
+        // Чистим кеш модуля
+        $cache = new FilesystemAdapter('UserGroup');
+        $cache->clear();
+
+        // Сбрасываем индивидуальный кеш
+        $cache = new ApcuAdapter('UserGroup');
+        $cache->clear();
+
+
         // Чистим кеш модуля
         $cache = new FilesystemAdapter('GroupCheckUser');
         $cache->clear();
@@ -42,14 +61,12 @@ final class GroupCheckUserCacheClear
         $cache = new ApcuAdapter('GroupCheckUser');
         $cache->clear();
 
-        $cache = new ApcuAdapter((string) $message->getId());
-        $cache->clear();
+        // Получаем всех пользователей группы и чистим им кеш
+        $CheckUsersEvent = $this->entityManager->getRepository(CheckUsersEvent::class)->find($message->getEvent());
 
-        $cache = new ApcuAdapter((string) $message->getEvent()->getValue());
-        $cache->clear();
-
-        if ($message->getLast()) {
-            $cache = new ApcuAdapter((string) $message->getLast()->getValue());
+        if($CheckUsersEvent)
+        {
+            $cache = new FilesystemAdapter((string) $CheckUsersEvent->getUser());
             $cache->clear();
         }
     }

@@ -131,7 +131,7 @@ final class RoleHandler
         /* Отправляем событие в шину  */
         $this->messageDispatch->dispatch(
             message: new UserRoleMessage($Role->getId(), $Role->getEvent(), $command->getEvent()),
-            transport: 'users_groups'
+            transport: 'users-groups'
         );
 
 

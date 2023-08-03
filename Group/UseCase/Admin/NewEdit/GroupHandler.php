@@ -163,7 +163,7 @@ final class GroupHandler
         /* Отправляем событие в шину  */
         $this->messageDispatch->dispatch(
             message: new UserGroupMessage($Group->getId(), $Group->getEvent(), $command->getEvent()),
-            transport: 'users_groups'
+            transport: 'users-groups'
         );
 
 

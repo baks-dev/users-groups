@@ -23,10 +23,10 @@ use BaksDev\Users\Groups\Users\Type\Event\CheckUsersEventUid;
 use BaksDev\Users\User\Tests\TestUserAccount;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DependencyInjection\Attribute\When;
 
-/**
- * @group users-groups
- */
+/** @group users-groups */
+#[When(env: 'test')]
 final class EditControllerTest extends WebTestCase
 {
     private const URL = '/admin/user/check/edit/%s';

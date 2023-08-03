@@ -79,7 +79,6 @@ final class UsersGroupChoiceRepository implements UsersGroupChoiceInterface
 
         $qb->andWhere($qb->expr()->not($qb->expr()->exists($qbExistGroup->getDQL())));
 
-        // dd($qb->getQuery()->getResult());
 
         return $qb->getQuery()->getResult();
     }
